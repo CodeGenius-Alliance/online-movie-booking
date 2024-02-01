@@ -9,7 +9,12 @@ const AdminSchema=mongoose.Schema(
         password:{
             type:String,
             required:[true,"Please add the password"]
-        }
+        },
+        addedMovies:[
+            {
+                type:String,
+            }
+        ]
     }
 )
 

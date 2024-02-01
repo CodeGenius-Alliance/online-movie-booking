@@ -7,4 +7,5 @@ router.route('/login').post(login);
 
 router.use(validateTokenHanlder);//validating Token
 
+
 module.exports=router
