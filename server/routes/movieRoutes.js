@@ -1,6 +1,6 @@
 const express = require("express");
 const {addMovie , getAllMovies,getMovieById} = require("../controllers/movieController")
-const adminTokenHandler=require('../middlewares/adminTokenHandler');
+// const adminTokenHandler=require('../middlewares/adminTokenHandler');
 
 
 const movieRouter = express.Router()
