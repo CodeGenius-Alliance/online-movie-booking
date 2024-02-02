@@ -10,7 +10,7 @@ const addMovie = async (req, res, next) => {
 
   //verify token
   jwt.verify(
-    extractedToken,
+    extractedToken, 
     process.env.ACCESS_TOKEN_ADMIN,
     (err, decrypted) => {
       if (err) {
