@@ -23,7 +23,7 @@ const addMovie = async (req, res, next) => {
   );
 
   //create new movie
-  const { title, description, releaseDate, posterUrl, featured, actors } =
+  const { movie_id,title, description, releaseDate, posterUrl, featured, actors } =
     req.body;
   if (
     !title &&
@@ -39,6 +39,7 @@ const addMovie = async (req, res, next) => {
   let movie;
   try {
     movie = new MovieModule({
+      movie_id,
       title,
       description,
       releaseDate: new Date(`${releaseDate}`),

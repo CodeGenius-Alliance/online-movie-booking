@@ -1,6 +1,6 @@
 const jwt=require('jsonwebtoken');
 
-const validateTokenHanlder=()=>{
+const validateTokenHanlder=(req,res,next)=>{
     try{
         let token;
         let authHeader=req.headers.authorization
@@ -11,7 +11,7 @@ const validateTokenHanlder=()=>{
                     res.status(400).send("Admin is not authorized");
                 }
                 req.user=decode.user;
-                next();
+                next(); 
             })
             if(!token){
                 res.status(400).send("Token is expired");

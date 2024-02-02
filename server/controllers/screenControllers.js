@@ -48,7 +48,7 @@ const getScreen=asyncHandler(async(req,res)=>{
                     _id:0,
                     movie_id:1,
                     screen_id:1,
-                    movie_name:`$screenDetails.movie_name`,
+                    movie_name:`$screenDetails.title`,
                     no_of_seats:1,
                     date:1,
                     time:1,
