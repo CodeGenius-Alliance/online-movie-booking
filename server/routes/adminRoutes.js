@@ -1,7 +1,7 @@
 const express=require('express');
 const router=express.Router();
 const {login}=require('../controllers/adminController');
-const validateTokenHanlder = require('../middlewares/validateTokenHandler');
+const validateTokenHanlder = require('../middlewares/adminTokenHandler'); 
 
 router.route('/login').post(login);
 
