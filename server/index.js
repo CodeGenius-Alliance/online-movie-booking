@@ -1,3 +1,4 @@
+
 const express=require('express');
 const app=express();
 const dotenv=require('dotenv').config();
@@ -17,4 +18,3 @@ app.use("/screens",screenRouter);
 app.listen(port,()=>{
     console.log(`Server listening on the port:${port}`);
 }) 
-
