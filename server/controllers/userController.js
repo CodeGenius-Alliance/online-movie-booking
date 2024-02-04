@@ -1,14 +1,13 @@
 
-import User from "../models/userModel";
-import bcrypt from "bcryptjs";
+
+const bcrypt= require("bcrypt");
 const MovieModule = require("../models/MovieModule");
-const { default: userModel } = require("../models/userModel");
+const userModel= require("../models/userModel");
 
 
+// User Registration -- working
 
-// User Registration
-
-export const singup = async (res, res, next) => {
+const signup = async (req, res) => {
   const { name, email, password } = req.body;
 
   if (
@@ -21,12 +20,12 @@ export const singup = async (res, res, next) => {
   )
     return res.status(422).json({ message: "Invalid Input" });
 
-  const hashPassword = bcrypt.hashSync(password);
+  //const hashPassword = bcrypt.hashSync(password);
 
   let user;
 
   try {
-    user = new User({ name, email, password: hashPassword });
+    user = new userModel({ name, email, password });
     user = await user.save();
   } catch (err) {
     return console.log(err);
@@ -41,14 +40,14 @@ export const singup = async (res, res, next) => {
 
 // Login user
 
-export const login = async (req, res, next) => {
+const login = async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email && email.trim() === "" && !password && password.trim() === "")
     return res.status(422).json({ message: "Invalid Input" });
   let existingUser;
   try {
-    existingUser = await User.findOne({ email });
+    existingUser = await userModel.findOne({ email });
   } catch (err) {
     return console.log(err);
   }
@@ -70,9 +69,16 @@ export const login = async (req, res, next) => {
     .json({ message: "Login Successfull", id: existingUser._id });
 };
 
-
-
-//get one movie
+//get all the movies  -- working
+const getAllMovies=async(req,res)=>{
+  try {
+    const movies=await MovieModule.find()
+    res.json({movies:movies})
+  } catch (error) {
+    
+  }
+}
+//get one movie -- working
 const getOneMovie = async (req, res) => {
   try {
     const movie_id = req.body._id;
@@ -83,42 +89,40 @@ const getOneMovie = async (req, res) => {
   }
 };
 
-//book a movie
-
+//book a movie -- working
 const bookMovie = async (req, res) => {
   try {
-    const {movie_id,moviedetail,seats}= req.body;
+    const {movie_id,seats,user_id}= req.body;
     const Movie = await MovieModule.findById(movie_id);
 
-    if(user && Movie)
-    {
-        await userModel.findByIdAndUpdate(req.user._id,{bookedmovie:{$set:{movie_id:movie_id,seats:seats}}})
-        await MovieModule.findByIdAndUpdate(movie_id,{booking:{$set:{seatnumbers:seats,user:req.user._id}}})
-        res.status(201).json({"messege":"your movieticket has been booked"})
-    }
-    else{
-        res.staus(404).json({"messege":"user or movie not exist "})
-    }
+    console.log(req.body)
     
-  } catch (error) {}
+    const user=await userModel.findByIdAndUpdate(user_id,{$push:{bookedmovie:{movie_id:movie_id,seats:seats}}})
+
+    const movie=await MovieModule.findByIdAndUpdate(movie_id,{$push:{bookings:{user:user_id,seatnumbers:seats}}})
+    res.json({"messege":"your movieticket has been booked",user:user,movie:movie})
+    
+  } catch (error) {
+    console.log(error)
+  }
 };
 
-//cancel movie
+//cancel movie -- working
 const cancelticket=async(req,res)=>{
-    const {movie_id}= req.body;
-    const Movie = await MovieModule.findById(movie_id);
+    const {movie_id,user_id}= req.body;
+   
     try {
-        await userModel.findByIdAndUpdate(req.user._id,{bookedmovie:
-            {$unset:{$eq:{movie_id:movie_id}}}
-
-        })
-        await MovieModule.findByIdAndUpdate(movie_id,{booking:{$unset:{$eq:{user:req.user._id}}}})
+        let user=await userModel.findByIdAndUpdate(user_id,{$pull:
+            {bookedmovie:{movie_id:{$eq:movie_id}}}})
+        let movie=await MovieModule.findByIdAndUpdate(movie_id,{$pull:{bookings:{user:{$eq:user_id}}}})
+        res.json({user:user,movie:movie})
     } catch (error) {
-        res.json({"messege":"some error occur"})
+      console.log(error)
+        res.json({"messege":error})
     }
 }
 
-//get booked movies
+//get booked movies  -- working
 const getBookedMovie=async (req,res)=>{
     try {
         const moviesbooked=userModel.findById(req.user._id)
@@ -128,5 +132,5 @@ const getBookedMovie=async (req,res)=>{
     }
 }
 
-module.exports = {getOneMovie,bookMovie,cancelticket,getBookedMovie};
+module.exports = {getOneMovie,bookMovie,cancelticket,getBookedMovie,login,signup, getAllMovies};
 

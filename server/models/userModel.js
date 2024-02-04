@@ -16,9 +16,10 @@ const userSchema = new Schema({
     required: true,
     minLength: 6,
   },
-  bookedmovie:{
-    type:Array
-  }
+  bookedmovie:[{
+    movie_id:{type:String},seats:{type:Array}
+    
+  }]
 });
 
 const userModel=mongoose.model("User", userSchema);

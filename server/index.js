@@ -7,7 +7,7 @@ const adminRoutes=require('./routes/adminRoutes');
 const movieRouter = require('./routes/movieRoutes');
 const screenRouter=require('./routes/screenRoutes');
 const userRouter=require('./routes/userRoutes');
-const port=process.env.port||3000
+const port=process.env.port
 connectDb(); //Database connection
 app.use(express.json());
 

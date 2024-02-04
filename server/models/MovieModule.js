@@ -27,7 +27,10 @@ const movieSchema = new mongoose.Schema({
   featured: {
     type: Boolean,
   },
-  bookings: [{ type: String }],
+  bookings: [{
+    user:{type:String},
+    seatnumbers:{type:Array}
+  }],
 
   admin: {
     type: String,
