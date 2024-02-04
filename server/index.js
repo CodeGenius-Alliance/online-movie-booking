@@ -1,18 +1,20 @@
-const express=require("express")
+
+const express=require('express');
 const app=express();
+const dotenv=require('dotenv').config();
+const connectDb=require('./config/db');
+const adminRoutes=require('./routes/adminRoutes');
+const movieRouter = require('./routes/movieRoutes');
+const screenRouter=require('./routes/screenRoutes');
+const port=process.env.port
+connectDb(); //Database connection
+app.use(express.json());
 
-
-//import cors module so we can get data from the frontend
-const cors=require('cors');
-app.use(cors());
-
-//use json format to sent data in json
-app.use(express.json())
-
-//import cookie-parcer(step1 to install it using npm i cookie-parser)
-var cookieParser = require('cookie-parser')
-app.use(cookieParser())
-
-
-
-app.listen('3000',()=>{console.log(`website backend is running in http://localhost:3000`)})
+app.use('/admins/',adminRoutes)
+app.use("/movie", movieRouter )
+app.use("/screens",screenRouter);
+// console.log(adminId)
+//server creation
+app.listen(port,()=>{
+    console.log(`Server listening on the port:${port}`);
+}) 
