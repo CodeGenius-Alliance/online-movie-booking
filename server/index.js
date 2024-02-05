@@ -10,9 +10,6 @@ const port = process.env.port;
 connectDb(); //Database connection
 app.use(express.json());
 
-app.all("/", function (req, res) {
-  console.log("Hello Sir");
-});
 app.use("/admins/", adminRoutes);
 app.use("/movie", movieRouter);
 app.use("/screens", screenRouter);
