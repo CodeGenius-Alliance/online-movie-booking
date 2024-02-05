@@ -13,7 +13,7 @@ const addScreen=asyncHandler(async(req,res)=>{
             return res.status(409).send("Movie id does'nt exists");
         }
         var seats=new Array(no_of_seats);
-        seats.fill(0);
+        seats.fill(null);
         await Screens.create({"screen_id":screen_id,"movie_id":movie_id,"movie_name":chk.movie_name,"no_of_seats":no_of_seats,"status":true,"seats":seats,"date":date,"time":time});
         res.status(200).send("Details added successfully");
     }
@@ -43,6 +43,7 @@ const getScreen=asyncHandler(async(req,res)=>{
             },
             {$unwind:"$screenDetails",
            },
+           {$match:{"screen_id":screen_id}},
             {
                 $project:{
                     _id:0,

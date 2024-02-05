@@ -8,7 +8,6 @@ const ScreenSchema=mongoose.Schema({
     },
     movie_id:{
         type:String,
-        unique:[true,"Please mention unique id for screen"],
         required:{true:"Please mention the movie id"}
     },
     no_of_seats:{
