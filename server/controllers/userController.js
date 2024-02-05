@@ -1,9 +1,9 @@
-import User from "../models/userModel";
-import bcrypt from "bcryptjs";
+const User = require("../models/userModel");
+const bcrypt = require("bcrypt");
 
 // User Registration
 
-export const singup = async (res, res, next) => {
+const signup = async (req, res, next) => {
   const { name, email, password } = req.body;
 
   if (
@@ -15,8 +15,8 @@ export const singup = async (res, res, next) => {
     password.trim() === ""
   )
     return res.status(422).json({ message: "Invalid Input" });
-
-  const hashPassword = bcrypt.hashSync(password);
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = bcrypt.hashSync(password, salt);
 
   let user;
 
@@ -36,7 +36,7 @@ export const singup = async (res, res, next) => {
 
 // Login user
 
-export const login = async (req, res, next) => {
+const login = async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email && email.trim() === "" && !password && password.trim() === "")
@@ -53,8 +53,12 @@ export const login = async (req, res, next) => {
       .status(404)
       .json({ message: "Unable to find user from this ID" });
   }
-
-  const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password);
+  const salt = await bcrypt.genSalt(10);
+  const isPasswordCorrect = bcrypt.compareSync(
+    password,
+    existingUser.password,
+    salt
+  );
 
   if (!isPasswordCorrect) {
     return res.status(400).json({ message: "Incorrect Password" });
@@ -64,3 +68,4 @@ export const login = async (req, res, next) => {
     .status(200)
     .json({ message: "Login Successfull", id: existingUser._id });
 };
+module.exports = { login, signup };
