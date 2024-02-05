@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const MovieModule = require("../models/MovieModule");
 const userModel = require("../models/userModel");
+const jwtToken = require("jsonwebtoken");
 
 // User Registration -- working
 
@@ -23,7 +24,7 @@ const signup = async (req, res) => {
   let user;
 
   try {
-    user = new userModel({ name, email, password });
+    user = new userModel({ name, email, password: hashPassword });
     user = await user.save();
   } catch (err) {
     return console.log(err);
@@ -66,18 +67,31 @@ const login = async (req, res, next) => {
     return res.status(400).json({ message: "Incorrect Password" });
   }
 
+  // Access Token Creation --> jwtToken --> sign(obj[data of encryption] , encryption key , {expires of that token})
+
+  const accessToken = jwtToken.sign(
+    {
+      id: existingUser._id,
+    },
+    process.env.ACCESS_TOKEN_USER,
+    {
+      expiresIn: "40m",
+    }
+  );
+
   return res
     .status(200)
-    .json({ message: "Login Successfull", id: existingUser._id });
+    .json({ message: "Login Successfull", id: existingUser._id, accessToken });
 };
 
 //get all the movies  -- working
 const getAllMovies = async (req, res) => {
   try {
     const movies = await MovieModule.find();
-    res.json({ movies: movies });
+    res.status(200).json({ movies: movies });
   } catch (error) {}
 };
+
 //get one movie -- working
 const getOneMovie = async (req, res) => {
   try {
@@ -104,7 +118,7 @@ const bookMovie = async (req, res) => {
     const movie = await MovieModule.findByIdAndUpdate(movie_id, {
       $push: { bookings: { user: user_id, seatnumbers: seats } },
     });
-    res.json({
+    res.status(200).json({
       messege: "your movieticket has been booked",
       user: user,
       movie: movie,

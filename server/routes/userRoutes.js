@@ -1,5 +1,5 @@
 const express = require("express");
-const validateTokenHanlder = require("../middlewares/adminTokenHandler");
+const validateTokenHanlder = require("../middlewares/userTokenHandler");
 const userRouter = express.Router();
 const {
   getOneMovie,
@@ -11,16 +11,17 @@ const {
   getAllMovies,
 } = require("../controllers/userController");
 
-userRouter.route("/getOneMovie").get(getOneMovie);
+userRouter.post("/signup", signup);
 userRouter.route("/login").get(login);
 
-userRouter.post("/signup", signup);
-// userRouter.use(validateTokenHanlder);
-//apply middleware of user to authenticate user and set user in req.user
+userRouter.route("/getOneMovie").get(getOneMovie);
+userRouter.route("/getAllMovies").get(getAllMovies);
+
+//MiddleWare --> verify user
+userRouter.use(validateTokenHanlder);
 
 userRouter.route("/bookMovie").post(bookMovie);
-userRouter.route("/getBookedMovie").get(getBookedMovie);
 userRouter.route("/cancelTickets").post(cancelticket);
-userRouter.route("/getAllMovies").get(getAllMovies);
+userRouter.route("/getBookedMovie").get(getBookedMovie);
 
 module.exports = userRouter;
