@@ -37,7 +37,7 @@ const signup = async (req, res) => {
   return res.status(201).json({ id: user._id });
 };
 
-// Login user
+// Login user -> working
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
