@@ -1,5 +1,5 @@
 const asyncHandler=require('express-async-handler');
-const Screens=require('../models/showModel');
+const Screens=require('../models/screenModel');
 
 const addScreen=asyncHandler(async(req,res)=>{ //fine
     const {screen_id,no_of_seats}=req.body;

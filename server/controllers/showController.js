@@ -12,19 +12,19 @@ const addShows=asyncHandler(async(req,res)=>{ //fine
         }
         const chk_movie=await Movies.findOne({"movie_id":movie_id});
         if(!chk_movie){
-            return res.status(409).send("Movie id does'nt exists");
+            return res.status(404).send("Movie id does'nt exists");
         }
         const chk_screen=await Screens.findOne({"screen_id":screen_id});
         if(!chk_screen){
-            return res.status(409).send("Screen id does'nt exists");
+            return res.status(404).send("Screen id does'nt exists");
         }
         const flag=await Shows.find({$and:[{"screen_id":screen_id,"date":date,"time":time}]});
-        if(flag.screen_id){
+        if(flag.length>0){
             return res.status(409).send(`Screen with id${screen_id} already scheduled on that given date and time`)
         }
         var seats=new Array(chk_screen.no_of_seats);
         seats.fill(null);
-        await Shows.create({"show_id":show_id,"screen_id":screen_id,"movie_id":movie_id,"movie_name":chk_movie.movie_name,"no_of_seats":chk_screen.no_of_seats,"status":true,"seats":seats,"date":date,"time":time});
+        await Shows.create({"show_id":show_id,"screen_id":screen_id,"movie_id":movie_id,"no_of_seats":chk_screen.no_of_seats,"status":true,"seats":seats,"date":date,"time":time});
         res.status(200).send("Details added successfully");
     }
     catch(e){
@@ -38,8 +38,8 @@ const getShow=asyncHandler(async(req,res)=>{
         if(!show_id){
             return res.status(400).send("Mention Movie id");
         }
-        const chk=await Shows.find({"show_id":show_id});
-        if(!chk){
+        const info=await Shows.find({"show_id":show_id});
+        if(!info){
             return res.status(400).send("No shows exists on that id,check again");
         }
         
@@ -84,8 +84,8 @@ const viewTicket=asyncHandler(async(req,res)=>{ //fine
     if(!show_id){
         return res.status(400).send("Mention show id");
     }
-    const msg=await Bookings.find({"show_id":show_id});
-    res.status(200).json(msg)
+    // const msg=await Bookings.find({"show_id":show_id});
+    // res.status(200).json(msg) 
 })
 
 
