@@ -3,8 +3,8 @@ const mongoose=require('mongoose');
 const ShowSchema=mongoose.Schema({
     show_id:{
         type:String,
-        required:{true:"Please mention the screen id"},
-        unique:{true:"Please mention unique show id"}
+        required:{true:"Please mention the show id"},
+        unique:true
     },
     screen_id:{
         type:String,

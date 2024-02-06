@@ -11,12 +11,12 @@ const port = process.env.port;
 connectDb(); //Database connection
 app.use(express.json());
 
-app.use("/admins/", adminRoutes);
+app.use("/admins/", adminRoutes); //working fine
 
-app.use("/movie", movieRouter);
+app.use("/movie", movieRouter);//working fine
 
 app.use("/shows",showRouter);
-app.use("/screens", screenRouter);
+app.use("/screens", screenRouter);//working fine
 
 app.use("/users", userRouter);
 // console.log(adminId)
