@@ -1,37 +1,18 @@
-const mongoose=require('mongoose');
+const mongoose=require('mongoose')
 
-const ScreenSchema=mongoose.Schema({
+const screenSchema=mongoose.Schema({
     screen_id:{
         type:String,
-        unique:[true,"Please mention unique id for screen"],
-        required:{true:"Please mention the screen id"}
-    },
-    movie_id:{
-        type:String,
-        required:{true:"Please mention the movie id"}
+        required:{true:"Please mention the screen id"},
+        unique:{true:"Screen id already exists,please mention unique screen id"}
     },
     no_of_seats:{
         type:Number,
-        required:{true:"Please mention the no of seats available in screen"}
-    },
-    status:{
-        type:Boolean
-    },
-    seats:{
-        type:Array,
-    },
-    date:{
-        type:String,
-        required:{true:"Please mention date"}
-    },
-    time:{
-        type:String,
-        required:{true:"Please mention time"}
+        required:{true:"Please mention the number of seats available in the screen"},
     }
 },
 {
-    timeStamps:true,
-}
-)
+    timeStamps:true
+})
 
-module.exports=mongoose.model("Screens",ScreenSchema);
+module.exports=mongoose.model("Screens",screenSchema)
