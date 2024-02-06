@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -16,6 +16,13 @@ const userSchema = new Schema({
     required: true,
     minLength: 6,
   },
+  bookedmovie: [
+    {
+      movie_id: { type: String },
+      seats: { type: Array },
+    },
+  ],
 });
 
-export default mongoose.model("User", userSchema);
+const userModel = mongoose.model("User", userSchema);
+module.exports = userModel;
