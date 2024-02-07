@@ -6,6 +6,7 @@ const Movies=require('../models/MovieModule')
 
 const addShows=asyncHandler(async(req,res)=>{ //fine
     const {show_id,screen_id,movie_id,date,time}=req.body;
+    console.log(show_id,screen_id,movie_id,date,time);
     try{
         if(!show_id||!screen_id||!movie_id||!date||!time){
             return res.status(401).send("All fields are mandatory");

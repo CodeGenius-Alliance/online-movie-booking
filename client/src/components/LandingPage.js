@@ -6,6 +6,8 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthProvider';
 
 // Define a custom theme
 const theme = createTheme({
@@ -23,6 +25,8 @@ const theme = createTheme({
 });
 
 const LandingPage = () => {
+  const navigate=useNavigate()
+  const auth=useAuth()
   return (
     <ThemeProvider theme={theme}>
       <div>
@@ -36,8 +40,11 @@ const LandingPage = () => {
 
             {/* Right side: Login buttons */}
             
-            <Button color="inherit">User Login</Button>
-            <Button color="inherit">Admin Login</Button>
+            <Button color="inherit">User </Button>
+            <Button onClick={()=>{
+              navigate('/admins/login')
+              auth.Admin()
+            }} color="inherit">Admin </Button>
             
             {/* <Button color="inherit">User Login</Button>
             <Button color="inherit">Admin Login</Button> */}

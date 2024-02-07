@@ -9,13 +9,8 @@ const login = asyncHandler(async (req, res) => {
       return res.status(200).send("Admin id not found");
     } else if (existingAdmin.password == password) {
       const accessToken = jwt.sign(
-        // {
-        //   user: {
-        //     adminname: email,
-        //   },
-        // },
         {
-          id: existingAdmin._id,
+          user: existingAdmin._id,
         },
         process.env.ACCESS_TOKEN_ADMIN,
         { expiresIn: "40m" }
