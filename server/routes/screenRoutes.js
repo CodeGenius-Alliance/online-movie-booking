@@ -4,6 +4,7 @@ const screenRouter=express.Router();
 const {addScreen}=require('../controllers/screenControllers')
 
 //screencontrollers
+screenRouter.use(validateTokenHanlder)
 screenRouter.route('/addScreen').post(addScreen);//Add Screen information
 
 module.exports=screenRouter;
