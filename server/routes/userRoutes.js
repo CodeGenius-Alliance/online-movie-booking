@@ -1,18 +1,27 @@
-const express=require('express');
-const validateTokenHanlder = require('../middlewares/adminTokenHandler');
-const userRouter=express.Router();
-const {getOneMovie,bookMovie,getBookedMovie,cancelticket,login,signup, getAllMovies}=require('../controllers/userController')
+const express = require("express");
+const validateTokenHanlder = require("../middlewares/userTokenHandler");
+const userRouter = express.Router();
+const {
+  getOneMovie,
+  bookMovie,
+  getBookedMovie,
+  cancelticket,
+  login,
+  signup,
+  getAllMovies,
+} = require("../controllers/userController");
 
-userRouter.route('/getOneMovie').get(getOneMovie);
-userRouter.route('/login').get(login);
+userRouter.post("/signup", signup);
+userRouter.route("/login").get(login);
 
-userRouter.post('/signup',signup)
-// userRouter.use(validateTokenHanlder);
-//apply middleware of user to authenticate user and set user in req.user
+userRouter.route("/getOneMovie").get(getOneMovie);
+userRouter.route("/getAllMovies").get(getAllMovies);
 
-userRouter.route('/bookMovie').post(bookMovie);
-userRouter.route('/getBookedMovie').get(getBookedMovie);
-userRouter.route('/cancelTickets').post(cancelticket);
-userRouter.route('/getAllMovies').get(getAllMovies);
+//MiddleWare --> verify user
+userRouter.use(validateTokenHanlder);
 
-module.exports=userRouter;
+userRouter.route("/bookMovie").post(bookMovie);
+userRouter.route("/cancelTickets").post(cancelticket);
+userRouter.route("/getBookedMovie").get(getBookedMovie);
+
+module.exports = userRouter;

@@ -1,13 +1,13 @@
 const express = require("express");
 const {addMovie , getAllMovies,getMovieById} = require("../controllers/movieController")
-const adminTokenHandler=require('../middlewares/adminTokenHandler');
 
 
 const movieRouter = express.Router()
-movieRouter.post("/",addMovie)
 
-movieRouter.get("/",getAllMovies )
+movieRouter.post("/addMovie",addMovie)
 
-movieRouter.get("/:id",getMovieById )
+movieRouter.get("/getMovies",getAllMovies )
+
+movieRouter.get("/getMovie/:id",getMovieById )
 
 module.exports = movieRouter
