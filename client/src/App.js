@@ -5,6 +5,7 @@ import LoginPage from "./components/LoginPage";
 import AuthProvider from "./components/AuthProvider";
 import AddScreen from "./components/AddScreen";
 import AddShows from "./components/AddShows";
+import AddMovie from "./components/AddMovies";
 function App() {
   return (
     <>
@@ -19,6 +20,9 @@ function App() {
         </Route>
         <Route path='/screens'>
           <Route path='addScreen' element={<AddScreen/>}/>
+        </Route>
+        <Route path='/movie'>
+          <Route path='addMovie' element={<AddMovie/>}/>
         </Route>
       </Routes>
       </AuthProvider>
