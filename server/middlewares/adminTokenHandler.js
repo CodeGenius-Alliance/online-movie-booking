@@ -2,6 +2,7 @@ const jwt=require('jsonwebtoken');
 
 const validateTokenHanlder=(req,res,next)=>{
     try{
+        //str="123 nfuirf uiewh" str.split(" ") [Bearer, token$%^&*jhghhhgfhjbgfyyhy == user.id, uiewh]
         let token;
         let authHeader=req.headers.authorization
         if(authHeader && authHeader.startsWith('Bearer')){

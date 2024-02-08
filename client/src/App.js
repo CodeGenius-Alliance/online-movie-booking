@@ -5,13 +5,13 @@ import Login from "./Components/LoginComponent/Login";
 import Register from "./Components/RegisterComponent/Register";
 import AdminLogin from "./Components/LoginComponent/AdminLogin";
 import { Provider } from 'react-redux'
-import { Userstore } from "./Redux/Store/UserStore";
+import { Mystore } from "./Redux/Store/MyStore";
 
 function App() {
   return (
     <>
       {/* define code */}
-    <Provider store={Userstore}>
+    <Provider store={Mystore}>
       <BrowserRouter>
       
         <Routes>
