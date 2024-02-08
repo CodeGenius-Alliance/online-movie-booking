@@ -1,14 +1,17 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./Components/HomeComponent/Home";
-import Navbar from "./Components/NavbarComponent/Navbar";import Login from "./Components/LoginComponent/Login";
+import Login from "./Components/LoginComponent/Login";
 import Register from "./Components/RegisterComponent/Register";
 import AdminLogin from "./Components/LoginComponent/AdminLogin";
+import { Provider } from 'react-redux'
+import { Userstore } from "./Redux/Store/UserStore";
 
 function App() {
   return (
     <>
       {/* define code */}
+    <Provider store={Userstore}>
       <BrowserRouter>
       
         <Routes>
@@ -18,6 +21,7 @@ function App() {
           <Route path="/register" element={<Register />}></Route>
         </Routes>
       </BrowserRouter>
+      </Provider>
     </>
   );
 }

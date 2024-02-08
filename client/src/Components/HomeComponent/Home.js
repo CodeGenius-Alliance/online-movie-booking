@@ -6,8 +6,7 @@ function Home() {
   return (
     <>
       <Navbar />
-    <div>Home</div>
-    <Link to={'/'}>click</Link>
+      
     </>
   )
 }
