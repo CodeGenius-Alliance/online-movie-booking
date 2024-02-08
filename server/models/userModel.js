@@ -1,4 +1,4 @@
-const mongoose=require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -16,11 +16,13 @@ const userSchema = new Schema({
     required: true,
     minLength: 6,
   },
-  bookedmovie:[{
-    movie_id:{type:String},seats:{type:Array}
-    
-  }]
+  bookedmovie: [
+    {
+      movie_id: { type: String },
+      seats: { type: Array },
+    },
+  ],
 });
 
-const userModel=mongoose.model("User", userSchema);
-module.exports=userModel
+const userModel = mongoose.model("User", userSchema);
+module.exports = userModel;
