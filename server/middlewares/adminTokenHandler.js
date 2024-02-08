@@ -17,11 +17,6 @@ const validateTokenHanlder = (req, res, next) => {
         res.status(400).send("Token is expired");
       }
     }
-    req.user = decode.user;
-    next();
-    if (!token) {
-      res.status(400).send("Token is not passed");
-    }
   } catch (e) {
     console.log(e);
   }
