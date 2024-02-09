@@ -94,8 +94,8 @@ const getAllMovies = async (req, res) => {
 
 //get one movie -- working
 const getOneMovie = async (req, res) => {
-  try {
-    const movie_id = req.body._id;
+  try {  //displaying shows with date> (in future)
+    const movie_id = req.body._id; 
     const Movie = await MovieModule.findById(movie_id);
     res.status(200).json({ movie: Movie, messege: "movie fetch successfully" });
   } catch (error) {
