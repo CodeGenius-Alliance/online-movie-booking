@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
-
 const validateTokenHanlder = (req, res, next) => {
   try {
+    //str="123 nfuirf uiewh" str.split(" ") [Bearer, token$%^&*jhghhhgfhjbgfyyhy == user.id, uiewh]
     let token;
     let authHeader = req.headers.authorization;
     if (authHeader && authHeader.startsWith("Bearer")) {
@@ -14,7 +14,7 @@ const validateTokenHanlder = (req, res, next) => {
         next();
       });
       if (!token) {
-        res.status(400).send("Token is not passed");
+        res.status(400).send("Token is expired");
       }
     }
   } catch (e) {

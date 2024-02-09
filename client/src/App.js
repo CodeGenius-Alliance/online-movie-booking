@@ -1,27 +1,28 @@
 import "./App.css";
-import {Routes,Route} from 'react-router-dom'
-import LandingPage from "./components/LandingPage";
-import LoginPage from "./components/LoginPage";
-import AuthProvider from "./components/AuthProvider";
-import AddScreen from "./components/AddScreen";
-import AddShows from "./components/AddShows";
+
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./Components/HomeComponent/Home";
+import Login from "./Components/LoginComponent/Login";
+import Register from "./Components/RegisterComponent/Register";
+import AdminLogin from "./Components/LoginComponent/AdminLogin";
+import { Provider } from 'react-redux'
+import { Mystore } from "./Redux/Store/MyStore";
+
 function App() {
   return (
     <>
-    <AuthProvider>
-      <Routes>
-        <Route path="/" element={<LandingPage/>}/>
-        <Route path='/admins'> 
-        <Route path='login' element={<LoginPage/>}/>
-        </Route>
-        <Route path='/shows'>
-          <Route path='addShow' element={<AddShows/>}/>
-        </Route>
-        <Route path='/screens'>
-          <Route path='addScreen' element={<AddScreen/>}/>
-        </Route>
-      </Routes>
-      </AuthProvider>
+      {/* define code */}
+    <Provider store={Mystore}>
+      <BrowserRouter>
+      
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/adminlogin" element={<AdminLogin />}></Route>
+          <Route path="/register" element={<Register />}></Route>
+        </Routes>
+      </BrowserRouter>
+      </Provider>
     </>
   );
 }
