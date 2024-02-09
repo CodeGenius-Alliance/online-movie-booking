@@ -10,13 +10,7 @@ const login = asyncHandler(async (req, res) => {
     } else if (existingAdmin.password == password) {
       
       const accessToken = jwt.sign(
-        // {
-        //   user: {
-        //     adminname: email,
-        //   },
-        // },
         {
-          //478494
           id: existingAdmin._id,
         },
         process.env.ACCESS_TOKEN_ADMIN,
