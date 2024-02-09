@@ -7,10 +7,11 @@ const movieRouter = require("./routes/movieRoutes");
 const screenRouter = require("./routes/screenRoutes");
 const userRouter = require("./routes/userRoutes");
 const showRouter = require("./routes/showRoutes");
+const cors=require('cors') //cross-origin-resource-sharing for integrating backend/frontend
 const port = process.env.port;
 connectDb(); //Database connection
 app.use(express.json());
-
+app.use(cors())
 app.use("/admins/", adminRoutes); //working fine
 
 app.use("/movie", movieRouter);//working fine

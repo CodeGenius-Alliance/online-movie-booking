@@ -14,9 +14,6 @@ const ShowSchema=mongoose.Schema({
         type:String,
         required:{true:"Please mention the movie id"}
     },
-    status:{
-        type:Boolean
-    },
     seats:{
         type:Array,
     },
