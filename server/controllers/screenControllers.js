@@ -2,7 +2,7 @@ const asyncHandler=require('express-async-handler');
 const Screens=require('../models/screenModel');
 
 const addScreen=asyncHandler(async(req,res)=>{ //fine
-    const {screen_id,no_of_seats}=req.body;
+    const {screen_id,no_of_seats}=req.body; 
     if(!screen_id||!no_of_seats){
         return res.status(400).send("All fields are mandatory")
     }
