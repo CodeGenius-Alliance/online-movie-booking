@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const base_url="http:localhost:3000/users"
+const base_url="http:localhost:3001/users"
 
 export const LOGIN_USER_SUCCESS = "LOGIN_USER_SUCCESS";
 export const LOGIN_USER_FAILURE = "LOGIN_USER_FAILURE";

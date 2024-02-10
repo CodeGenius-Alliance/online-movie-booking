@@ -5,19 +5,20 @@ import Login from "./Components/LoginComponent/Login";
 import Register from "./Components/RegisterComponent/Register";
 import AdminLogin from "./Components/LoginComponent/AdminLogin";
 import { Provider } from 'react-redux'
-import { Mystore } from "./Redux/Store/MyStore";
+import { MyStore } from "./Redux/Store/MyStore";
+import Navbar from "./Components/NavbarComponent/Navbar";
 
 function App() {
   return (
     <>
       {/* define code */}
-    <Provider store={Mystore}>
+    <Provider store={MyStore}>
       <BrowserRouter>
-      
+      <Navbar />
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/login" element={<Login />}></Route>
-          <Route path="/adminlogin" element={<AdminLogin />}></Route>
+          <Route path="/admin" element={<AdminLogin />}></Route>
           <Route path="/register" element={<Register />}></Route>
         </Routes>
       </BrowserRouter>
