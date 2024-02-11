@@ -70,7 +70,17 @@ const movieSchema = new mongoose.Schema({
   screen:[
     {
       screen_id:{type:String},
-      show:[]
+      show:[{
+        show_id:{type:String},
+        date:{type:Date},
+        start_time:{type:String},
+        end_time:{type:String},
+        price:{type:String},
+        bookings:[{
+            user_id:{type:String},
+            seats:{type:Array}
+        }]
+    }]
     }
   ],
 
