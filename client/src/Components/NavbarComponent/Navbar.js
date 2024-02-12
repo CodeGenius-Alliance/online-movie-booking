@@ -4,8 +4,21 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 function Navbar() {
   const user = useSelector((state) => state.user.user);
-  console.log(user)
-  if ( user && user.email) {
+  const admin=useSelector((state)=>state.admin.admin)
+  //.log(user)
+  if ( admin && admin.email) {
+    return (
+      <>
+        <nav className="my-nav">
+          <img src="/logo.svg" alt="" className="logo-img" />
+          <div className="btn-grp">
+            <h1>ADMIN</h1>
+          </div>
+        </nav>
+      </>
+    );
+  }
+  else if ( user && user.email) {
     return (
       <>
         <nav className="my-nav">

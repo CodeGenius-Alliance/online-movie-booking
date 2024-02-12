@@ -1,8 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import "./Login.css";
+import {Link} from 'react-router-dom'
+import { useDispatch } from "react-redux";
+import { Loginuser } from "../../Redux/Action/UserAction";
 const Login = () => {
   const initialValue = { email: "", password: "" };
+  const dispatch=useDispatch();
   const [formValues, setFormValue] = useState(initialValue);
 
   const handleClick = (e) => {
@@ -10,11 +14,19 @@ const Login = () => {
     setFormValue({ ...formValues, [name]: value });
     console.log(formValues);
   };
+  const SubmitLogin=async(e)=>{
+    e.preventDefault();
+    try {
+      dispatch(Loginuser(formValues))
+    } catch (error) {
+      
+    }
+  }
 
   return (
     <>
       <div>
-        <h1 className="head">Login Here</h1>
+       
         <form>
           <div className="container">
             <h1 className="heading">User Login</h1>
@@ -38,7 +50,17 @@ const Login = () => {
               ></input>
             </div>
 
-            <button className="button">SUBMIT</button>
+            <div>
+            <button className="button" onClick={SubmitLogin}>SUBMIT</button>
+           
+            </div>
+            <hr />
+            <div>
+            <Link to={'/admin'} className="login-links">Admin Login?</Link>
+            </div>
+            <div>
+              <Link to={'/register'} className="login-links">Don't have account?</Link>
+            </div>
           </div>
         </form>
       </div>

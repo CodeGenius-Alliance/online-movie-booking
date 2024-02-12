@@ -50,7 +50,7 @@ const addMovie = async (req, res, next) => {
     });
     movie = await movie.save();
   } catch (err) {
-    return console.log(err);
+    res.status(400).send({err})
   }
 
   if (!movie) {

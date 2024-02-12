@@ -2,6 +2,17 @@ const bcrypt = require("bcrypt");
 const MovieModule = require("../models/MovieModule");
 const userModel = require("../models/userModel");
 const jwtToken = require("jsonwebtoken");
+const screenModel = require("../models/screenModel");
+
+
+
+//get all the movies  -- working
+const getAllMovies = async (req, res) => {
+  try {
+    const movies = await MovieModule.find();
+    res.status(200).json({ movies: movies });
+  } catch (error) {}
+};
 
 // User Registration -- working
 
@@ -78,24 +89,22 @@ const login = async (req, res, next) => {
       expiresIn: "40m",
     }
   );
+  //set the cookies in response
+  res.cookie("token", accessToken, {
+    expires: new Date(Date.now() + 6000000),
+  });
 
   return res
     .status(200)
-    .json({ message: "Login Successfull", id: existingUser._id, accessToken });
+    .json({ message: "Login Successfull",user:existingUser, id: existingUser._id, accessToken });
 };
 
-//get all the movies  -- working
-const getAllMovies = async (req, res) => {
-  try {
-    const movies = await MovieModule.find();
-    res.status(200).json({ movies: movies });
-  } catch (error) {}
-};
 
 //get one movie -- working
 const getOneMovie = async (req, res) => {
-  try {  //displaying shows with date> (in future)
-    const movie_id = req.body._id; 
+  try {
+    //displaying shows with date> (in future)
+    const movie_id = req.body.movie_id;
     const Movie = await MovieModule.findById(movie_id);
     res.status(200).json({ movie: Movie, messege: "movie fetch successfully" });
   } catch (error) {
@@ -106,15 +115,30 @@ const getOneMovie = async (req, res) => {
 //book a movie -- working
 const bookMovie = async (req, res) => {
   try {
-    const { movie_id, seats, user_id } = req.body;
+    const { movie_id,screen_id,show_id, seats } = req.body;
+    const user_id = req.user._id;
     const Movie = await MovieModule.findById(movie_id);
 
     console.log(req.body);
 
     const user = await userModel.findByIdAndUpdate(user_id, {
-      $push: { bookedmovie: { movie_id: movie_id, seats: seats } },
+      $push: { bookedmovie: { movie_id, seats: seats,screen_id,show_id } },
     });
 
+    show:[{
+      date:{type:Date},
+      start_time:{type:String},
+      end_time:{type:String},
+      price:{type:String},
+      bookings:[{
+          user_id:{type:String},
+          seats:{type:Array}
+      }]
+  }]
+    const screen=await screenModel.find({_id:screen_id,show:{_id:show_id},},
+      
+      );
+  
     const movie = await MovieModule.findByIdAndUpdate(movie_id, {
       $push: { bookings: { user: user_id, seatnumbers: seats } },
     });
@@ -130,8 +154,8 @@ const bookMovie = async (req, res) => {
 
 //cancel movie -- working
 const cancelticket = async (req, res) => {
-  const { movie_id, user_id } = req.body;
-
+  const { movie_id } = req.body;
+  const user_id = req.user._id;
   try {
     let user = await userModel.findByIdAndUpdate(user_id, {
       $pull: { bookedmovie: { movie_id: { $eq: movie_id } } },

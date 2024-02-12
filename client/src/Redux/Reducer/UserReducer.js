@@ -1,7 +1,8 @@
+
 import { BOOK_MOVIE_FAILURE, BOOK_MOVIE_SUCCESS, CANCEL_MOVIE_FAILURE, CANCEL_MOVIE_SUCCESS, FETCH_BOOK_MOVIE_FAILURE, FETCH_BOOK_MOVIE_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, REGISTER_USER_FAILURE, REGISTER_USER_SUCCESS } from "../Action/UserAction"
 
 export const initialvalue={
-    user:{},
+    user:{} ,
     session:'',
     movie:[]
 }
@@ -9,6 +10,7 @@ export const initialvalue={
 export const UserReducer=(state=initialvalue,action)=>{
     switch(action.type)
     {
+        
        case LOGIN_USER_SUCCESS:
             return {...state,user:action.payload.user}
 

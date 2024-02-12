@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import "./Register.css";
+import {Link} from 'react-router-dom'
 const Register = () => {
   const initialValue = { name: "", email: "", password: "" };
   const [formValues, setFormValue] = useState(initialValue);
@@ -15,7 +16,7 @@ const Register = () => {
  
   return (
     <>
-        <h1 className="head">Register here</h1>
+       
         <form>
           <div className="container">
             <h1 className="heading">Registration Form</h1>
@@ -49,6 +50,13 @@ const Register = () => {
           
           
             <button className="button">SUBMIT</button>
+            <hr />
+            <div>
+            <Link to={'/admin'} className="login-links">Admin Login?</Link>
+            </div>
+            <div>
+              <Link to={'/login'} className="login-links">Already have account?</Link>
+            </div>
             </div>
         </form>
     </>

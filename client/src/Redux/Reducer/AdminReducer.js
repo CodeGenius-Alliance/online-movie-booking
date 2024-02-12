@@ -1,5 +1,7 @@
 export const initialvalue={
-    admin:{},
+    admin:{
+        email:"admin@gmail.com"
+    },
     session:'',
 
 }

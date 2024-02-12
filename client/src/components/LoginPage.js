@@ -20,7 +20,7 @@ const LoginPage = () => {
     axios.post('/admins/login',{"email":email,"password":password}).then(res=>{
       auth.verify(res.data.accessToken)
       alert("Login successfull")
-      navigate('/screens/addScreen')
+      navigate('/movie/addMovie')
     }).catch(e=>alert(e.response.data))
   }
   return (
