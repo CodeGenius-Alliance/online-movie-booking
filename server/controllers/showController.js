@@ -1,46 +1,104 @@
-const asyncHandler=require('express-async-handler');
-const Screens=require('../models/screenModel');
-const Shows=require('../models/showModel')
-const Movies=require('../models/MovieModule')
+const asyncHandler = require("express-async-handler");
+const movieModel = require("../models/MovieModule");
 
+const addShows = asyncHandler(async (req, res) => {
+  //fine
+  const { date, show_time, show_id, price, screen_id, movie_id } = req.body;
 
-const addShows=asyncHandler(async(req,res)=>{ //fine
-    const {show_id,screen_id,movie_id,date,time}=req.body;
-    console.log(show_id,screen_id,movie_id,date,time);
-    try{
-        if(!show_id||!screen_id||!movie_id||!date||!time){
-            return res.status(401).send("All fields are mandatory");
-        }
-        const chk_movie=await Movies.findOne({"movie_id":movie_id});
-        if(!chk_movie){
-            return res.status(404).send("Movie id does'nt exists");
-        }
-        const chk_screen=await Screens.findOne({"screen_id":screen_id});
-        if(!chk_screen){
-            return res.status(404).send("Screen id does'nt exists");
-        }
-        const flag=await Shows.find({$and:[{"screen_id":screen_id,"date":date,"time":time}]});
-        if(flag.length>0){
-            return res.status(409).send(`Screen with id${screen_id} already scheduled on that given date and time`)
-        }
-        var seats=new Array(chk_screen.no_of_seats);
-        seats.fill(null);
-        await Shows.create({"show_id":show_id,"screen_id":screen_id,"movie_id":movie_id,"no_of_seats":chk_screen.no_of_seats,"seats":seats,"date":date,"time":time});
-        res.status(200).send("Details added successfully");
+  try {
+    let updatedMovie = await movieModel.updateOne(
+      { movie_id: movie_id, "screen.screen_id": screen_id },
+      { $push: { "screen.$.show": { show_id, date, show_time, price } } }
+    );
+
+    if (!updatedMovie) {
+      return res.status(404).json({ message: "Movie not found" });
     }
-    catch(e){
-        res.status(400).json({e});
+
+    let info = await movieModel.findOne({ movie_id: movie_id });
+
+    const screenIndex = info.screen.findIndex(
+      (screen) => screen.screen_id === screen_id
+    );
+
+    if (screenIndex === -1) {
+      return res
+        .status(404)
+        .json({ message: "Screen not found for the movie" });
     }
-})
 
-const viewTicket=asyncHandler(async(req,res)=>{ //fine
-    const {show_id}=req.body;
-    if(!show_id){
-        return res.status(400).send("Mention show id");
+    res.status(201).json({ message: "Show has been added" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+const viewBookings = asyncHandler(async (req, res) => {
+  //fine
+  const { movie_id, screen_id, show_id } = req.body;
+  try {
+    const movie = await movieModel.findOne({ movie_id: movie_id });
+
+    if (!movie) {
+      return res.status(404).json({ message: "Movie not found" });
     }
-   // const msg=await Bookings.find({"show_id":show_id}); 
-    // res.status(200).json(msg) 
-})
+    const screen = movie.screen.find(
+      (screen) => screen.screen_id === screen_id
+    );
+
+    if (!screen) {
+      return res
+        .status(404)
+        .json({ message: "Screen not found for the movie" });
+    }
+
+    const show = screen.show.find((show) => show.show_id === show_id);
+
+    if (!show) {
+      return res.status(404).json({ message: "Show not found for the screen" });
+    }
+
+    const bookings = show.bookings;
+
+    res.status(200).json({ bookings: bookings });
+  } catch (e) {
+    res.status(500).json(e);
+  }
+});
+
+//fine
+const getShows = async (req, res) => {
+  try {
+    const movies = await movieModel.aggregate([
+      { $unwind: "$screen" },
+      { $unwind: "$screen.show" },
+      {
+        $match: {
+          "screen.show.date": { $gte: new Date() } 
+        }
+      },
+      {
+        $group: {
+          _id: "$_id",
+          movie_id: { $first: "$movie_id" },
+          title: { $first: "$title" },
+          description: { $first: "$description" },
+          actors: { $first: "$actors" },
+          releaseDate: { $first: "$releaseDate" },
+          posterUrl: { $first: "$posterUrl" },
+          screen: { $push: "$screen" }
+        }
+      }
+    ]);
+    res.status(200).json({ movies: movies });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+  
+  
+};
 
 
-module.exports={addShows,getShow,getShows,viewTicket}
+module.exports = { addShows, getShows,viewBookings };

@@ -9,7 +9,7 @@ const screenModel = require("../models/screenModel");
 //get all the movies  -- working
 const getAllMovies = async (req, res) => {
   try {
-    const movies = await MovieModule.find();
+    const movies = await MovieModule.find({releaseDate:{$gte:new Date()}});
     res.status(200).json({ movies: movies });
   } catch (error) {}
 };
@@ -108,7 +108,7 @@ const getOneMovie = async (req, res) => {
     const Movie = await MovieModule.findById(movie_id);
     res.status(200).json({ movie: Movie, messege: "movie fetch successfully" });
   } catch (error) {
-    res.status(404).json({ messege: "server errorn occur" });
+    res.status(404).json({ messege: "server error occur" });
   }
 };
 
@@ -119,22 +119,11 @@ const bookMovie = async (req, res) => {
     const user_id = req.user._id;
     const Movie = await MovieModule.findById(movie_id);
 
-    console.log(req.body);
 
     const user = await userModel.findByIdAndUpdate(user_id, {
       $push: { bookedmovie: { movie_id, seats: seats,screen_id,show_id } },
     });
 
-    show:[{
-      date:{type:Date},
-      start_time:{type:String},
-      end_time:{type:String},
-      price:{type:String},
-      bookings:[{
-          user_id:{type:String},
-          seats:{type:Array}
-      }]
-  }]
     const screen=await screenModel.find({_id:screen_id,show:{_id:show_id},},
       
       );

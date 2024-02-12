@@ -10,7 +10,7 @@ const validateTokenHanlder = (req, res, next) => {
 
       jwtToken.verify(token, process.env.ACCESS_TOKEN_USER, (err, decode) => {
         if (err)
-          res
+          res 
             .status(400)
             .send("User is not Authorized OR Token is already Expired");
         req.user = decode.user;
