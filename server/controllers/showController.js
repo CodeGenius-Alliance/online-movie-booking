@@ -33,53 +33,6 @@ const addShows=asyncHandler(async(req,res)=>{ //fine
     }
 })
 
-const getShow=asyncHandler(async(req,res)=>{
-    const {show_id}=req.body;
-    try{
-        if(!show_id){
-            return res.status(400).send("Mention Movie id");
-        }
-        const info=await Shows.find({"show_id":show_id});
-        if(!info){
-            return res.status(400).send("No shows exists on that id,check again");
-        }
-        
-        res.status(200).send(info)
-    }
-    catch(e){
-        res.status(400).json(e);
-        console.log(e);
-    }
-})
-
-const getShows=asyncHandler(async(req,res)=>{ //clarify
-    try{
-        const msg=await Movies.aggregate([
-            {
-                $lookup:{
-                    from:"shows",
-                    localField:"movie_id",
-                    foreignField:"movie_id",
-                    as:'showDetails'
-                }
-            },
-            {$unwind:`$showDetails`},
-            {$match:{"showDetails.status":true}},
-            {
-                $project:{
-                    "__v":0,
-                    "_id":0
-                }
-            }
-        ]);
-        res.status(200).send(msg)
-    }
-    catch(e){
-        console.log(e);
-        res.status(400).send(e);
-    }
-})
-
 const viewTicket=asyncHandler(async(req,res)=>{ //fine
     const {show_id}=req.body;
     if(!show_id){
