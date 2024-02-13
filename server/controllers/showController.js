@@ -4,28 +4,35 @@ const movieModel = require("../models/MovieModule");
 const addShows = asyncHandler(async (req, res) => {
   //fine
   const { date, show_time, show_id, price, screen_id, movie_id } = req.body;
-
+  
   try {
-    let updatedMovie = await movieModel.updateOne(
-      { movie_id: movie_id, "screen.screen_id": screen_id },
-      { $push: { "screen.$.show": { show_id, date, show_time, price } } }
+    let flag=1;
+    let info = await movieModel.findOne({ movie_id: movie_id });
+    let atr=info.screen;
+    atr.map((x=>{
+      if(x.screen_id===screen_id){
+        flag=0;
+      }}
+    ))
+
+    if(flag){
+      let updatedMovie = await movieModel.updateOne(
+        { movie_id: movie_id},
+         { $push: {"screen":{screen_id}} }
+      );
+    } 
+   
+    let chk = await movieModel.updateOne(
+      { "movie_id": movie_id, "screen.screen_id": screen_id }, 
+      { $push: { "screen.$.show": { show_id, date, show_time, price } } } 
     );
 
-    if (!updatedMovie) {
+    if (!chk) {
       return res.status(404).json({ message: "Movie not found" });
     }
 
-    let info = await movieModel.findOne({ movie_id: movie_id });
-
-    const screenIndex = info.screen.findIndex(
-      (screen) => screen.screen_id === screen_id
-    );
-
-    if (screenIndex === -1) {
-      return res
-        .status(404)
-        .json({ message: "Screen not found for the movie" });
-    }
+    
+   
 
     res.status(201).json({ message: "Show has been added" });
   } catch (error) {
