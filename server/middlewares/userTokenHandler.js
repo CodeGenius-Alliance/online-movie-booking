@@ -3,7 +3,7 @@ const jwtToken = require("jsonwebtoken");
 const validateTokenHanlder = (req, res, next) => {
   try {
     let token;
-    let authHeader =req.cookies.token || req.header.authorization;
+    let authHeader = req.cookies.token||req.headers.authorization;
     
     if (authHeader && authHeader.startsWith("Bearer")) {
       token = authHeader.split(" ")[1];
@@ -13,7 +13,7 @@ const validateTokenHanlder = (req, res, next) => {
           res 
             .status(400)
             .send("User is not Authorized OR Token is already Expired");
-        req.user = decode.user;
+        req.id = decode.id;
         next();
       });
 

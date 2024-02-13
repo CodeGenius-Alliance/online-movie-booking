@@ -79,10 +79,9 @@ const login = async (req, res, next) => {
   }
 
   // Access Token Creation --> jwtToken --> sign(obj[data of encryption] , encryption key , {expires of that token})
-
   const accessToken = jwtToken.sign(
     {
-      id: existingUser._id,
+      id: existingUser.email,
     },
     process.env.ACCESS_TOKEN_USER,
     {
@@ -90,7 +89,7 @@ const login = async (req, res, next) => {
     }
   );
   //set the cookies in response
-  res.cookie("token", accessToken, {
+  res.status(200).cookie("token", accessToken, {
     expires: new Date(Date.now() + 6000000),
   });
 
@@ -116,21 +115,47 @@ const getOneMovie = async (req, res) => {
 const bookMovie = async (req, res) => {
   try {
     const { movie_id,screen_id,show_id, seats } = req.body;
-    const user_id = req.user._id;
-    const Movie = await MovieModule.findById(movie_id);
+    if(!seats){
+      return res.status(400).send("No seats booked");
+    }
+    const user_id = req.id;
+    const user = await userModel.updateOne(
+      { "email": user_id },
+      {
+        $push: {
+          "bookedmovie": {
+            movie_id: movie_id,
+            seats: seats,
+            screen_id: screen_id,
+            show_id: show_id
+          }
+        }
+      }
+    );
+    
+    // Update the movie document to add the booking
+    const movie = await MovieModule.updateOne(
+      {
+        "movie_id": movie_id,
+        "screen.screen_id": screen_id,
+        "screen.show.show_id": show_id
+      },
+      {
+        $push: {
+          "screen.$[screenElem].show.$[showElem].bookings": {
+            user_id: user_id,
+            seats: seats
+          }
+        }
+      },
+      {
+        arrayFilters: [
+          { "screenElem.screen_id": screen_id },
+          { "showElem.show_id": show_id }
+        ]
+      }
+    );
 
-
-    const user = await userModel.findByIdAndUpdate(user_id, {
-      $push: { bookedmovie: { movie_id, seats: seats,screen_id,show_id } },
-    });
-
-    const screen=await screenModel.find({_id:screen_id,show:{_id:show_id},},
-      
-      );
-  
-    const movie = await MovieModule.findByIdAndUpdate(movie_id, {
-      $push: { bookings: { user: user_id, seatnumbers: seats } },
-    });
     res.status(200).json({
       messege: "your movieticket has been booked",
       user: user,
@@ -144,7 +169,7 @@ const bookMovie = async (req, res) => {
 //cancel movie -- working
 const cancelticket = async (req, res) => {
   const { movie_id } = req.body;
-  const user_id = req.user._id;
+  const user_id = req.id;
   try {
     let user = await userModel.findByIdAndUpdate(user_id, {
       $pull: { bookedmovie: { movie_id: { $eq: movie_id } } },
@@ -162,8 +187,11 @@ const cancelticket = async (req, res) => {
 //get booked movies  -- working
 const getBookedMovie = async (req, res) => {
   try {
-    const moviesbooked = userModel.findById(req.user._id);
-    res.status(200).json({ bookedmovies: moviesbooked.bookedmovie });
+    const user_id=req.id;
+    
+    const moviesbooked = await userModel.find({"email":user_id});
+    const ans=moviesbooked[0].bookedmovie
+    res.status(200).json({ bookedmovies:  ans});
   } catch (error) {
     res.status(404).json({ bookedmovies: "server error" });
   }

@@ -3,7 +3,7 @@ const validateTokenHanlder = require('../middlewares/adminTokenHandler');
 const showRouter=express.Router();
 const {addShows,viewBookings,getShows}=require('../controllers/showController')
 
-showRouter.route("/getAllShows").get(getShows);//Get show information
+showRouter.route("/getShows").get(getShows);//Get show information
 
 showRouter.use(validateTokenHanlder);
 
