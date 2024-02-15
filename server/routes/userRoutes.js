@@ -25,3 +25,4 @@ userRouter.route("/cancelTickets").post(cancelticket);
 userRouter.route("/getBookedMovie").get(getBookedMovie);
 
 module.exports = userRouter;
+ 

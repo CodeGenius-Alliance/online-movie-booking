@@ -1,6 +1,9 @@
 const asyncHandler = require("express-async-handler");
 const Admin = require("../models/adminModel");
 const jwt = require("jsonwebtoken");
+
+
+//admin login
 const login = asyncHandler(async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -30,5 +33,7 @@ const login = asyncHandler(async (req, res) => {
     console.log(e);
   }
 });
+
+
 
 module.exports = { login };

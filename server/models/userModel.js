@@ -18,8 +18,10 @@ const userSchema = new Schema({
   },
   bookedmovie: [
     {
+      screen_id: { type: String },
       movie_id: { type: String },
       seats: { type: Array },
+      show_id: { type: String },
     },
   ],
 });

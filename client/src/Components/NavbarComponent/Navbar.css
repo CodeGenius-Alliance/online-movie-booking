@@ -6,9 +6,8 @@
     justify-content: space-between;
     overflow-x: hidden;
     overflow-y: hidden;
-    margin-left: 2%;
     margin-top: 5px;
-    margin-right: 2%;
+   
     height: 45px;
 }
 .login-btn{
@@ -20,7 +19,7 @@
     margin-left: 10px;
     color: #FBF103;
     background-color: #E97635;
-    
+    font-size: 18px;
 }
 .btn-grp{
     margin-top: 5px;
