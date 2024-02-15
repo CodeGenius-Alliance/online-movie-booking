@@ -4,7 +4,7 @@ const MovieModule = require("../models/MovieModule");
 const addMovie = async (req, res, next) => {
 
   //create new movie
-  const { movie_id,title, description, releaseDate, posterUrl, actors } =
+  const { title, description, releaseDate, posterUrl, actors } =
     req.body;
   if (
     !title &&
@@ -20,7 +20,6 @@ const addMovie = async (req, res, next) => {
   let movie;
   try {
     movie = new MovieModule({
-      movie_id,
       title,
       description,
       releaseDate: new Date(`${releaseDate}`),

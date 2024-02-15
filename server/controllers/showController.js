@@ -7,7 +7,7 @@ const addShows = asyncHandler(async (req, res) => {
   
   try {
     let flag=1;
-    let info = await movieModel.findOne({ movie_id: movie_id });
+    let info = await movieModel.findOne({ _id: movie_id });
     let atr=info.screen;
     atr.map((x=>{
       if(x.screen_id===screen_id){
@@ -17,13 +17,13 @@ const addShows = asyncHandler(async (req, res) => {
 
     if(flag){
       let updatedMovie = await movieModel.updateOne(
-        { movie_id: movie_id},
+        { _id: movie_id},
          { $push: {"screen":{screen_id}} }
       );
     } 
    
     let chk = await movieModel.updateOne(
-      { "movie_id": movie_id, "screen.screen_id": screen_id }, 
+      { "_id": movie_id, "screen.screen_id": screen_id }, 
       { $push: { "screen.$.show": { show_id, date, show_time, price } } } 
     );
 
@@ -45,7 +45,7 @@ const viewBookings = asyncHandler(async (req, res) => {
   //fine
   const { movie_id, screen_id, show_id } = req.body;
   try {
-    const movie = await movieModel.findOne({ movie_id: movie_id });
+    const movie = await movieModel.findOne({ _id: _id });
 
     if (!movie) {
       return res.status(404).json({ message: "Movie not found" });
@@ -74,38 +74,20 @@ const viewBookings = asyncHandler(async (req, res) => {
   }
 });
 
-//fine
-const getShows = async (req, res) => {
+
+const getShowbyMovieId = async (req, res) => {
   try {
-    const movies = await movieModel.aggregate([
-      { $unwind: "$screen" },
-      { $unwind: "$screen.show" },
-      {
-        $match: {
-          "screen.show.date": { $gte: new Date() } 
-        }
-      },
-      {
-        $group: {
-          _id: "$_id",
-          movie_id: { $first: "$movie_id" },
-          title: { $first: "$title" },
-          description: { $first: "$description" },
-          actors: { $first: "$actors" },
-          releaseDate: { $first: "$releaseDate" },
-          posterUrl: { $first: "$posterUrl" },
-          screen: { $push: "$screen" }
-        }
-      }
-    ]);
+    const id=req.params.movieid;
+    console.log(id);
+    const movies = await movieModel.find({'_id':id},{"screen.show": 1});
+    console.log(movies)
     res.status(200).json({ movies: movies });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
-  
-  
 };
 
 
-module.exports = { addShows, getShows,viewBookings };
+
+module.exports = { addShows, viewBookings ,getShowbyMovieId};

@@ -1,9 +1,9 @@
 const express=require('express');
 const validateTokenHanlder = require('../middlewares/adminTokenHandler');
 const showRouter=express.Router();
-const {addShows,viewBookings,getShows}=require('../controllers/showController')
+const {addShows,viewBookings,getShowbyMovieId}=require('../controllers/showController')
 
-showRouter.route("/getShows").get(getShows);//Get show information
+showRouter.route("/getShowbyMovieId/:movieid").get(getShowbyMovieId);//Get show information movie id
 
 showRouter.use(validateTokenHanlder);
 
