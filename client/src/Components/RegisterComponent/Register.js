@@ -2,18 +2,21 @@ import React from "react";
 import { useState } from "react";
 import "./Register.css";
 import {Link} from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { Registeruser } from "../../Redux/Action/UserAction";
+
+//done
 const Register = () => {
   const initialValue = { name: "", email: "", password: "" };
   const [formValues, setFormValue] = useState(initialValue);
-  
+  const dispatch=useDispatch();
 
   const handleClick = (e) => {
     const { name, value } = e.target;
     setFormValue({ ...formValues, [name]: value });
-    console.log(formValues);
+   
   };
 
- 
   return (
     <>
        
@@ -49,7 +52,9 @@ const Register = () => {
             ></input>
           
           
-            <button className="button">SUBMIT</button>
+            <button className="button" onClick={(e)=>{
+              e.preventDefault();
+              dispatch(Registeruser(formValues))}}>SUBMIT</button>
             <hr />
             <div>
             <Link to={'/admin'} className="login-links">Admin Login?</Link>

@@ -3,13 +3,18 @@ const movieModel = require("../models/MovieModule");
 
 const addShows = asyncHandler(async (req, res) => {
   //fine
-  const { date, show_time, show_id, price, screen_id, movie_id } = req.body;
-  
+  const { date, show_time,  price, screen_id, movie_id } = req.body;
+  console.log(req.body)
   try {
     let flag=1;
     let info = await movieModel.findOne({ _id: movie_id });
+    if(!info.screen ){
+      await movieModel.findOneAndUpdate({ _id: movie_id },{
+        screen:[]
+      });
+    }
     let atr=info.screen;
-    atr.map((x=>{
+    atr?.map((x=>{
       if(x.screen_id===screen_id){
         flag=0;
       }}
@@ -24,7 +29,7 @@ const addShows = asyncHandler(async (req, res) => {
    
     let chk = await movieModel.updateOne(
       { "_id": movie_id, "screen.screen_id": screen_id }, 
-      { $push: { "screen.$.show": { show_id, date, show_time, price } } } 
+      { "screen.$.show":{$push:  {  date, show_time, price } } } 
     );
 
     if (!chk) {

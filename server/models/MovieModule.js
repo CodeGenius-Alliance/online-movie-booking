@@ -11,8 +11,8 @@ const movieSchema = new mongoose.Schema({
   },
   actors: [{ type: String, required: true }],
   releaseDate: {
-    type: String,
-    required: true,
+    type: Date,
+    default:new Date()
   },
   posterUrl: {
     type: String,

@@ -19,14 +19,19 @@ const login = asyncHandler(async (req, res) => {
         process.env.ACCESS_TOKEN_ADMIN,
         { expiresIn: "40m" }
       );
+      res.cookie("token", accessToken, {
+        expires: new Date(Date.now() + 6000000),
+      });
       return res
         .status(200)
         .send({
           message: "Authentication completed",
           accessToken,
           id: existingAdmin._id,
+          admin:existingAdmin
         });
     } else {
+      
       res.status(400).send("Invalid credentials");
     }
   } catch (e) {

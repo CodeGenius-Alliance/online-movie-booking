@@ -1,5 +1,5 @@
 .logo-img{
-    height: 35px;
+    height: 45px;
 }
 .my-nav{
     display: flex;
@@ -8,7 +8,7 @@
     overflow-y: hidden;
     margin-top: 5px;
    
-    height: 45px;
+    height: 55px;
 }
 .login-btn{
     text-decoration: none;
@@ -24,3 +24,4 @@
 .btn-grp{
     margin-top: 5px;
 }
+

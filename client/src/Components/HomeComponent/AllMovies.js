@@ -20,7 +20,7 @@ function AllMovies() {
           {/* FETCH MOVIES FROM BACKEND AND APPLY CRUD OPERRATIONS ON IT LIKE ADD SHOW AND EDIT PRICE AND TIMING make template*/}
           <div>ALL MOVIES</div>
           {movies?.map((movie)=>(<>
-           {movie.show?<>
+           {movie.screen.show?<>
            <Link to={`/OneMovie/${movie._id}`}>
             <div>{movie?._id}</div>
             <div>{movie?.title}</div>
