@@ -21,7 +21,7 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/admin" element={<AdminLogin />}></Route>
           <Route path="/register" element={<Register />}></Route>
-          <Route path="/movie/:id" component={MovieDetails} />
+          <Route path="/moviedetails" element={<MovieDetails />} />
         </Routes>
       </BrowserRouter>
       </Provider>
