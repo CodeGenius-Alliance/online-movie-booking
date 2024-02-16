@@ -1,11 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import "./Login.css";
+import { useDispatch } from "react-redux";
+import { Loginadmin } from "../../Redux/Action/AdminAction";
 
 const AdminLogin = () => {
   const initialValue = { email: "", password: "" };
   const [formValues, setFormValue] = useState(initialValue);
-
+const dispatch=useDispatch();
   const handleClick = (e) => {
     const { name, value } = e.target;
     setFormValue({ ...formValues, [name]: value });
@@ -39,7 +41,9 @@ const AdminLogin = () => {
               ></input>
             </div>
 
-            <button className="button">SUBMIT</button>
+            <button className="button" onClick={(e)=>{e.preventDefault()
+            dispatch(Loginadmin(formValues))
+            }}>SUBMIT</button>
           </div>
         </form>
       </div>

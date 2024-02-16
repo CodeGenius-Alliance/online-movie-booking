@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const base_url="http:localhost:3001/users"
+
+const base_url="http://localhost:3001/users"
 
 export const LOGIN_USER_SUCCESS = "LOGIN_USER_SUCCESS";
 export const LOGIN_USER_FAILURE = "LOGIN_USER_FAILURE";
@@ -17,19 +18,38 @@ export const FETCH_BOOK_MOVIE_FAILURE="REGISTER_USER_FAILURE"
 export const CANCEL_MOVIE_SUCCESS="REGISTER_USER_SUCCESS"
 export const CANCEL_MOVIE_FAILURE="REGISTER_USER_FAILURE"
 
+export const LOGOUT_SUCCESS="LOGOUT_SUCCESS"
+
+
 
 export const Loginuser = (userdetail) => async (dispatch) => {
-  //login code
+ 
+  //login code -- working checked creating cookies also
   try {
-    const response= await axios.post(base_url+'/login',userdetail)
-    dispatch({type:LOGIN_USER_SUCCESS,payload:{user:response.user,messege:response.messege}}) 
+    
+    const response= await axios.post(base_url+'/login',userdetail,{withCredentials:true})
+    console.log(response.data)
+    dispatch({type:LOGIN_USER_SUCCESS,payload:{user:response.data.user,messege:response.data.messege}}) 
   } catch (error) {
+    console.log(error)
     dispatch({type:LOGIN_USER_FAILURE,payload:{messege:error.response.data.messege}}) 
   }
 };
 
+
+export const Logout=()=>async(dispatch)=>{
+  try {
+    //api for backend session logout
+    dispatch({type:LOGOUT_SUCCESS})
+  } catch (error) {
+    
+  }
+}
+
+
 export const Registeruser = (userdetail) => async (dispatch) => {
-  //register user code
+  //register user code -- checked -- working
+
   try {
     const response= await axios.post(base_url+'/signup',userdetail)
     dispatch({type:REGISTER_USER_SUCCESS,payload:{user:response.user,messege:response.messege}}) 

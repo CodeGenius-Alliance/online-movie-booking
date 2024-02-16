@@ -24,16 +24,7 @@ const addShows = asyncHandler(async (req, res) => {
 
     let chk = await movieModel.updateOne(
       { _id: movie_id, "screen.screen_id": screen_id },
-      {
-        $push: {
-          "screen.$[screenElem].show.$[showElem]": {
-            show_id,
-            date,
-            show_time,
-            price,
-          },
-        },
-      }
+      { $push: { "screen.$.show": { show_id, date, show_time, price } } }
     );
 
     if (!chk) {

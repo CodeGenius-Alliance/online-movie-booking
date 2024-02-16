@@ -13,7 +13,8 @@ function Home() {
 
 
 
-   if(user && user.email)
+
+  if(admin && admin.email)
   {
     return (
       <>
@@ -30,32 +31,9 @@ function Home() {
           indulgence with TicketBlitz's red carpet treatment
         </p>
         </div>
+      {/** lists of movie and navigate to particular movie accordingly*/}
         <AllMovies/>
-        
-      </>
-    );
-  }
-  else if(admin && admin.email)
-  {
-    return (
-      <>
-        
-        <div className="Main-heading">
-        <h1>TicketBlitz</h1>
-        </div>
-        <div className="description">
-        <p>
-          Elevate your entertainment game with TicketBlitz – your VIP pass to a
-          cinematic wonderland where each frame weaves a tale, and every click
-          unlocks the door to unmatched movie enchantment! Say farewell to the
-          hassles of yesteryear's ticket chaos and step into a new era of movie
-          indulgence with TicketBlitz's red carpet treatment
-        </p>
-        </div>
-        <AllMovies/>
-        <AddMovie/>
-        <AddScreen/>
-        <AddShow />
+    
         
       </>
     );
@@ -77,6 +55,7 @@ function Home() {
         </p>
         </div>
         <AllMovies/>
+        
         
       </>
     );

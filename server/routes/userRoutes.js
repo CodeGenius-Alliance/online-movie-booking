@@ -12,13 +12,13 @@ const {
 } = require("../controllers/userController");
 
 userRouter.post("/signup", signup);
-userRouter.route("/login").get(login);
+userRouter.route("/login").post(login);
 
 userRouter.route("/getOneMovie").get(getOneMovie);
 userRouter.route("/getAllMovies").get(getAllMovies);
 
 //MiddleWare --> verify user
-userRouter.use(validateTokenHanlder);
+// userRouter.use(validateTokenHanlder);
 
 userRouter.route("/bookMovie").post(bookMovie);
 userRouter.route("/cancelTickets").post(cancelticket);
