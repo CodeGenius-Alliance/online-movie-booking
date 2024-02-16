@@ -4,15 +4,16 @@ const MovieModule = require("../models/MovieModule");
 const addMovie = async (req, res, next) => {
 
   //create new movie
-  const { title, description, releaseDate, posterUrl, actors } =
+  console.log("add movies")
+  const { title, description, release_date, poster_url, actors } =
     req.body;
   if (
     !title &&
     title.trim() === "" &&
     !description &&
     description.trim() == "" &&
-    !posterUrl &&
-    posterUrl.trim() === ""
+    !poster_url &&
+    poster_url.trim() === ""
   ) {
     return res.status(422).json({ message: "invalid inputs" });
   }
@@ -22,12 +23,14 @@ const addMovie = async (req, res, next) => {
     movie = new MovieModule({
       title,
       description,
-      releaseDate: new Date(`${releaseDate}`),
+      releaseDate:new Date(release_date),
       actors,
-      posterUrl,
+      posterUrl:poster_url,
     });
     movie = await movie.save();
+
   } catch (err) {
+    console.log(err)
     res.status(400).send({err})
   }
 

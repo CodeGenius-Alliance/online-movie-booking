@@ -12,7 +12,7 @@ const Login = () => {
   const handleClick = (e) => {
     const { name, value } = e.target;
     setFormValue({ ...formValues, [name]: value });
-    console.log(formValues);
+    
   };
   const SubmitLogin=async(e)=>{
     e.preventDefault();

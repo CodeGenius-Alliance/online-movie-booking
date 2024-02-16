@@ -8,8 +8,10 @@ const screenModel = require("../models/screenModel");
 
 //get all the movies  -- working
 const getAllMovies = async (req, res) => {
+  
   try {
-    const movies = await MovieModule.find({releaseDate:{$gte:new Date()}});
+    const movies = await MovieModule.screen.show.find({date:{$gte:new Date()}});
+    console.log(new Date())
     res.status(200).json({ movies: movies });
   } catch (error) {}
 };
@@ -53,11 +55,10 @@ const signup = async (req, res) => {
 const login = async (req, res, next) => {
   const { email, password } = req.body;
 
-  if (!email && email.trim() === "" && !password && password.trim() === "")
-    return res.status(422).json({ message: "Invalid Input" });
+  console.log(req.body)
   let existingUser;
   try {
-    existingUser = await userModel.findOne({ email });
+    existingUser = await userModel.findOne({ email:email });
   } catch (err) {
     return console.log(err);
   }
@@ -95,7 +96,7 @@ const login = async (req, res, next) => {
 
   return res
     .status(200)
-    .json({ message: "Login Successfull",user:existingUser, id: existingUser._id, accessToken });
+    .json({ message: "Login Successfull",user:existingUser, id: existingUser._id, token:accessToken });
 };
 
 
