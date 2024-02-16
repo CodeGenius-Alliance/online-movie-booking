@@ -4,35 +4,41 @@ const movieModel = require("../models/MovieModule");
 const addShows = asyncHandler(async (req, res) => {
   //fine
   const { date, show_time, show_id, price, screen_id, movie_id } = req.body;
-  
-  try {
-    let flag=1;
-    let info = await movieModel.findOne({ _id: movie_id });
-    let atr=info.screen;
-    atr.map((x=>{
-      if(x.screen_id===screen_id){
-        flag=0;
-      }}
-    ))
 
-    if(flag){
+  try {
+    let flag = 1;
+    let info = await movieModel.findOne({ _id: movie_id });
+    let atr = info.screen;
+    atr.map((x) => {
+      if (x.screen_id === screen_id) {
+        flag = 0;
+      }
+    });
+
+    if (flag) {
       let updatedMovie = await movieModel.updateOne(
-        { _id: movie_id},
-         { $push: {"screen":{screen_id}} }
+        { _id: movie_id },
+        { $push: { screen: { screen_id } } }
       );
-    } 
-   
+    }
+
     let chk = await movieModel.updateOne(
-      { "_id": movie_id, "screen.screen_id": screen_id }, 
-      { $push: { "screen.$.show": { show_id, date, show_time, price } } } 
+      { _id: movie_id, "screen.screen_id": screen_id },
+      {
+        $push: {
+          "screen.$[screenElem].show.$[showElem]": {
+            show_id,
+            date,
+            show_time,
+            price,
+          },
+        },
+      }
     );
 
     if (!chk) {
       return res.status(404).json({ message: "Movie not found" });
     }
-
-    
-   
 
     res.status(201).json({ message: "Show has been added" });
   } catch (error) {
@@ -74,13 +80,12 @@ const viewBookings = asyncHandler(async (req, res) => {
   }
 });
 
-
 const getShowbyMovieId = async (req, res) => {
   try {
-    const id=req.params.movieid;
+    const id = req.params.movieid;
     console.log(id);
-    const movies = await movieModel.find({'_id':id},{"screen.show": 1});
-    console.log(movies)
+    const movies = await movieModel.find({ _id: id }, { "screen.show": 1 });
+    console.log(movies);
     res.status(200).json({ movies: movies });
   } catch (error) {
     console.error(error);
@@ -88,6 +93,4 @@ const getShowbyMovieId = async (req, res) => {
   }
 };
 
-
-
-module.exports = { addShows, viewBookings ,getShowbyMovieId};
+module.exports = { addShows, viewBookings, getShowbyMovieId };
