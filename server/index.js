@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cors())
 app.use("/admins/", adminRoutes); //working fine
 
-app.use("/movie", movieRouter);//working fine
+app.use("/movies", movieRouter);//working fine
 
 app.use("/shows",showRouter);
 app.use("/screens", screenRouter);//working fine
