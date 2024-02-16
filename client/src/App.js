@@ -7,7 +7,8 @@ import AdminLogin from "./Components/LoginComponent/AdminLogin";
 import { Provider } from 'react-redux'
 import { MyStore } from "./Redux/Store/MyStore";
 import Navbar from "./Components/NavbarComponent/Navbar";
-import MovieDetails from "./Components/HomeComponent/MovieDetails";
+import MovieDetails from "./Components/UserComponent/MovieDetails";
+import SeatSelection from "./Components/UserComponent/SeatSelection";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/admin" element={<AdminLogin />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/moviedetails" element={<MovieDetails />} />
+          <Route path="/seatselection" element={<SeatSelection />} />
         </Routes>
       </BrowserRouter>
       </Provider>
