@@ -16,36 +16,6 @@ function AllMovies() {
 
   const movies=[
     {
-      return (
-        <>
-          {/* FETCH MOVIES FROM BACKEND AND APPLY CRUD OPERRATIONS ON IT LIKE ADD SHOW AND EDIT PRICE AND TIMING make template*/}
-          <div>ALL MOVIES</div>
-          {movies?.map((movie)=>(<>
-           {movie.screen.show?<>
-           <Link to={`/OneMovie/${movie._id}`}>
-            <div>{movie?._id}</div>
-            <div>{movie?.title}</div>
-            <div>BookNow</div>
-           </Link>
-           </>:<>
-           <div>{movie?._id}</div>
-            <div>{movie?.title}</div>
-            <div>BookNow</div>
-           </>}
-          </>))}
-        </>
-      );
-    }
-    else{
-      return (
-        <> 
-          {/* FETCH ALL THE MOVIES FROM THE BACKEND */}
-          <div>ALL MOVIES SHOWN TO USER</div>
-          
-        </>
-      );
-    }
-
       movie_id: 1,
       title: "Spiderman",
       posterURL: "https://www.themoviedb.org/t/p/original/3csIdytRnmRNh1EjHD9Nrej3L2H.jpg",
@@ -140,6 +110,7 @@ function AllMovies() {
         {/* FETCH ALL THE MOVIES FROM THE BACKEND */}
         <div>ALL MOVIES SHOWN TO USER</div>
       </>
+    )
 
   }
 }
