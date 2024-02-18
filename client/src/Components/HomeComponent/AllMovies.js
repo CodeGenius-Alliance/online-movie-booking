@@ -12,6 +12,7 @@ function AllMovies() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(FetchAllMovies());
+    
   }, []);
 
   
@@ -43,8 +44,25 @@ function AllMovies() {
   } else {
     return (
       <>
-        {/* FETCH ALL THE MOVIES FROM THE BACKEND */}
-        <div>ALL MOVIES SHOWN TO USER</div>
+        <div className="movies-container">
+          <div className="movies-heading">ALL MOVIES</div>
+          <div className="movie-selection">
+            {movies?.map((movie) => (
+              //  <Link to={`/movie/${movie.movie_id}`} key={movie.movie_id} className="movie-link">
+              <div className="movie" key={movie._id}>
+                <img
+                  className="movie-poster"
+                  src={movie.posterURL}
+                  alt={movie.title}
+                />
+                <div>hi: {movie._id}</div>
+                <div className="movie-title">{movie.title}</div>
+                <Link className="link" to={`/user/${movie._id}`}>Read more...</Link>
+              </div>
+              // </Link>
+            ))}
+          </div>
+        </div>
       </>
     );
   }
