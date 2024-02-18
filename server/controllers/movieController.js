@@ -20,24 +20,24 @@ const addMovie = async (req, res, next) => {
 
   let movie;
   try {
-    movie = new MovieModule({
+  
+    movie=await MovieModule.create({
       title,
       description,
       releaseDate:new Date(release_date),
       actors,
       posterUrl:poster_url,
-    });
-    movie = await movie.save();
-
+      screen: []
+      });
+     
   } catch (err) {
-    console.log(err)
-    res.status(400).send({err})
+    console.log("error hai",err)
   }
 
   if (!movie) {
     return res.status(500).json({ message: "Request failed" });
   }
-  return res.status(201).json({ movie });
+  return res.status(201).json({ movie:movie });
 };
 
 const getAllMovies = async(req,res,next)=>{

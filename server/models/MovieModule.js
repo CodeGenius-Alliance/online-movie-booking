@@ -12,7 +12,7 @@ const movieSchema = new mongoose.Schema({
   actors: [{ type: String, required: true }],
   releaseDate: {
     type: Date,
-    default:new Date()
+    
   },
   posterUrl: {
     type: String,
@@ -22,11 +22,8 @@ const movieSchema = new mongoose.Schema({
   screen:[
     {
       screen_id:{type:String},
-      show:[{
-        show_id:{
-          type:String,
-          unique:true
-        },
+      show:[{  
+        show_id: { type: String, sparse: true },
         date:{type:Date},
         show_time:{type:String},
         price:{type:String},
@@ -39,7 +36,7 @@ const movieSchema = new mongoose.Schema({
   ],
 
 });
-
+movieSchema.index({ 'screen.show.show_id': 1 }, { unique: false });
 const movieModel=mongoose.model("Movie", movieSchema);
 
 module.exports = movieModel

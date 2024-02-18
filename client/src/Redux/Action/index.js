@@ -12,10 +12,10 @@ export const FetchAllMovies=()=>async(dispatch)=>{
     
     try {
        
-        const response=await (await axios.get('http://localhost:3001/users/getAllMovies',{withCredentials:true}))
+        const response=await (await axios.get('http://localhost:3001/movies/getMovies',{withCredentials:true}))
         dispatch({type:FETCH_ALL_MOVIES_SUCCESS,payload:{messege:response.data.messege,movies:response.data.movies}})
     } catch (error) {
-        
+        console.log(error)
         dispatch({type:FETCH_ALL_MOVIES_FAILURE})
     }
 }

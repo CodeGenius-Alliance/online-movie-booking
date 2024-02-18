@@ -14,6 +14,7 @@ import AddShow from "./Components/AdminComponent/AddShow";
 
 import MovieDetails from "./Components/UserComponent/MovieDetails";
 import SeatSelection from "./Components/UserComponent/SeatSelection";
+import AddScreen from "./Components/AdminComponent/AddScreen";
 
 
 function App() {
@@ -30,6 +31,8 @@ function App() {
           <Route path="/register" element={<Register />}></Route>
 
           <Route path="/admin">
+            <Route path="addmovie" element={<AddMovie />}></Route>
+            <Route path="addscreen" element={<AddScreen />}></Route>
             <Route path=":movie_id" element={<AddShow/>}></Route>
             <Route path=":movie_id/:screen_id/:show_id" element={<ViewBookings/>}></Route>
           </Route>

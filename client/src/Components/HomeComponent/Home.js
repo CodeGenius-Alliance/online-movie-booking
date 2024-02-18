@@ -7,6 +7,7 @@ import AddShow from "../AdminComponent/AddShow";
 import { useDispatch, useSelector } from "react-redux";
 import AllMovies from "./AllMovies";
 import { FetchAllMovies } from "../../Redux/Action";
+import { Link } from "react-router-dom";
 function Home() {
   const user=useSelector((state)=>state.user.user)
   const admin=useSelector((state)=>state.admin.admin)
@@ -31,6 +32,8 @@ function Home() {
           indulgence with TicketBlitz's red carpet treatment
         </p>
         </div>
+        <Link className="link" to={'/admin/addmovie'}>Add Movie</Link> <br />
+        <Link className="link" to={'/admin/addscreen'}> Add Screen</Link>
       {/** lists of movie and navigate to particular movie accordingly*/}
         <AllMovies/>
     
