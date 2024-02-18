@@ -1,10 +1,14 @@
 import React from "react";
 import { useState } from "react";
 import "./Login.css";
-import {Link} from 'react-router-dom'
-import { useDispatch } from "react-redux";
+import {Link, useNavigate} from 'react-router-dom'
+import { useDispatch, useSelector } from "react-redux";
 import { Loginuser } from "../../Redux/Action/UserAction";
 const Login = () => {
+  const admin=useSelector((state)=>state.admin.admin)
+  const user=useSelector((state)=>state.user.user)
+
+  const navigate=useNavigate();
   const initialValue = { email: "", password: "" };
   const dispatch=useDispatch();
   const [formValues, setFormValue] = useState(initialValue);
@@ -22,7 +26,11 @@ const Login = () => {
       
     }
   }
-
+  if((admin && admin.email) || (user && user.email) )
+  {
+    navigate('/')
+  }
+else
   return (
     <>
       <div>

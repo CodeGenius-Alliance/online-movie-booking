@@ -56,9 +56,10 @@ const getAllMovies = async(req,res,next)=>{
 
 const getMovieById = async(req,res,next)=>{
     const id = req.params.id;
+    console.log(req.params.id)
     let movie;
     try{
-        movie = await MovieModule.findOne({"movie_id":id})
+        movie = await MovieModule.findOne({"_id":id})
     }catch(err){
         return console.log(err)
     }

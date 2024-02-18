@@ -47,7 +47,9 @@ function AllMovies() {
         <div className="movies-container">
           <div className="movies-heading">ALL MOVIES</div>
           <div className="movie-selection">
-            {movies?.map((movie) => (
+            {movies?.map((movie) =>  {
+              if(movie.screen.length>0 && movie.screen.map((show)=>show._id))
+              return (
               //  <Link to={`/movie/${movie.movie_id}`} key={movie.movie_id} className="movie-link">
               <div className="movie" key={movie._id}>
                 <img
@@ -57,10 +59,18 @@ function AllMovies() {
                 />
                 <div>hi: {movie._id}</div>
                 <div className="movie-title">{movie.title}</div>
-                <Link className="link" to={`/user/${movie._id}`}>Read more...</Link>
+                <Link to={`/user/${movie._id}`}>Read more...</Link>
               </div>
               // </Link>
-            ))}
+            )
+            else{
+              return (<></>)
+             }
+          }
+            
+            )
+              // </Link>
+            }
           </div>
         </div>
       </>

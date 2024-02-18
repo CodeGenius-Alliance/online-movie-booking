@@ -105,9 +105,12 @@ const getOneMovie = async (req, res) => {
   try {
     //displaying shows with date> (in future)
     const movie_id = req.body.movie_id;
-    const Movie = await MovieModule.findById(movie_id);
+    console.log(req)
+    const Movie = await MovieModule.findOne({_id:movie_id});
+   // console.log("Movie",Movie)
     res.status(200).json({ movie: Movie, messege: "movie fetch successfully" });
   } catch (error) {
+    console.log(error)
     res.status(404).json({ messege: "server error occur" });
   }
 };
