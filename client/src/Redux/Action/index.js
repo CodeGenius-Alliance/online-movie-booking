@@ -12,19 +12,22 @@ export const FetchAllMovies=()=>async(dispatch)=>{
     
     try {
        
-        const response=await (await axios.get('http://localhost:3001/users/getAllMovies',{withCredentials:true}))
+        const response=await (await axios.get('http://localhost:3001/movies/getMovies',{withCredentials:true}))
         dispatch({type:FETCH_ALL_MOVIES_SUCCESS,payload:{messege:response.data.messege,movies:response.data.movies}})
     } catch (error) {
-        
+        console.log(error)
         dispatch({type:FETCH_ALL_MOVIES_FAILURE})
     }
 }
 
 export const FetchOneMovie=(movie_id)=>async(dispatch)=>{
     try {
-        const response=await axios.get(base_url+'/getOneMovie',{movie_id:movie_id})
+        console.log(movie_id)
+        const response=await (await axios.get(`http://localhost:3001/movies/getMovie/${movie_id}`,{withCredentials:true}))
+        console.log(response)
         dispatch({type:FETCH_ONE_MOVIE_SUCCESS,payload:{messege:response.data.messege,oneMovie:response.data.movie}})
     } catch (error) {
+        console.log(error)
         dispatch({type:FECTH_ONE_MOVIE_FAILURE})
     }
 }

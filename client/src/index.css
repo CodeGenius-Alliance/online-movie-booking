@@ -7,3 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.link{
+  color: white;
+  font-size: 18px;
+}

@@ -12,34 +12,34 @@ const movieSchema = new mongoose.Schema({
   actors: [{ type: String, required: true }],
   releaseDate: {
     type: Date,
-    default:new Date()
   },
   posterUrl: {
     type: String,
     required: true,
   },
-  
-  screen:[
+
+  screen: [
     {
-      screen_id:{type:String},
-      show:[{
-        show_id:{
-          type:String,
-          unique:true
+      // row , col --> add
+      screen_id: { type: String },
+      show: [
+        {
+          show_id: { type: String, sparse: true },
+          date: { type: Date },
+          show_time: { type: String },
+          price: { type: String },
+          bookings: [
+            {
+              user_id: { type: String },
+              seats: { type: Array },
+            },
+          ],
         },
-        date:{type:Date},
-        show_time:{type:String},
-        price:{type:String},
-        bookings:[{
-            user_id:{type:String},
-            seats:{type:Array}
-        }]
-    }]
-    }
+      ],
+    },
   ],
-
 });
+movieSchema.index({ "screen.show.show_id": 1 }, { unique: false });
+const movieModel = mongoose.model("Movie", movieSchema);
 
-const movieModel=mongoose.model("Movie", movieSchema);
-
-module.exports = movieModel
+module.exports = movieModel;

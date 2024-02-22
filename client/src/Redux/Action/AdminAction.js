@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const base_url="http://localhost:3001/admin"
+const base_url="http://localhost:3001/admins"
 const movie_url="http://localhost:3001/movies"
 const screen_url="http://localhost:3001/screens"
 const shows_url="http://localhost:3001/shows"
@@ -43,7 +43,7 @@ export const Loginadmin = (admindetail) => async (dispatch) => {
   try {
     const response= await (await axios.post(base_url+'/login',admindetail,{withCredentials:true}))
     console.log(response.data)
-    dispatch({type:LOGIN_ADMIN_SUCCESS,payload:{user:response.data.admin,messege:response.data.messege}}) 
+    dispatch({type:LOGIN_ADMIN_SUCCESS,payload:{admin:response.data.admin,messege:response.data.messege}}) 
   } catch (error) {
     console.log(error)
     dispatch({type:LOGIN_ADMIN_FAILURE,payload:{messege:error.response.data.messege}}) 

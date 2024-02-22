@@ -20,24 +20,24 @@ const addMovie = async (req, res, next) => {
 
   let movie;
   try {
-    movie = new MovieModule({
+  
+    movie=await MovieModule.create({
       title,
       description,
       releaseDate:new Date(release_date),
       actors,
       posterUrl:poster_url,
-    });
-    movie = await movie.save();
-
+      screen: []
+      });
+     
   } catch (err) {
-    console.log(err)
-    res.status(400).send({err})
+    console.log("error hai",err)
   }
 
   if (!movie) {
     return res.status(500).json({ message: "Request failed" });
   }
-  return res.status(201).json({ movie });
+  return res.status(201).json({ movie:movie });
 };
 
 const getAllMovies = async(req,res,next)=>{
@@ -56,9 +56,10 @@ const getAllMovies = async(req,res,next)=>{
 
 const getMovieById = async(req,res,next)=>{
     const id = req.params.id;
+    console.log(req.params.id)
     let movie;
     try{
-        movie = await MovieModule.findOne({"movie_id":id})
+        movie = await MovieModule.findOne({"_id":id})
     }catch(err){
         return console.log(err)
     }
