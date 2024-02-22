@@ -16,7 +16,12 @@ function App() {
       {/* define code */}
     <Provider store={MyStore}>
       <BrowserRouter>
+      <div className="head-title">
+        <img src="/Newlogo.png" alt="Logo" className="logo"></img>
+        <div className="appname">JustBookit</div>
+      </div>
       <Navbar />
+      <div className="banners"></div>
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/login" element={<Login />}></Route>
@@ -25,6 +30,7 @@ function App() {
           <Route path="/moviedetails" element={<MovieDetails />} />
           <Route path="/seatselection" element={<SeatSelection />} />
         </Routes>
+        
       </BrowserRouter>
       </Provider>
     </>

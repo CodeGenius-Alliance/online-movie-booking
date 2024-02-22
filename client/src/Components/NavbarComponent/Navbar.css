@@ -1,14 +1,15 @@
-.logo-img{
+/* .logo-img{
     height: 35px;
-}
+} */
 .my-nav{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     overflow-x: hidden;
     overflow-y: hidden;
-    margin-top: 5px;
-   
-    height: 45px;
+    /* margin-top: 5px; */
+    height: 59px;
+    /* width: 1440px; */
+    background-color: #D3CFCF;
 }
 .login-btn{
     text-decoration: none;
@@ -21,6 +22,30 @@
     background-color: #E97635;
     font-size: 18px;
 }
-.btn-grp{
+/* .btn-grp{
     margin-top: 5px;
+} */
+
+.btn-grp
+.btn-grp-admin
+.btn-grp-user {
+    width: 149px;
+    height: 59px;
 }
+
+.btn-grp:hover,
+.btn-grp-admin:hover,
+.btn-grp-user:hover {
+  background-color: darkgray;
+}
+
+h1 {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0 30px 0;
+}
+
+.btn-grp-admin {
+    margin-left: auto;
+}
+

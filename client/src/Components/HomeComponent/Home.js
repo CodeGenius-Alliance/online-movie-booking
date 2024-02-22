@@ -18,7 +18,7 @@ function Home() {
     return (
       <>
         
-        <div className="Main-heading">
+        {/* <div className="Main-heading">
         <h1>TicketBlitz</h1>
         </div>
         <div className="description">
@@ -28,8 +28,8 @@ function Home() {
           unlocks the door to unmatched movie enchantment! Say farewell to the
           hassles of yesteryear's ticket chaos and step into a new era of movie
           indulgence with TicketBlitz's red carpet treatment
-        </p>
-        </div>
+        </p> */}
+        {/* </div> */}
         <AllMovies/>
         
       </>
@@ -40,8 +40,9 @@ function Home() {
     return (
       <>
         
-        <div className="Main-heading">
-        <h1>TicketBlitz</h1>
+        {/* <div className="Main-heading">
+        <img src="C:\Users\Tushar\OneDrive\Desktop\JMAN Code BAse\online-movie-booking\client\public\Logo.png" className="logo"></img>
+        <h1>JustBookit</h1>
         </div>
         <div className="description">
         <p>
@@ -51,7 +52,7 @@ function Home() {
           hassles of yesteryear's ticket chaos and step into a new era of movie
           indulgence with TicketBlitz's red carpet treatment
         </p>
-        </div>
+        </div> */}
         <AllMovies/>
         <AddMovie/>
         <AddScreen/>
@@ -64,8 +65,8 @@ function Home() {
     return (
       <>
        
-        <div className="Main-heading">
-        <h1>TicketBlitz</h1>
+        {/* <div className="Main-heading"> */}
+        {/* <h1>TicketBlitz</h1>
         </div>
         <div className="description">
         <p>
@@ -75,7 +76,7 @@ function Home() {
           hassles of yesteryear's ticket chaos and step into a new era of movie
           indulgence with TicketBlitz's red carpet treatment
         </p>
-        </div>
+        </div> */}
         <AllMovies/>
         
       </>

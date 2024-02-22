@@ -10,9 +10,21 @@ function Navbar() {
     return (
       <>
         <nav className="my-nav">
-          <img src="/logo.svg" alt="" className="logo-img" />
+          {/* <img src="/logo.svg" alt="" className="logo-img" /> */}
           <div className="btn-grp">
-            <h1>ADMIN</h1>
+            <h1>Movies</h1>
+          </div>
+          <div className="btn-grp">
+            <h1>Add Movie</h1>
+          </div>
+          <div className="btn-grp">
+            <h1>Add Screen</h1>
+          </div>
+          <div className="btn-grp">
+            <h1>Add Show</h1>
+          </div>
+          <div className="btn-grp-admin">
+            <h1>Admin</h1>
           </div>
         </nav>
       </>
@@ -22,8 +34,8 @@ function Navbar() {
     return (
       <>
         <nav className="my-nav">
-          <img src="/logo.svg" alt="" className="logo-img" />
-          <div className="btn-grp">
+          {/* <img src="/logo.svg" alt="" className="logo-img" /> */}
+          <div className="btn-grp-user">
             <h1>USER</h1>
           </div>
         </nav>

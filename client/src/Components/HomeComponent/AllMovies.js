@@ -90,13 +90,19 @@ function AllMovies() {
     return (
       <>
        <div className="movies-container">
-        <div className="movies-heading">ALL MOVIES</div>
+        <div className="movies-heading">
+          <h1 className="movies-list">MOVIES</h1>
+          <img src="/arrow.png" alt="arrow" className="arrow"></img>
+        </div>
         <div className="movie-selection">
           {movies?.map((movie) => (
             //  <Link to={`/movie/${movie.movie_id}`} key={movie.movie_id} className="movie-link">
             <div className="movie" key={movie.movie_id}>
-              <img className="movie-poster" src={movie.posterURL} alt={movie.title} />
-              <div className="movie-title">{movie.title}</div>
+              <img className="movie-poster" src={movie.posterURL} alt={movie.title}/>
+              <div className="movie-details">
+                <h3 className="movie-title">{movie.title}</h3> 
+                <h5 className="movie-genre">Genre</h5>
+              </div>
             </div>
             // </Link>
           ))}

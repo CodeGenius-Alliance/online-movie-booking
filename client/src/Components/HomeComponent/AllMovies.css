@@ -1,11 +1,33 @@
 .movies-container {
-  padding: 20px; /* Adjust the padding value as needed */
+  padding: 20px 25px 20px; /* Adjust the padding value as needed */
 }
 
 .movies-heading {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 10px;
+  display: flex;
+  height: 55px;
+}
+
+h1
+img {
+  flex: 1;
+}
+
+.arrow {
+  mix-blend-mode: darken;
+  width: 15px;
+  height: 15px;
+  margin-top: 30px;
+}
+
+.movies-list {
+  padding : 0 8px 0 0;
+  width: 105px;
+  height: 55px;
+  font-size: 30px;
+  font-weight: bolder;
 }
 
 .movie-selection {
@@ -16,19 +38,33 @@
 
 .movie {
   text-align: center;
-  border: 1px solid #ddd;
-  padding: 10px;
-  border-radius: 8px;
-  width: 200px;
+  background-color: #5D738C;
+  border-radius: 10px;
 }
 
 .movie-poster {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
+  width: 270px;
+  height: 230px;
+  border-radius: inherit;
 }
+
+.movie-details {
+  text-align: left;
+  padding-left: 5px;
+}
+
 
 .movie-title {
   margin-top: 10px;
-  font-weight: bold;
+  margin-bottom: 0px;
+  font-weight: 500;
+  font-size: 25px;
+  color: black;
+}
+
+.movie-genre {
+  margin-top: 5px;
+  font-size: 15px;
+  font-style: italic;
+  font-weight: lighter;
 }
