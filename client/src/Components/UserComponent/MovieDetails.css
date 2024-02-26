@@ -1,8 +1,7 @@
-body{
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-}
+
 .movies-details-container {
   display: flex;
+  
   justify-content: space-between;
   margin: 0%;
   padding: 30px;
@@ -12,6 +11,7 @@ body{
 .movies-details-left {
   width: 35%;
   margin: auto;
+  font-size: 14px !important;
 }
 
 /* Movie poster styling */
@@ -24,9 +24,10 @@ body{
 
 /* Right section for movie details */
 .movies-details-right {
+  font-size: 14px !important;
   width: 55%;
   margin: auto;
-  color: #f1eeee; /* Adjust text color to make it visible */
+  color: black; /* Adjust text color to make it visible */
 }
 
 /* Styling for the screen container */
@@ -38,16 +39,18 @@ body{
 /* Styling for individual screens */
 .screen {
   margin-bottom: 10px;
-  border: 2px solid #ebe308;
+  border: 2px solid rgb(230, 229, 229);
   padding: 8px;
   border-radius: 8px;
   transition: background-color 0.3s ease;
-  background-color: rgba(162, 25, 25, 0.726);
-  color: #f1eeee; /* Adjust text color to make it visible */
+  background-color: rgb(231, 231, 231) !important;
+  box-shadow: 2px 5px 5px lightblue !important;
+  color: black; /* Adjust text color to make it visible */
 }
 
 /* Styling for the show container */
 .show-container {
+  
   display: flex;
   flex-direction: row; /* Change to row to make shows appear beside screens */
   justify-content: flex-start; /* Adjust as needed */
@@ -62,15 +65,15 @@ body{
   font-size: medium;
   border-radius: 6px;
   transition: background-color 0.3s ease;
-  color: #f1eeee; /* Adjust text color to make it visible */
+  color: black; /* Adjust text color to make it visible */
 }
 
 /* Hover effect for shows */
 .show:hover {
-  background-color: rgb(194, 108, 91);
+  background-color: rgb(196, 195, 195);
 }
 .movies-details{
-  color: #ebe308;
+  color: black;
 }
 .title{
   font-weight: bold;

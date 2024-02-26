@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import "./Login.css";
 import {Link, useNavigate} from 'react-router-dom'
@@ -18,6 +18,12 @@ const Login = () => {
     setFormValue({ ...formValues, [name]: value });
     
   };
+  useEffect(()=>{
+    if((admin && admin.email) || (user && user.email) )
+    {
+      return navigate('/')
+    }
+  },[user,admin,navigate,dispatch])
   const SubmitLogin=async(e)=>{
     e.preventDefault();
     try {
@@ -26,11 +32,8 @@ const Login = () => {
       
     }
   }
-  if((admin && admin.email) || (user && user.email) )
-  {
-    navigate('/')
-  }
-else
+ 
+
   return (
     <>
       <div>

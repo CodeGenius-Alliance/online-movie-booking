@@ -1,19 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import "./Login.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Loginadmin } from "../../Redux/Action/AdminAction";
+import { useNavigate } from "react-router-dom";
 
 const AdminLogin = () => {
   const initialValue = { email: "", password: "" };
   const [formValues, setFormValue] = useState(initialValue);
+  const admin=useSelector((state)=>state.admin.admin)
 const dispatch=useDispatch();
+const navigate=useNavigate();
   const handleClick = (e) => {
     const { name, value } = e.target;
     setFormValue({ ...formValues, [name]: value });
     console.log(formValues);
   };
 
+  useEffect(()=>{
+    if(admin && admin.email)
+  {
+    return navigate('/')
+  }
+  },[dispatch, admin, navigate])
   return (
     <>
       <div>

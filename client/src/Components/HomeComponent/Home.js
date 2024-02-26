@@ -8,10 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import AllMovies from "./AllMovies";
 import { FetchAllMovies } from "../../Redux/Action";
 import { Link } from "react-router-dom";
+import { Toaster } from "sonner";
 function Home() {
   const user=useSelector((state)=>state.user.user)
   const admin=useSelector((state)=>state.admin.admin)
-
 
 
 
@@ -21,6 +21,7 @@ function Home() {
       <>
         
         <div className="Main-heading">
+       
         <h1>TicketBlitz</h1>
         </div>
         <div className="description">
@@ -32,10 +33,13 @@ function Home() {
           indulgence with TicketBlitz's red carpet treatment
         </p>
         </div>
-        <Link className="link" to={'/admin/addmovie'}>Add Movie</Link> <br />
-        <Link className="link" to={'/admin/addscreen'}> Add Screen</Link>
+        <div className="flex-btn">
+        <button><Link className="link" to={'/admin/addmovie'}>Add Movie</Link> <br /></button>
+        <button><Link className="link" to={'/admin/addscreen'}> Add Screen</Link></button>
+        </div>
       {/** lists of movie and navigate to particular movie accordingly*/}
-        <AllMovies/>
+       
+       <center> <AllMovies/></center>
     
         
       </>
@@ -46,6 +50,7 @@ function Home() {
       <>
        
         <div className="Main-heading">
+       
         <h1>TicketBlitz</h1>
         </div>
         <div className="description">
@@ -57,7 +62,8 @@ function Home() {
           indulgence with TicketBlitz's red carpet treatment
         </p>
         </div>
-        <AllMovies/>
+        <center> <AllMovies/></center>
+    
         
         
       </>
