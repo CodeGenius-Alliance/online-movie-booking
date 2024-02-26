@@ -47,7 +47,6 @@ export const UserReducer=(state=initialvalue,action)=>{
 
         case LOGOUT_SUCCESS:
             localStorage.clear();
-            
             return {state,user:{}};
             
         default:

@@ -12,15 +12,16 @@ function AddMovie() {
   const dispatch=useDispatch();
 
   const initialValue = {title:'', description:'',actors:'',release_date:'',poster_url:'',featured:''};
- 
+ const navigate=useNavigate();
   const [movie,setMovie]=useState(initialValue);
 
  
   const AddMovieFunction=(e)=>{
     e.preventDefault()
     dispatch(AddNewMovie(movie))
+    navigate('/')
   }
-  const navigate=useNavigate();
+  
   const admin=useSelector((state)=>state.admin.admin)
  if(admin && admin.email)
   return (

@@ -7,12 +7,13 @@ function AddScreen() {
     const initialValue = {screen_name:'',no_of_rows:0,no_of_columns:0};
     const [screen,setScreen]=useState(initialValue);
     const dispatch=useDispatch();
-
+    const navigate=useNavigate();
     const AddScreenFunction=(e)=>{
         e.preventDefault();
         dispatch(AddNewScreen(screen))
+        navigate('/')
     }
-    const navigate=useNavigate();
+   
   const admin=useSelector((state)=>state.admin.admin)
  if(admin && admin.email)
     return (

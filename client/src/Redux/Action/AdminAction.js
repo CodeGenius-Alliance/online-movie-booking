@@ -38,6 +38,8 @@ export const REMOVE_MOVIE_FAILURE="REMOVE_MOVIE_FAILURE"
 
 export const FETCH_BOOKINGS_SUCCESS="FETCH_BOOKINGS_SUCCESS"
 export const FETCH_BOOKINGS_FAILURE="FETCH_BOOKINGS_FAILURE"
+
+export const LOGOUT_SUCCESS="LOGOUT_SUCCESS"
 /*admin login */
 export const Loginadmin = (admindetail) => async (dispatch) => {
   try {
@@ -49,6 +51,15 @@ export const Loginadmin = (admindetail) => async (dispatch) => {
     dispatch({type:LOGIN_ADMIN_FAILURE,payload:{messege:error.response.data.messege}}) 
   }
 };
+export const LogoutAdmin=()=>async(dispatch)=>{
+  try {
+    //api for backend session logout
+    dispatch({type:LOGOUT_SUCCESS})
+  } catch (error) {
+    
+  }
+}
+
 
 /* all the functions related to screens -- working -- checked */
 export const FetchScreens=()=>async(dispatch)=>{

@@ -39,7 +39,12 @@ function App() {
               ></Route>
             </Route>
             <Route path="/user">
-              <Route path=":movie_id" element={<MovieDetails />}></Route>
+              <Route path=":movie_id" element={<MovieDetails />}>
+                <Route
+                  path=":screen_id/:show_id"
+                  element={<SeatSelection />}
+                ></Route>
+              </Route>
             </Route>
 
             <Route path="/moviedetails" element={<MovieDetails />} />

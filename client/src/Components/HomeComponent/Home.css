@@ -1,5 +1,5 @@
 .Main-heading{
-    color: rgba(8, 231, 151, 1);
+    color: #ba5a10;
     text-align: center;
     font-size: x-large;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -7,7 +7,14 @@
 .description{
     font-size: 20px;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    color: rgba(197, 209, 67, 1);
+    color: rgb(53, 54, 45);
     text-align: center;
     
+}
+.flex-btn{
+    display: flex;
+    justify-content: space-between;
+}
+button .link{
+    text-decoration: none;
 }

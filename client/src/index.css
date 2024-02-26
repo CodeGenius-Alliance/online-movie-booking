@@ -5,9 +5,17 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
 }
 
 .link{
   color: white;
   font-size: 18px;
+}
+button{
+  color: white !important;
+}
+.container{
+  background-color: rgb(231, 231, 231) !important;
+  box-shadow: 10px 10px 5px lightblue !important;
 }

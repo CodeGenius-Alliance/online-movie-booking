@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import "./Register.css";
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Registeruser } from "../../Redux/Action/UserAction";
 
@@ -10,11 +10,12 @@ const Register = () => {
   const initialValue = { name: "", email: "", password: "" };
   const [formValues, setFormValue] = useState(initialValue);
   const dispatch=useDispatch();
+  const navigate=useNavigate();
 
   const handleClick = (e) => {
     const { name, value } = e.target;
     setFormValue({ ...formValues, [name]: value });
-   
+   navigate('/login')
   };
 
   return (
