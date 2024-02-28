@@ -3,7 +3,7 @@ import { useState } from "react";
 import "./Login.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Loginadmin } from "../../Redux/Action/AdminAction";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const AdminLogin = () => {
   const initialValue = { email: "", password: "" };
@@ -26,6 +26,8 @@ const navigate=useNavigate();
   return (
     <>
       <div>
+      <div className="close-btn"><Link to={'/'}><img src="/closebtn.png" alt="" className="logo-img"  /></Link></div>
+    
         <h1 className="head">Login Here</h1>
         <form>
           <div className="container">

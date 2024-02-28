@@ -19,3 +19,23 @@ button{
   background-color: rgb(231, 231, 231) !important;
   box-shadow: 10px 10px 5px lightblue !important;
 }
+.close-btn{
+  display: flex;
+  flex-direction: row-reverse;
+  cursor: pointer;
+  opacity: .7;
+}
+Link{
+  text-decoration: none !important;
+}
+.booked-seats:hover{
+ background-color: grey;
+}
+.heads{
+  font-size: 18px;
+
+  font-weight: bold;
+  margin-bottom: 2px;
+  margin-left: 5%;
+  margin-right: 5%;
+}

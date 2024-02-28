@@ -1,24 +1,26 @@
-const jwtToken = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 
 const validateTokenHanlder = (req, res, next) => {
   try {
     let token;
     let authHeader = req.cookies.token||req.headers.authorization;
     
-    if (authHeader && authHeader.startsWith("Bearer")) {
-      token = authHeader.split(" ")[1];
-
-      jwtToken.verify(token, process.env.ACCESS_TOKEN_USER, (err, decode) => {
-        if (err)
-          res 
-            .status(400)
-            .send("User is not Authorized OR Token is already Expired");
+    if (authHeader ) {
+      token = authHeader
+      jwt.verify(authHeader, process.env.ACCESS_TOKEN_USER, (err, decode) => {
+        if (err) {
+          console.log(err)
+          return res.status(400).send("Admin is not authorized");
+        }
         req.id = decode.id;
+
         next();
       });
-
-      if (!token) res.status(400).send("Token Not passed");
+      if (!token) {
+        res.status(400).send("Token is not available");
+      }
     }
+    else res.status(400).send("Token is not available");
   } catch (err) {
     console.log(err);
   }

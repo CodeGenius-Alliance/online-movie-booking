@@ -15,6 +15,7 @@ import AddShow from "./Components/AdminComponent/AddShow";
 import MovieDetails from "./Components/UserComponent/MovieDetails";
 import SeatSelection from "./Components/UserComponent/SeatSelection";
 import AddScreen from "./Components/AdminComponent/AddScreen";
+import ViewAllShows from "./Components/AdminComponent/ViewAllShows";
 
 function App() {
   return (
@@ -32,7 +33,8 @@ function App() {
             <Route path="/admin">
               <Route path="addmovie" element={<AddMovie />}></Route>
               <Route path="addscreen" element={<AddScreen />}></Route>
-              <Route path=":movie_id" element={<AddShow />}></Route>
+              <Route path="addshow/:movie_id" element={<AddShow />}></Route>
+              <Route path=":movie_id" element={<ViewAllShows />}></Route>
               <Route
                 path=":movie_id/:screen_id/:show_id"
                 element={<ViewBookings />}
@@ -40,11 +42,12 @@ function App() {
             </Route>
             <Route path="/user">
               <Route path=":movie_id" element={<MovieDetails />}>
-                <Route
-                  path=":screen_id/:show_id"
+                
+              </Route>
+              <Route
+                  path=":movie_id/:screen_id/:show_id"
                   element={<SeatSelection />}
                 ></Route>
-              </Route>
             </Route>
 
             <Route path="/moviedetails" element={<MovieDetails />} />

@@ -10,17 +10,17 @@ const Register = () => {
   const initialValue = { name: "", email: "", password: "" };
   const [formValues, setFormValue] = useState(initialValue);
   const dispatch=useDispatch();
-  const navigate=useNavigate();
-
+  const navigate=useNavigate()
   const handleClick = (e) => {
     const { name, value } = e.target;
     setFormValue({ ...formValues, [name]: value });
-   navigate('/login')
+  
   };
 
   return (
     <>
-       
+       <div className="close-btn"><Link to={'/'}><img src="/closebtn.png" alt="" className="logo-img"  /></Link></div>
+    
         <form>
           <div className="container">
             <h1 className="heading">Registration Form</h1>
@@ -52,10 +52,12 @@ const Register = () => {
               onChange={handleClick}
             ></input>
           
-          
+          <br />
             <button className="button" onClick={(e)=>{
               e.preventDefault();
-              dispatch(Registeruser(formValues))}}>SUBMIT</button>
+              dispatch(Registeruser(formValues))
+              navigate('/login')
+              }}>SUBMIT</button>
             <hr />
             <div>
             <Link to={'/admin'} className="login-links">Admin Login?</Link>
