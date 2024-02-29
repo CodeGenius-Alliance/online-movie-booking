@@ -1,0 +1,10 @@
+.banner-div {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.banner-image {
+  width: 100%;
+  height: 300px;
+  border-radius: 5px;
+}

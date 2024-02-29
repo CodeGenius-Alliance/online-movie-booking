@@ -15,6 +15,8 @@ import AddShow from "./Components/AdminComponent/AddShow";
 import MovieDetails from "./Components/UserComponent/MovieDetails";
 import SeatSelection from "./Components/UserComponent/SeatSelection";
 import AddScreen from "./Components/AdminComponent/AddScreen";
+import Showslider from "./Components/HomeComponent/Showslider";
+import Footer from "./Components/HomeComponent/Footer";
 
 function App() {
   return (
@@ -50,6 +52,7 @@ function App() {
             <Route path="/moviedetails" element={<MovieDetails />} />
             <Route path="/seatselection" element={<SeatSelection />} />
           </Routes>
+          <Footer />
         </BrowserRouter>
       </Provider>
     </>
