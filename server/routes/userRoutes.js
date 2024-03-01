@@ -9,6 +9,7 @@ const {
   login,
   signup,
   getAllMovies,
+  getSeats
 } = require("../controllers/userController");
 
 userRouter.post("/signup", signup);
@@ -18,7 +19,8 @@ userRouter.route("/getOneMovie").get(getOneMovie);
 userRouter.route("/getAllMovies").get(getAllMovies);
 
 //MiddleWare --> verify user
-// userRouter.use(validateTokenHanlder);
+userRouter.use(validateTokenHanlder);
+userRouter.route('/getseats/:movie_id/:screen_id/:show_id').get(getSeats)
 
 userRouter.route("/bookMovie").post(bookMovie);
 userRouter.route("/cancelTickets").post(cancelticket);

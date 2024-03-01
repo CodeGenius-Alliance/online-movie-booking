@@ -37,6 +37,7 @@ const Login = () => {
   return (
     <>
       <div>
+      <div className="close-btn"><Link to={'/'}><img src="/closebtn.png" alt="" className="logo-img"  /></Link></div>
        
         <form>
           <div className="container">

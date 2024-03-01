@@ -5,6 +5,8 @@ const {addShows,viewBookings,getShowbyMovieId}=require('../controllers/showContr
 
 showRouter.route("/getShowbyMovieId/:movieid").get(getShowbyMovieId);//Get show information movie id
 
+
+
 showRouter.use(validateTokenHanlder);
 
 //showcontrollers

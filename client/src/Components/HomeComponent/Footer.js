@@ -36,7 +36,7 @@ function Footer() {
           return (
             <>
               <h5>{it.heading}</h5>
-              <p>{it.content}</p>
+              <p className="content-para">{it.content}</p>
             </>
           );
         })}

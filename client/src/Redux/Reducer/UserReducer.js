@@ -1,11 +1,13 @@
 
 import { useNavigate } from "react-router-dom"
-import { BOOK_MOVIE_FAILURE, BOOK_MOVIE_SUCCESS, CANCEL_MOVIE_FAILURE, CANCEL_MOVIE_SUCCESS, FETCH_BOOK_MOVIE_FAILURE, FETCH_BOOK_MOVIE_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_SUCCESS, REGISTER_USER_FAILURE, REGISTER_USER_SUCCESS } from "../Action/UserAction"
+import { BOOK_MOVIE_FAILURE, BOOK_MOVIE_SUCCESS, CANCEL_MOVIE_FAILURE, CANCEL_MOVIE_SUCCESS, FETCH_BOOK_MOVIE_FAILURE, FETCH_BOOK_MOVIE_SUCCESS, FETCH_SEATS_FAILURE, FETCH_SEATS_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_SUCCESS, REGISTER_USER_FAILURE, REGISTER_USER_SUCCESS } from "../Action/UserAction"
 
 export const initialvalue={
     user:JSON.parse(localStorage.getItem('user')) ||{} ,
     session:'',
-    movie:[]
+    movie:[],
+    seats:{},
+    booking:[]
 }
 
 export const UserReducer=(state=initialvalue,action)=>{
@@ -48,7 +50,12 @@ export const UserReducer=(state=initialvalue,action)=>{
         case LOGOUT_SUCCESS:
             localStorage.clear();
             return {state,user:{}};
+
+        case FETCH_SEATS_SUCCESS:
+            return {...state,booking:action.payload.booking}
             
+        case FETCH_SEATS_FAILURE:
+            return {...state,booking:[]}
         default:
             return state;
     }

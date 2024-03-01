@@ -55,7 +55,7 @@ const signup = async (req, res) => {
 const login = async (req, res, next) => {
   const { email, password } = req.body;
 
-  console.log(req.body)
+  //console.log(req.body)
   let existingUser;
   try {
     existingUser = await userModel.findOne({ email:email });
@@ -115,14 +115,47 @@ const getOneMovie = async (req, res) => {
   }
 };
 
+//get all the seats for a show
+const getSeats=async(req,res)=>{
+  const {movie_id,screen_id,show_id}=req.params 
+  console.log("here ",movie_id," screen ",screen_id," show ",show_id)
+  try {
+    const movie=await MovieModule.findOne({_id:movie_id});
+    const screen=await movie.screen.find(
+      (screen) => screen.screen_id === screen_id
+    );
+   // console.log("screen ",screen)
+    if(!screen)
+    {res.status(404).json({"messege":"out of date"})}
+    const show =  screen.show.find((show) => show._id == show_id);
+    //console.log("show ",show)
+    res.status(200).json({"messege":"show ready","show":show})
+  } catch (error) {
+    console.log(error)
+    res.json({"error":error})
+  }
+
+}
 //book a movie -- working
 const bookMovie = async (req, res) => {
   try {
     const { movie_id,screen_id,show_id, seats } = req.body;
+    console.log(req.body)
     if(!seats){
       return res.status(400).send("No seats booked");
     }
     const user_id = req.id;
+    console.log(user_id)
+    const fmovie=await MovieModule.findOne({_id:movie_id});
+    const screen=await fmovie.screen.find(
+      (screen) => screen.screen_id === screen_id
+    );
+   // console.log("screen ",screen)
+    if(!screen)
+    {res.status(404).json({"messege":"out of date"})}
+    const show =  screen.show.find((show) => show._id == show_id);
+
+    
     const user = await userModel.updateOne(
       { "email": user_id },
       {
@@ -140,9 +173,9 @@ const bookMovie = async (req, res) => {
     // Update the movie document to add the booking
     const movie = await MovieModule.updateOne(
       {
-        "movie_id": movie_id,
+        "_id": movie_id,
         "screen.screen_id": screen_id,
-        "screen.show.show_id": show_id
+        "screen.show._id": show_id
       },
       {
         $push: {
@@ -155,7 +188,7 @@ const bookMovie = async (req, res) => {
       {
         arrayFilters: [
           { "screenElem.screen_id": screen_id },
-          { "showElem.show_id": show_id }
+          { "showElem._id": show_id }
         ]
       }
     );
@@ -209,4 +242,5 @@ module.exports = {
   login,
   signup,
   getAllMovies,
+  getSeats
 };
