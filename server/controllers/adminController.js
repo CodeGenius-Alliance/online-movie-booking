@@ -14,7 +14,7 @@ const login = asyncHandler(async (req, res) => {
       
       const accessToken = jwt.sign(
         {
-          id: existingAdmin._id,
+          id: existingAdmin.email,
         },
         process.env.ACCESS_TOKEN_ADMIN,
         { expiresIn: "40m" }
@@ -25,7 +25,7 @@ const login = asyncHandler(async (req, res) => {
       });
     
       return res
-        .status(200)
+        
         .json({
           message: "Authentication completed",
           accessToken,

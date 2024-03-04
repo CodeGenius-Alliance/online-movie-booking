@@ -29,7 +29,9 @@ const movieSchema = new mongoose.Schema({
           show_time: { type: String },
           price: { type: String },
           bookings: [
+            
             {
+              _id: mongoose.Schema.Types.ObjectId,
               user_id: { type: String },
               seats: { type: Array },
             },

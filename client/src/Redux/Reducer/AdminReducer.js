@@ -1,4 +1,4 @@
-import { ADD_SHOW_SUCCESS, FETCH_ALL_SCREENS_SUCCESS, FETCH_BOOKINGS_FAILURE, LOGIN_ADMIN_SUCCESS, LOGOUT_SUCCESS } from "../Action/AdminAction"
+import { ADD_SHOW_SUCCESS, FETCH_ALL_SCREENS_SUCCESS, FETCH_BOOKINGS_FAILURE, FETCH_BOOKINGS_SUCCESS, LOGIN_ADMIN_SUCCESS, LOGOUT_SUCCESS } from "../Action/AdminAction"
 import { toast } from 'sonner'
 
 export const initialvalue={
@@ -28,8 +28,13 @@ export const AdminReducer=(state=initialvalue,action)=>{
             toast.success("fetch successfully")
             return {...state,screens:action.payload.screens}
 
+        
+
         case FETCH_BOOKINGS_FAILURE:
             toast.success("show has been added")
+            return {...state}
+
+        case FETCH_BOOKINGS_SUCCESS:
             return {...state,bookings:action.payload.bookings}
 
         case ADD_SHOW_SUCCESS:

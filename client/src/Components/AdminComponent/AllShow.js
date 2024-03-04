@@ -1,25 +1,27 @@
-import React, { useEffect } from 'react';
-import './MovieDetails.css'; // Import your stylesheet
-import '../HomeComponent/Home.css'
-import { Link, useParams } from 'react-router-dom';
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { FetchOneMovie } from '../../Redux/Action';
 
-const MovieDetails = () => {
-  // Assuming you have only one movie in the array
-  const movie_id=useParams().movie_id;
-  const user=useSelector((state)=>state.user.user)
-  const dispatch=useDispatch();
-  const movie=useSelector((state)=>state.common.oneMovie)
+function AllShow() {
 
-  useEffect(()=>{
-    dispatch(FetchOneMovie(movie_id))
-  },[dispatch])
+    const movie_id=useParams().movie_id;
+    const admin=useSelector((state)=>state.admin.admin)
+    const dispatch=useDispatch();
+    const navigate=useNavigate();
+    const movie=useSelector((state)=>state.common.oneMovie)
   
-  //console.log("movie",movie)
+    useEffect(()=>{
+      dispatch(FetchOneMovie(movie_id))
+    },[dispatch])
+    
+    if(!admin.email)
+    {
+        navigate('/login')
+    }
 
 
-  return (
+return (
     <>
     <div className="close-btn"><Link to={'/'}><img src="/closebtn.png" alt="" className="logo-img"  /></Link></div>
 
@@ -47,14 +49,16 @@ const MovieDetails = () => {
               <p><span className='h3' >Screen ID:</span> {screen?.screen_id}</p>
               <div className="show-container">
                 {screen?.show?.map((show) => (   
-                    <Link to={'/user/'+movie_id+'/'+screen.screen_id+'/'+show._id}>
+                   
                   <div key={show?.show_id} className="show">
                     <p><span className="h3">Show ID:</span> {show?._id}</p>
                     <p><span className="h3"> Date:</span> {show?.date}</p>
                     <p><span className="h3"> Time:</span> {show["show_time"]}</p>
                     <p><span className="h3"> Price:</span> {show?.price}</p>
+                    <button onClick={()=>navigate(`/admin/${movie_id}/${screen.screen_id}/${show._id}`)}>View Booked Movies</button>
                   </div>
-                  </Link>
+                  
+                 
                 ))}
               </div>
             </div>
@@ -64,7 +68,7 @@ const MovieDetails = () => {
     </div>
     </>
   );
-};
 
-export default MovieDetails;
+}
 
+export default AllShow

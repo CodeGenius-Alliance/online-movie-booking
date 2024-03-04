@@ -5,16 +5,25 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
+  
 }
 
 .link{
   color: white;
   font-size: 18px;
 }
-button{
-  color: white !important;
+.nav-link{
+  color: rgb(255, 255, 255);
+  font-size: 20px !important;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 4px;
+  /* text-shadow: 1px 1px #ff6f00b3; */
 }
+/* .main{
+  margin-top: 80px !important;
+} */
+
 .container{
   background-color: rgb(231, 231, 231) !important;
   box-shadow: 10px 10px 5px lightblue !important;
@@ -33,7 +42,6 @@ Link{
 }
 .heads{
   font-size: 18px;
-
   font-weight: bold;
   margin-bottom: 2px;
   margin-left: 5%;

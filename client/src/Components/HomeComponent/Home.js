@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
-import Navbar from "../NavbarComponent/Navbar";
+
 import "./Home.css";
-import AddMovie from "../AdminComponent/AddMovie";
-import AddScreen from "../AdminComponent/AddScreen";
-import AddShow from "../AdminComponent/AddShow";
+
 import { useDispatch, useSelector } from "react-redux";
 import AllMovies from "./AllMovies";
 import { FetchAllMovies } from "../../Redux/Action";
@@ -18,14 +16,14 @@ function Home() {
   if(admin && admin.email)
   {
     return (
-      <>
-        
-        <div className="Main-heading">
+      <div className="main">
+     
+        <div className="Main-heading ">
        
         <h1>TicketBlitz</h1>
         </div>
         <div className="description">
-        <p>
+        <p className="heading">
           Elevate your entertainment game with TicketBlitz – your VIP pass to a
           cinematic wonderland where each frame weaves a tale, and every click
           unlocks the door to unmatched movie enchantment! Say farewell to the
@@ -42,19 +40,19 @@ function Home() {
        <center> <AllMovies/></center>
     
         
-      </>
+      </div>
     );
   }
   else{
     return (
-      <>
+      <div className="main">
        
-        <div className="Main-heading">
+        <div className="Main-heading ">
        
         <h1>TicketBlitz</h1>
         </div>
         <div className="description">
-        <p>
+        <p className="heading">
           Elevate your entertainment game with TicketBlitz – your VIP pass to a
           cinematic wonderland where each frame weaves a tale, and every click
           unlocks the door to unmatched movie enchantment! Say farewell to the
@@ -62,11 +60,12 @@ function Home() {
           indulgence with TicketBlitz's red carpet treatment
         </p>
         </div>
+      
         <center> <AllMovies/></center>
     
         
         
-      </>
+      </div>
     );
   }
 }

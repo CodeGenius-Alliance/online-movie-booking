@@ -9,21 +9,22 @@ export const LOGIN_USER_FAILURE = "LOGIN_USER_FAILURE";
 export const REGISTER_USER_SUCCESS="REGISTER_USER_SUCCESS"
 export const REGISTER_USER_FAILURE="REGISTER_USER_FAILURE"
 
-export const BOOK_MOVIE_SUCCESS="REGISTER_USER_SUCCESS"
-export const BOOK_MOVIE_FAILURE="REGISTER_USER_FAILURE"
+export const BOOK_MOVIE_SUCCESS="BOOK_MOVIE_SUCCESS"
+export const BOOK_MOVIE_FAILURE="BOOK_MOVIE_FAILURE"
 
-export const FETCH_BOOK_MOVIE_SUCCESS="REGISTER_USER_SUCCESS"
-export const FETCH_BOOK_MOVIE_FAILURE="REGISTER_USER_FAILURE"
+export const FETCH_BOOK_MOVIE_SUCCESS="FETCH_BOOK_MOVIE_SUCCESS"
+export const FETCH_BOOK_MOVIE_FAILURE="FETCH_BOOK_MOVIE_FAILURE"
 
-export const CANCEL_MOVIE_SUCCESS="REGISTER_USER_SUCCESS"
-export const CANCEL_MOVIE_FAILURE="REGISTER_USER_FAILURE"
+export const CANCEL_MOVIE_SUCCESS="CANCEL_MOVIE_SUCCESS"
+export const CANCEL_MOVIE_FAILURE="CANCEL_MOVIE_FAILURE"
 
 export const LOGOUT_SUCCESS="LOGOUT_SUCCESS"
 
 export const FETCH_SEATS_SUCCESS="FETCH_SEATS_SUCCESS"
 export const FETCH_SEATS_FAILURE="FETCH_SEATS_FAILURE"
 
-
+export const DETAIL_MOVIE_SUCCESS="DETAIL_MOVIE_SUCCESS"
+export const DETAIL_MOVIE_FAILURE="DETAIL_MOVIE_FAILURE"
 
 export const Loginuser = (userdetail) => async (dispatch) => {
  
@@ -31,10 +32,10 @@ export const Loginuser = (userdetail) => async (dispatch) => {
   try {
     
     const response= await axios.post(base_url+'/login',userdetail,{withCredentials:true})
-    console.log(response.data)
+    //console.log(response.data)
     dispatch({type:LOGIN_USER_SUCCESS,payload:{user:response.data.user,messege:response.data.messege}}) 
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     dispatch({type:LOGIN_USER_FAILURE,payload:{messege:error.response.data.messege}}) 
   }
 };
@@ -71,12 +72,23 @@ export const FetchShowSeats=({movie_id,screen_id,show_id})=>async(dispatch)=>{
   }
 }
 
-export const BookMovie=({movie_id,screen_id,show_id},seatsBooked)=>async(dispatch)=>{
+export const FetchMovieDetail=({movie_id,screen_id,show_id})=>async(dispatch)=>{
+  //book movie using movie id
+  try {
+      const response= await axios.get(base_url+'/bookMovieDetail',{movie_id,screen_id,show_id},{withCredentials:true})
+     console.log(response)
+      dispatch({type:DETAIL_MOVIE_SUCCESS,payload:{messege:response.data.messege}})
+  } catch (error) {
+    console.log(error)
+      dispatch({type:DETAIL_MOVIE_FAILURE,payload:{messege:error.response.data.messege}})
+  }
+}
+export const BookMovie=({movie_id,screen_id,show_id,movie_name,show_date,screen_name},seatsBooked)=>async(dispatch)=>{
     //book movie using movie id
     try {
-        const response= await axios.post(base_url+'/bookMovie',{seats:seatsBooked,movie_id,screen_id,show_id},{withCredentials:true})
-        
-        dispatch({type:BOOK_MOVIE_SUCCESS,payload:{messege:response.messege}})
+        const response= await axios.post(base_url+'/bookMovie',{seats:seatsBooked,movie_id,screen_id,show_id,movie_name,show_date,screen_name},{withCredentials:true})
+       
+        dispatch({type:BOOK_MOVIE_SUCCESS,payload:{messege:response.data.messege}})
     } catch (error) {
       console.log(error)
         dispatch({type:BOOK_MOVIE_FAILURE,payload:{messege:error.response.data.messege}})
@@ -85,17 +97,19 @@ export const BookMovie=({movie_id,screen_id,show_id},seatsBooked)=>async(dispatc
 
 export const FetchBookMovie=()=>async(dispatch)=>{
     try {
-        const response= await axios.post(base_url+'/getBookedMovie')
-        dispatch({type:FETCH_BOOK_MOVIE_SUCCESS,payload:{messege:response.messege,bookedmovie:response.movie}})
+        const response=await (await axios.get(base_url+'/getBookedMovie',{withCredentials:true}))
+       console.log("hi ",response.data.bookedmovies)
+        dispatch({type:FETCH_BOOK_MOVIE_SUCCESS,payload:{messege:response.data.messege,bookedmovies:response.data.bookedmovies}})
     } catch (error) {
+      console.log(error)
         dispatch({type:FETCH_BOOK_MOVIE_FAILURE,payload:{messege:error.response.data.messege}})
     }
 }
 
-export const CancelMovieTickets=()=>async(dispatch)=>{
+export const CancelMovieTickets=(detail)=>async(dispatch)=>{
     try {
-        const response= await axios.post(base_url+'/getBookedMovie')
-        dispatch({type:CANCEL_MOVIE_SUCCESS,payload:{messege:response.messege,bookedmovie:response.movie}})
+        const response= await axios.post(base_url+'/cancelTickets',detail,{withCredentials:true})
+        dispatch({type:CANCEL_MOVIE_SUCCESS,payload:{messege:response.data.messege,bookedmovie:response.data.movie}})
     } catch (error) {
         dispatch({type:CANCEL_MOVIE_FAILURE,payload:{messege:error.response.data.messege}})
     }

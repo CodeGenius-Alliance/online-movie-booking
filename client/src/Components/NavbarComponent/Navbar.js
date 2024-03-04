@@ -18,7 +18,7 @@ function Navbar() {
   if ( admin && admin.email) {
     return (
       <>
-    <Toaster richColors></Toaster>
+    
         <nav className="my-nav">
           <img src="/logo.svg" alt="" className="logo-img" />
           <div className="btn-grp">
@@ -27,20 +27,26 @@ function Navbar() {
           <div><button onClick={(e)=>{dispatch(Logout())
           logoutMe()}}>LOGOUT</button></div>
         </nav>
+       
       </>
     );
   }
   else if ( user && user.email) {
-    <Toaster  richColors></Toaster>
+   
     return (
       <>
         <nav className="my-nav">
           <img src="/logo.svg" alt="" className="logo-img" />
           
           <div className="btn-grp">
-            <h1>USER</h1>
+            <h1 className="nav-link">USER</h1>
             
           </div>
+          <div className="btn-grp">
+            <h1><Link className="nav-link " to={'/user/booked-movies'}>MY SHOWS</Link></h1>
+            
+          </div>
+         
           <div><button onClick={(e)=>{
             logoutMe()
             dispatch(Logout())
@@ -48,23 +54,26 @@ function Navbar() {
           }>LOGOUT</button></div>
           
         </nav>
+   
       </>
     );
   } else {
-    <Toaster  richColors></Toaster>
     return (
       <>
         <nav className="my-nav">
           <img src="/logo.svg" alt="" className="logo-img" />
           <div className="btn-grp">
-            <Link className="login-btn" to={"/login"}>
+            <button className="login-btn" onClick={()=>navigate('/login')}>
               LOGIN{" "}
-            </Link>
-            <Link to={"/register"} className="login-btn">
+            </button>
+           <button className="login-btn" onClick={()=>navigate('/register')}>
+           
               REGISTER{" "}
-            </Link>
+           
+           </button>
           </div>
         </nav>
+      
       </>
     );
   }

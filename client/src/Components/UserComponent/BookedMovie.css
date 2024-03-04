@@ -1,0 +1,16 @@
+.booked-movie-div{
+    background-color: rgb(235, 235, 235);
+    padding-left: 2%;
+    padding-top: 1%;
+    padding-right: 2%;
+    margin-top: 3%;
+    border-radius: 12px;
+    box-shadow: 10px 10px 5px  rgb(214, 234, 240);
+}
+h3{
+    margin: 0 !important;
+}
+.d-flex{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
