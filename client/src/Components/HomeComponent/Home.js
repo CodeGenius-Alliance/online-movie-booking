@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
-import Navbar from "../NavbarComponent/Navbar";
+
 import "./Home.css";
-import AddMovie from "../AdminComponent/AddMovie";
-import AddScreen from "../AdminComponent/AddScreen";
-import AddShow from "../AdminComponent/AddShow";
+
 import { useDispatch, useSelector } from "react-redux";
 import AllMovies from "./AllMovies";
 import { FetchAllMovies } from "../../Redux/Action";
@@ -17,8 +15,10 @@ function Home() {
 
   if (admin && admin.email) {
     return (
-      <>
+      <div className="main">
+        <h2 style={{ marginTop: "20px", marginBottom: "10px" }}>Coming Soon</h2>
         <Showslider />
+
         <div className="flex-btn">
           <button>
             <Link className="link" to={"/admin/addmovie"}>
@@ -33,22 +33,43 @@ function Home() {
             </Link>
           </button>
         </div>
-        {/** lists of movie and navigate to particular movie accordingly*/}
-
+        <h2
+          style={{
+            marginTop: "20px",
+            marginBottom: "1px",
+            marginLeft: "20px",
+          }}
+        >
+          Shows
+        </h2>
         <center>
           {" "}
           <AllMovies />
         </center>
-      </>
+      </div>
     );
   } else {
     return (
-      <div style={{ paddingLeft: "2%", paddingRight: "2%" }}>
-        <Showslider />
-        <center>
-          {" "}
-          <AllMovies />
-        </center>
+      <div className="main">
+        <div className="Main-heading ">
+          <h2 style={{ marginTop: "20px", marginBottom: "10px" }}>
+            Coming Soon
+          </h2>
+          <Showslider />
+          <div>
+            {" "}
+            <h2
+              style={{
+                marginTop: "20px",
+                marginBottom: "1px",
+                marginLeft: "20px",
+              }}
+            >
+              Shows
+            </h2>
+            <AllMovies />
+          </div>
+        </div>
       </div>
     );
   }

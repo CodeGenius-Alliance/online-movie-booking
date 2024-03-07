@@ -5,8 +5,8 @@ const validateTokenHanlder = (req, res, next) => {
     //str="123 nfuirf uiewh" str.split(" ") [Bearer, token$%^&*jhghhhgfhjbgfyyhy == user.id, uiewh]
      let token;
     // console.log(req)
-    let authHeader = req.cookies.token || req.headers.authorization;
-
+    let authHeader = req.cookies.token||req.headers.authorization;
+       console.log(req.cookies)
     if (authHeader ) {
       token = authHeader
       jwt.verify(authHeader, process.env.ACCESS_TOKEN_ADMIN, (err, decode) => {
@@ -14,6 +14,7 @@ const validateTokenHanlder = (req, res, next) => {
           console.log(err)
           return res.status(400).send("Admin is not authorized");
         }
+        
         req.id = decode.id;
         next();
       });

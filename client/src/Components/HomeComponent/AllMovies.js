@@ -29,37 +29,26 @@ function AllMovies() {
       {admin && admin.email ? (
         <>
           <div className="movies-container">
-            <div className="movies-heading">ALL MOVIES</div>
             <div className="movie-selection">
               {movies?.map((movie) => (
-                //  <Link to={`/movie/${movie.movie_id}`} key={movie.movie_id} className="movie-link">
-                <div className="movie" key={movie._id}>
+                <div className="movie-admin" key={movie._id}>
                   <img
                     className="movie-poster"
                     src={movie["posterUrl"]}
                     alt={movie.title}
                   />
-                  <div>
-                    <span className="h3">MOVIE ID : </span>hi: {movie._id}
-                  </div>
-                  <div className="movie-title">
-                    <span className="h3"> MOVIE-TITLE :</span>
-                    {movie.title}
-                  </div>
+                  <div className="movie-title">{movie.title}</div>
 
-                  <button>
+                  <div className="add_show_btn">
                     <Link className="link" to={`/admin/addshow/${movie._id}`}>
-                      Add Show
+                      <span className="movie-title">Add Show</span>
                     </Link>
-                  </button>
-                  <button>
-                    <Link className="link" to={`/admin/${movie._id}`}>
-                      View Show
-                    </Link>
-                  </button>
-                </div>
 
-                // </Link>
+                    <Link className="link" to={`/admin/${movie._id}`}>
+                      <span className="movie-title">View Show</span>
+                    </Link>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
@@ -67,40 +56,28 @@ function AllMovies() {
       ) : (
         <>
           <div className="movies-container">
-            <div className="movies-heading">ALL MOVIES</div>
             <div className="movie-selection">
-              {
-                movies?.map((movie) => {
-                  if (
-                    movie.screen.length > 0 &&
-                    movie.screen.map((show) => show._id)
-                  )
-                    return (
-                      //  <Link to={`/movie/${movie.movie_id}`} key={movie.movie_id} className="movie-link">
-
+              {movies?.map((movie) => {
+                if (
+                  movie.screen.length > 0 &&
+                  movie.screen.map((show) => show._id)
+                )
+                  return (
+                    <Link className="link" to={`/user/${movie._id}`}>
                       <div className="movie" key={movie._id}>
                         <img
                           className="movie-poster"
                           src={movie["posterUrl"]}
                           alt={movie.title}
                         />
-                        <div>hi: {movie._id}</div>
-                        <div className="movie-title">{movie.title}</div>
-
-                        <button>
-                          <Link className="link" to={`/user/${movie._id}`}>
-                            Read more...
-                          </Link>
-                        </button>
+                        <span className="movie-title">{movie.title}</span>
                       </div>
-                      // </Link>
-                    );
-                  else {
-                    return <></>;
-                  }
-                })
-                // </Link>
-              }
+                    </Link>
+                  );
+                else {
+                  return <></>;
+                }
+              })}
             </div>
           </div>
         </>

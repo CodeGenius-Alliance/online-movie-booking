@@ -41,14 +41,15 @@ const addShows = asyncHandler(async (req, res) => {
 const viewBookings = asyncHandler(async (req, res) => {
   //fine
   const { movie_id, screen_id, show_id } = req.body;
+  console.log(req.body)
   try {
-    const movie = await movieModel.findOne({ _id: _id });
+    const movie = await movieModel.findOne({ _id: movie_id });
 
     if (!movie) {
       return res.status(404).json({ message: "Movie not found" });
     }
     const screen = movie.screen.find(
-      (screen) => screen.screen_id === screen_id
+      (screen) => screen.screen_id == screen_id
     );
 
     if (!screen) {
@@ -57,7 +58,7 @@ const viewBookings = asyncHandler(async (req, res) => {
         .json({ message: "Screen not found for the movie" });
     }
 
-    const show = screen.show.find((show) => show.show_id === show_id);
+    const show = screen.show.find((show) => show._id == show_id);
 
     if (!show) {
       return res.status(404).json({ message: "Show not found for the screen" });
@@ -65,8 +66,9 @@ const viewBookings = asyncHandler(async (req, res) => {
 
     const bookings = show.bookings;
 
-    res.status(200).json({ bookings: bookings });
+    res.status(200).json({ bookings: bookings,"message":"sucessfully loaded data" });
   } catch (e) {
+    console.log(e)
     res.status(500).json(e);
   }
 });

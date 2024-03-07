@@ -18,10 +18,19 @@ const userSchema = new Schema({
   },
   bookedmovie: [
     {
-      screen_id: { type: String },
-      movie_id: { type: String },
+      _id: mongoose.Schema.Types.ObjectId,
+      screen: { type: String },
+      movie: {
+        movie_id: { type: String },
+        title: { type: String },
+      },
       seats: { type: Array },
-      show_id: { type: String },
+      show: {
+        show_id: { type: String, sparse: true },
+        date: { type: Date },
+        show_time: { type: String },
+        price: { type: String },
+      },
     },
   ],
 });

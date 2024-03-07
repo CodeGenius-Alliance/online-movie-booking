@@ -30,6 +30,7 @@ const movieSchema = new mongoose.Schema({
           price: { type: String },
           bookings: [
             {
+              _id: mongoose.Schema.Types.ObjectId,
               user_id: { type: String },
               seats: { type: Array },
             },

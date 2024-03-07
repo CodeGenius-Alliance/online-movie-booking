@@ -18,12 +18,6 @@ const Register = () => {
 
   return (
     <>
-      <div className="close-btn">
-        <Link to={"/"}>
-          <img src="/closebtn.png" alt="" className="logo-img" />
-        </Link>
-      </div>
-
       <form>
         <div className="container">
           <h1 className="heading">Registration Form</h1>

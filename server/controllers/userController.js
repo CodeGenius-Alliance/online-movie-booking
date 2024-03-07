@@ -3,6 +3,8 @@ const MovieModule = require("../models/MovieModule");
 const userModel = require("../models/userModel");
 const jwtToken = require("jsonwebtoken");
 const screenModel = require("../models/screenModel");
+const mongoose = require("mongoose");
+const movieModel = require("../models/MovieModule");
 
 //get all the movies  -- working
 const getAllMovies = async (req, res) => {
@@ -93,14 +95,12 @@ const login = async (req, res, next) => {
     expires: new Date(Date.now() + 6000000),
   });
 
-  return res
-    .status(200)
-    .json({
-      message: "Login Successfull",
-      user: existingUser,
-      id: existingUser._id,
-      token: accessToken,
-    });
+  return res.status(200).json({
+    message: "Login Successfull",
+    user: existingUser,
+    id: existingUser._id,
+    token: accessToken,
+  });
 };
 
 //get one movie -- working
@@ -108,7 +108,7 @@ const getOneMovie = async (req, res) => {
   try {
     //displaying shows with date> (in future)
     const movie_id = req.body.movie_id;
-    console.log(req);
+    // console.log(req);
     const Movie = await MovieModule.findOne({ _id: movie_id });
     // console.log("Movie",Movie)
     res.status(200).json({ movie: Movie, messege: "movie fetch successfully" });
@@ -121,7 +121,7 @@ const getOneMovie = async (req, res) => {
 //get all the seats for a show
 const getSeats = async (req, res) => {
   const { movie_id, screen_id, show_id } = req.params;
-  console.log("here ", movie_id, " screen ", screen_id, " show ", show_id);
+  //console.log("here ", movie_id, " screen ", screen_id, " show ", show_id);
   try {
     const movie = await MovieModule.findOne({ _id: movie_id });
     const screen = await movie.screen.find(
@@ -140,18 +140,43 @@ const getSeats = async (req, res) => {
   }
 };
 //book a movie -- working
+const bookMovieDetail = async (req, res) => {
+  try {
+    const { movie_id, screen_id, show_id } = req.body;
+
+    // console.log(req.body)
+    let response = {};
+
+    const movie = await MovieModule.findById(movie_id);
+    response.movie = movie;
+
+    const screen = screenModel.findById(screen_id);
+    response.screen = screen;
+
+    const screendetail = await movie.screen.find(
+      (screen) => screen.screen_id === screen_id
+    );
+
+    const show = screendetail.show.find((show) => show._id == show_id);
+    response.show = show;
+
+    res.status(200).json({ moviedetail: response });
+  } catch (error) {
+    console.log(error);
+  }
+};
 const bookMovie = async (req, res) => {
   try {
     const { movie_id, screen_id, show_id, seats } = req.body;
-    console.log(req.body);
+    //console.log(req.body);
     if (!seats) {
       return res.status(400).send("No seats booked");
     }
     const user_id = req.id;
-    console.log(user_id);
+    //console.log(user_id);
     const fmovie = await MovieModule.findOne({ _id: movie_id });
-    const screen = await fmovie.screen.find(
-      (screen) => screen.screen_id === screen_id
+    const screen = fmovie.screen.find(
+      (screen) => screen.screen_id == screen_id
     );
     // console.log("screen ",screen)
     if (!screen) {
@@ -159,20 +184,36 @@ const bookMovie = async (req, res) => {
     }
     const show = screen.show.find((show) => show._id == show_id);
 
+    const newItemId = new mongoose.Types.ObjectId();
+
     const user = await userModel.updateOne(
       { email: user_id },
       {
         $push: {
           bookedmovie: {
-            movie_id: movie_id,
-            seats: seats,
-            screen_id: screen_id,
-            show_id: show_id,
+            $each: [
+              {
+                _id: newItemId,
+                movie: {
+                  movie_id: movie_id,
+                  title: fmovie.title,
+                },
+                seats: seats,
+                screen: screen_id,
+                show: {
+                  show_id: show._id,
+                  date: show.date,
+                  show_time: show["start_time"],
+                  price: show.price,
+                },
+              },
+            ],
           },
         },
       }
     );
 
+    console.log(user);
     // Update the movie document to add the booking
     const movie = await MovieModule.updateOne(
       {
@@ -183,6 +224,7 @@ const bookMovie = async (req, res) => {
       {
         $push: {
           "screen.$[screenElem].show.$[showElem].bookings": {
+            _id: newItemId,
             user_id: user_id,
             seats: seats,
           },
@@ -208,15 +250,40 @@ const bookMovie = async (req, res) => {
 
 //cancel movie -- working
 const cancelticket = async (req, res) => {
-  const { movie_id } = req.body;
+  const id = req.body._id;
+  const movie_id = req.body.movie.movie_id;
+  const screen_id = req.body.screen;
+  const show_id = req.body.show.show_id;
+
   const user_id = req.id;
   try {
-    let user = await userModel.findByIdAndUpdate(user_id, {
-      $pull: { bookedmovie: { movie_id: { $eq: movie_id } } },
-    });
-    let movie = await MovieModule.findByIdAndUpdate(movie_id, {
-      $pull: { bookings: { user: { $eq: user_id } } },
-    });
+    let chk = await movieModel.findOneAndUpdate(
+      {
+        _id: movie_id,
+        "screen.screen_id": screen_id,
+        "screen.show._id": show_id,
+      },
+      {
+        $pull: {
+          "screen.$[screenElem].show.$[showElem].bookings": {
+            _id: id,
+          },
+        },
+      },
+      {
+        arrayFilters: [
+          { "screenElem.screen_id": screen_id },
+          { "showElem._id": show_id },
+        ],
+      }
+    );
+    let user = await userModel.findOneAndUpdate(
+      { email: user_id },
+      {
+        $pull: { bookedmovie: { _id: { $eq: id } } },
+      }
+    );
+
     res.json({ user: user, movie: movie });
   } catch (error) {
     console.log(error);
@@ -231,6 +298,9 @@ const getBookedMovie = async (req, res) => {
 
     const moviesbooked = await userModel.find({ email: user_id });
     const ans = moviesbooked[0].bookedmovie;
+
+    const response = [];
+
     res.status(200).json({ bookedmovies: ans });
   } catch (error) {
     res.status(404).json({ bookedmovies: "server error" });
@@ -246,4 +316,5 @@ module.exports = {
   signup,
   getAllMovies,
   getSeats,
+  bookMovieDetail,
 };

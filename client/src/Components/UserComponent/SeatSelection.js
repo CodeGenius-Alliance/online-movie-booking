@@ -14,6 +14,7 @@ const SeatSelection = () => {
   const [allSeats, setAllSeats] = useState([]);
   const dispatch = useDispatch();
   const { movie_id, screen_id, show_id } = useParams();
+  const [movieDetail,setMovieDetail]=useState();
   const [booked, setbooked] = useState(0);
   const [matrix, setMatrix] = useState(
     Array.from({ length: rows }, () => Array.from({ length: cols }, () => null))

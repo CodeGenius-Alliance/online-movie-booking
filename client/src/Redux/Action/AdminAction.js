@@ -155,13 +155,14 @@ export const DeleteMovie=(movie_id)=>async(dispatch)=>{
   
 }
 
-export const FetchBooking=(data)=>async(dispatch)=>{
+export const FetchBooking=({...params})=>async(dispatch)=>{
   try {
-    const response=await axios.get(shows_url+'viewBookings',data);
+    const response=await (await axios.post(`http://localhost:3001/shows/viewBookings`,params,{withCredentials:true}))
     console.log("fetch booking admin",response);
     dispatch({type:FETCH_BOOKINGS_SUCCESS,payload:{messege:response.data.messege,bookings:response.data.bookings}})
 
   } catch (error) {
+    console.log(error)
     dispatch({type:FETCH_BOOKINGS_FAILURE})
   }
 

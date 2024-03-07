@@ -1,7 +1,6 @@
-
 .movies-details-container {
   display: flex;
-  
+
   justify-content: space-between;
   margin: 0%;
   padding: 30px;
@@ -11,7 +10,6 @@
 .movies-details-left {
   width: 35%;
   margin: auto;
-  font-size: 14px !important;
 }
 
 /* Movie poster styling */
@@ -24,9 +22,8 @@
 
 /* Right section for movie details */
 .movies-details-right {
-  font-size: 14px !important;
+  font-size: 14px;
   width: 55%;
-  margin: auto;
   color: black; /* Adjust text color to make it visible */
 }
 
@@ -50,7 +47,6 @@
 
 /* Styling for the show container */
 .show-container {
-  
   display: flex;
   flex-direction: row; /* Change to row to make shows appear beside screens */
   justify-content: flex-start; /* Adjust as needed */
@@ -66,17 +62,40 @@
   border-radius: 6px;
   transition: background-color 0.3s ease;
   color: black; /* Adjust text color to make it visible */
+  width: 150px;
 }
 
 /* Hover effect for shows */
 .show:hover {
   background-color: rgb(196, 195, 195);
 }
-.movies-details{
+.movies-details {
   color: black;
 }
-.title{
+.title {
   font-weight: bold;
 }
 
+.actors {
+  font-size: 17px;
+  font-weight: bold;
+}
 
+.actors-name {
+  font-size: 17px;
+  margin-left: 5px;
+}
+
+.descriptions {
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.shows {
+  text-decoration: none;
+}
+
+.div1 {
+  display: flex;
+  justify-content: space-between;
+}

@@ -9,7 +9,7 @@ const validateTokenHanlder = (req, res, next) => {
       token = authHeader
       jwt.verify(authHeader, process.env.ACCESS_TOKEN_USER, (err, decode) => {
         if (err) {
-          console.log(err)
+         // console.log(err)
           return res.status(400).send("Admin is not authorized");
         }
         req.id = decode.id;
