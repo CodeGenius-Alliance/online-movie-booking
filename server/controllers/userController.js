@@ -4,14 +4,13 @@ const userModel = require("../models/userModel");
 const jwtToken = require("jsonwebtoken");
 const screenModel = require("../models/screenModel");
 
-
-
 //get all the movies  -- working
 const getAllMovies = async (req, res) => {
-  
   try {
-    const movies = await MovieModule.screen.show.find({date:{$gte:new Date()}});
-    console.log(new Date())
+    const movies = await MovieModule.screen.show.find({
+      date: { $gte: new Date() },
+    });
+    console.log(new Date());
     res.status(200).json({ movies: movies });
   } catch (error) {}
 };
@@ -58,7 +57,7 @@ const login = async (req, res, next) => {
   //console.log(req.body)
   let existingUser;
   try {
-    existingUser = await userModel.findOne({ email:email });
+    existingUser = await userModel.findOne({ email: email });
   } catch (err) {
     return console.log(err);
   }
@@ -96,100 +95,104 @@ const login = async (req, res, next) => {
 
   return res
     .status(200)
-    .json({ message: "Login Successfull",user:existingUser, id: existingUser._id, token:accessToken });
+    .json({
+      message: "Login Successfull",
+      user: existingUser,
+      id: existingUser._id,
+      token: accessToken,
+    });
 };
-
 
 //get one movie -- working
 const getOneMovie = async (req, res) => {
   try {
     //displaying shows with date> (in future)
     const movie_id = req.body.movie_id;
-    console.log(req)
-    const Movie = await MovieModule.findOne({_id:movie_id});
-   // console.log("Movie",Movie)
+    console.log(req);
+    const Movie = await MovieModule.findOne({ _id: movie_id });
+    // console.log("Movie",Movie)
     res.status(200).json({ movie: Movie, messege: "movie fetch successfully" });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(404).json({ messege: "server error occur" });
   }
 };
 
 //get all the seats for a show
-const getSeats=async(req,res)=>{
-  const {movie_id,screen_id,show_id}=req.params 
-  console.log("here ",movie_id," screen ",screen_id," show ",show_id)
+const getSeats = async (req, res) => {
+  const { movie_id, screen_id, show_id } = req.params;
+  console.log("here ", movie_id, " screen ", screen_id, " show ", show_id);
   try {
-    const movie=await MovieModule.findOne({_id:movie_id});
-    const screen=await movie.screen.find(
+    const movie = await MovieModule.findOne({ _id: movie_id });
+    const screen = await movie.screen.find(
       (screen) => screen.screen_id === screen_id
     );
-   // console.log("screen ",screen)
-    if(!screen)
-    {res.status(404).json({"messege":"out of date"})}
-    const show =  screen.show.find((show) => show._id == show_id);
+    // console.log("screen ",screen)
+    if (!screen) {
+      res.status(404).json({ messege: "out of date" });
+    }
+    const show = screen.show.find((show) => show._id == show_id);
     //console.log("show ",show)
-    res.status(200).json({"messege":"show ready","show":show})
+    res.status(200).json({ messege: "show ready", show: show });
   } catch (error) {
-    console.log(error)
-    res.json({"error":error})
+    console.log(error);
+    res.json({ error: error });
   }
-
-}
+};
 //book a movie -- working
 const bookMovie = async (req, res) => {
   try {
-    const { movie_id,screen_id,show_id, seats } = req.body;
-    console.log(req.body)
-    if(!seats){
+    const { movie_id, screen_id, show_id, seats } = req.body;
+    console.log(req.body);
+    if (!seats) {
       return res.status(400).send("No seats booked");
     }
     const user_id = req.id;
-    console.log(user_id)
-    const fmovie=await MovieModule.findOne({_id:movie_id});
-    const screen=await fmovie.screen.find(
+    console.log(user_id);
+    const fmovie = await MovieModule.findOne({ _id: movie_id });
+    const screen = await fmovie.screen.find(
       (screen) => screen.screen_id === screen_id
     );
-   // console.log("screen ",screen)
-    if(!screen)
-    {res.status(404).json({"messege":"out of date"})}
-    const show =  screen.show.find((show) => show._id == show_id);
+    // console.log("screen ",screen)
+    if (!screen) {
+      res.status(404).json({ messege: "out of date" });
+    }
+    const show = screen.show.find((show) => show._id == show_id);
 
-    
     const user = await userModel.updateOne(
-      { "email": user_id },
+      { email: user_id },
       {
         $push: {
-          "bookedmovie": {
+          bookedmovie: {
             movie_id: movie_id,
             seats: seats,
             screen_id: screen_id,
-            show_id: show_id
-          }
-        }
+            show_id: show_id,
+          },
+        },
       }
     );
-    
+
     // Update the movie document to add the booking
     const movie = await MovieModule.updateOne(
       {
-        "_id": movie_id,
+        _id: movie_id,
         "screen.screen_id": screen_id,
-        "screen.show._id": show_id
+        "screen.show._id": show_id,
       },
       {
         $push: {
           "screen.$[screenElem].show.$[showElem].bookings": {
             user_id: user_id,
-            seats: seats
-          }
-        }
+            seats: seats,
+          },
+        },
       },
       {
         arrayFilters: [
           { "screenElem.screen_id": screen_id },
-          { "showElem._id": show_id }
-        ]
+          { "showElem._id": show_id },
+        ],
       }
     );
 
@@ -224,11 +227,11 @@ const cancelticket = async (req, res) => {
 //get booked movies  -- working
 const getBookedMovie = async (req, res) => {
   try {
-    const user_id=req.id;
-    
-    const moviesbooked = await userModel.find({"email":user_id});
-    const ans=moviesbooked[0].bookedmovie
-    res.status(200).json({ bookedmovies:  ans});
+    const user_id = req.id;
+
+    const moviesbooked = await userModel.find({ email: user_id });
+    const ans = moviesbooked[0].bookedmovie;
+    res.status(200).json({ bookedmovies: ans });
   } catch (error) {
     res.status(404).json({ bookedmovies: "server error" });
   }
@@ -242,5 +245,5 @@ module.exports = {
   login,
   signup,
   getAllMovies,
-  getSeats
+  getSeats,
 };
