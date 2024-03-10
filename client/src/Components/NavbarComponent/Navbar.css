@@ -9,12 +9,13 @@
     display: flex;
     justify-content: space-between;
     overflow-x: hidden;
-    background-color: rgb(56, 14, 14);
+    background-image: linear-gradient(to bottom right, rgb(73, 18, 20), rgba(119, 56, 4, 0.924));
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
     opacity: 1;
     overflow-y: hidden;
   
     height: 65px;
-    z-index: 1;
+ 
   
 }
 
@@ -31,3 +32,13 @@
 }
 
 
+.number{
+    border:1px solid grey;
+    border-radius: 50%;    
+    padding: 2px;
+    margin-top: 12px;
+    color: white !important;
+
+  text-shadow: 2px 2px 4px #000000;
+    font-size: 14px;
+}

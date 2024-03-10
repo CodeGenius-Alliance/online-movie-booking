@@ -34,7 +34,7 @@ export const UserReducer=(state=initialvalue,action)=>{
 
         case BOOK_MOVIE_SUCCESS:
             alert("tickets booked")
-            return {...state,movie:[...state.movie,action.payload.movie]}
+            return {...state,movie:[...state.movie,action.payload?.movie]}
 
         case BOOK_MOVIE_FAILURE:
             alert("error")
@@ -42,7 +42,7 @@ export const UserReducer=(state=initialvalue,action)=>{
 
         case CANCEL_MOVIE_SUCCESS:
             alert("tickets cancel")
-            return {...state,movie:[...state.movie,action.payload.movie]}
+            return {...state,movie:[...state.movie,action.payload?.movie]}
 
         case CANCEL_MOVIE_FAILURE:
             alert("error")
@@ -50,7 +50,7 @@ export const UserReducer=(state=initialvalue,action)=>{
 
         case FETCH_BOOK_MOVIE_SUCCESS:
             //console.log("booked movies are ",action.payload.bookedmovies)
-            return {...state,bookedmovies:action.payload.bookedmovies}
+            return {...state,bookedmovies:action.payload?.bookedmovies}
 
         case FETCH_BOOK_MOVIE_FAILURE:
             alert(action.payload.messege)
@@ -61,10 +61,10 @@ export const UserReducer=(state=initialvalue,action)=>{
             return {state,user:{}};
 
         case FETCH_SEATS_SUCCESS:
-            return {...state,booking:action.payload.booking}
+            return {...state,booking:action.payload?.booking}
             
         case FETCH_SEATS_FAILURE:
-            return {...state,booking:[]}
+            return {...state}
         default:
             return state;
     }

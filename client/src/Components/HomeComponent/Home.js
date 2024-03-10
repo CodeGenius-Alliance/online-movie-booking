@@ -23,13 +23,13 @@ function Home() {
         <h1>TicketBlitz</h1>
         </div>
         <div className="description">
-        <p className="heading">
+        <em><p className="heading">
           Elevate your entertainment game with TicketBlitz – your VIP pass to a
           cinematic wonderland where each frame weaves a tale, and every click
           unlocks the door to unmatched movie enchantment! Say farewell to the
           hassles of yesteryear's ticket chaos and step into a new era of movie
           indulgence with TicketBlitz's red carpet treatment
-        </p>
+        </p></em>
         </div>
         <div className="flex-btn">
         <button><Link className="link" to={'/admin/addmovie'}>Add Movie</Link> <br /></button>
@@ -52,13 +52,13 @@ function Home() {
         <h1>TicketBlitz</h1>
         </div>
         <div className="description">
-        <p className="heading">
+       <em> <p className="heading">
           Elevate your entertainment game with TicketBlitz – your VIP pass to a
           cinematic wonderland where each frame weaves a tale, and every click
           unlocks the door to unmatched movie enchantment! Say farewell to the
           hassles of yesteryear's ticket chaos and step into a new era of movie
           indulgence with TicketBlitz's red carpet treatment
-        </p>
+        </p></em>
         </div>
       
         <center> <AllMovies/></center>

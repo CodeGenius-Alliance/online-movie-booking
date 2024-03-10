@@ -42,7 +42,8 @@ function Navbar() {
             <h1 className="nav-link">USER</h1>
             
           </div>
-          <div className="btn-grp">
+          <div className="btn-grp d-flex">
+          <div><pre className="number" style={{color:"while"}}>{user.bookedmovie.length }</pre></div>
             <h1><Link className="nav-link " to={'/user/booked-movies'}>MY SHOWS</Link></h1>
             
           </div>

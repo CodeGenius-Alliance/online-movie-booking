@@ -33,7 +33,7 @@ export const Loginuser = (userdetail) => async (dispatch) => {
     
     const response= await axios.post(base_url+'/login',userdetail,{withCredentials:true})
     //console.log(response.data)
-    dispatch({type:LOGIN_USER_SUCCESS,payload:{user:response.data.user,messege:response.data.messege}}) 
+    dispatch({type:LOGIN_USER_SUCCESS,payload:{user:response.data?.user,messege:response.data?.messege}}) 
   } catch (error) {
     // console.log(error)
     dispatch({type:LOGIN_USER_FAILURE,payload:{messege:error.response.data.messege}}) 
@@ -56,7 +56,7 @@ export const Registeruser = (userdetail) => async (dispatch) => {
 
   try {
     const response= await axios.post(base_url+'/signup',userdetail)
-    dispatch({type:REGISTER_USER_SUCCESS,payload:{user:response.user,messege:response.messege}}) 
+    dispatch({type:REGISTER_USER_SUCCESS,payload:{user:response.data.user,messege:response.data.messege}}) 
   } catch (error) {
     dispatch({type:REGISTER_USER_FAILURE,payload:{messege:error.response.data.messege}}) 
   }
@@ -66,7 +66,7 @@ export const FetchShowSeats=({movie_id,screen_id,show_id})=>async(dispatch)=>{
   try {
     const response=await axios.get(base_url+`/getseats/${movie_id}/${screen_id}/${show_id}`,{withCredentials:true})
     //console.log("res",response.data.show.bookings)
-    dispatch({type:FETCH_SEATS_SUCCESS,payload:{"messege":"ok",booking:response.data.show.bookings}})
+    dispatch({type:FETCH_SEATS_SUCCESS,payload:{"messege":"ok",booking:response.data?.show?.bookings}})
   } catch (error) {
     dispatch({type:FETCH_SEATS_FAILURE})
   }
