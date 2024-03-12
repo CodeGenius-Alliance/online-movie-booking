@@ -10,7 +10,8 @@ const {
   signup,
   getAllMovies,
   getSeats,
-  bookMovieDetail
+  bookMovieDetail,
+  getShow
 } = require("../controllers/userController");
 
 userRouter.post("/signup", signup);
@@ -29,5 +30,7 @@ userRouter.route("/cancelTickets").post(cancelticket);
 userRouter.route("/getBookedMovie").get(getBookedMovie);
 
 
+
+userRouter.route('/getshow/:movie_id/:screen_id/:show_id').get(getShow)
 module.exports = userRouter;
  

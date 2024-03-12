@@ -113,7 +113,7 @@ try {
 }
 }
 
-export const FetchShow=(movie_id)=>async(dispatch)=>{
+export const FetchShow=({movie_id})=>async(dispatch)=>{
   
 }
 
@@ -124,7 +124,8 @@ export const AddNewShow=(show_detail)=>async(dispatch)=>{
     console.log("add new show",response.data)
     dispatch({type:ADD_SHOW_SUCCESS,payload:{"messege":response.data.messege}})
   } catch (error) {
-  
+     console.log(error)
+     dispatch({type:ADD_SHOW_FAILURE,payload:{"messege":error.response.data.message}})
   }
 
 }

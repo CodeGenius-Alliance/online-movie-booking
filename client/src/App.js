@@ -15,6 +15,10 @@ import AddShow from "./Components/AdminComponent/AddShow";
 import MovieDetails from "./Components/UserComponent/MovieDetails";
 import SeatSelection from "./Components/UserComponent/SeatSelection";
 import AddScreen from "./Components/AdminComponent/AddScreen";
+
+import Showslider from "./Components/HomeComponent/Showslider";
+import Footer from "./Components/HomeComponent/Footer";
+
 import ViewAllShows from "./Components/AdminComponent/ViewAllShows";
 import BookedMovies from "./Components/UserComponent/BookedMovies";
 import AllShow from "./Components/AdminComponent/AllShow";
@@ -43,19 +47,18 @@ function App() {
               ></Route>
             </Route>
             <Route path="/user">
-              <Route path=":movie_id" element={<MovieDetails />}>
-                
-              </Route>
+              <Route path=":movie_id" element={<MovieDetails />}></Route>
               <Route
-                  path=":movie_id/:screen_id/:show_id"
-                  element={<SeatSelection />}
-                ></Route>
-                <Route path="booked-movies" element={<BookedMovies/>} ></Route>
+                path=":movie_id/:screen_id/:show_id"
+                element={<SeatSelection />}
+              ></Route>
+              <Route path="booked-movies" element={<BookedMovies />}></Route>
             </Route>
 
             <Route path="/moviedetails" element={<MovieDetails />} />
             <Route path="/seatselection" element={<SeatSelection />} />
           </Routes>
+          <Footer />
         </BrowserRouter>
       </Provider>
     </>

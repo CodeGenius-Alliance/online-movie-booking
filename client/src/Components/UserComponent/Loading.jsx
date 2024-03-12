@@ -1,8 +1,11 @@
 import React from 'react'
 
+
 function Loading() {
   return (
-    <div>Loading</div>
+   <>
+   <img className='myimage' src={'../networkerror.png'} alt="error" />
+   </>
   )
 }
 

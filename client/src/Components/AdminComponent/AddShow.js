@@ -20,19 +20,19 @@ function AddShow(props) {
     */
   
     const dispatch=useDispatch();
-    const initialValue = {date:'', show_time:'',price:'',screen_id:'',movie_id:useParams().movie_id};
+    const initialValue = {date:'', show_time:'',price:'',screen:'',screen_name:'',movie_id:useParams().movie_id};
+    
     const available_screens=useSelector((state)=>state.admin.screens)
     const submitted_form=useSelector((state)=>state.admin.form)
  const navigate=useNavigate();
     const [show,setShow]=useState(initialValue);
-  
+    console.log(show);
     const AddShowFunction=(e)=>{
       e.preventDefault()
       dispatch(AddNewShow(show));
       navigate('/')
     }
 
-    console.log(initialValue)
     useEffect(()=>{
       dispatch(FetchScreens());
       console.log(available_screens)
@@ -53,11 +53,11 @@ function AddShow(props) {
              <div className='d-flex flex-wrap justify-content-between'><label htmlFor="Start date">show_time: </label><input type="time" placeholder='Start Time' onChange={(e)=>{setShow({...show,show_time:e.target.value})}}/></div>     
              <div className='d-flex flex-wrap justify-content-between'>
              <label htmlFor="Select theatre">Select Theatre: </label>
-              <select name="" id="" className='' onChange={(e)=>setShow({...show,screen_id:e.target.value})} >
+              <select name="" id="" className='' onChange={(e)=>setShow({...show,screen:e.target.value})} >
               <option value="">--Please choose an option--</option>
              {available_screens?.map((screen)=><>
              
-              <option value={screen?._id}>{screen?.screen_name}</option>
+              <option value={[screen?._id,screen?.screen_name]}>{screen?.screen_name}</option>
              
              </>)}
              </select></div>

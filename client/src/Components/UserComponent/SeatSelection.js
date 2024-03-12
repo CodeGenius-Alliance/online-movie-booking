@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { BookMovie, FetchShowSeats } from "../../Redux/Action/UserAction";
+import { BookMovie, FetchOneShow, FetchShowSeats } from "../../Redux/Action/UserAction";
 import Loading from "./Loading";
+import { FetchShow } from "../../Redux/Action/AdminAction";
 
 const SeatSelection = () => {
   const user = useSelector((state) => state.user.user);
@@ -16,6 +17,10 @@ const SeatSelection = () => {
   const { movie_id, screen_id, show_id } = useParams();
   const [movieDetail,setMovieDetail]=useState();
   const [booked, setbooked] = useState(0);
+  
+  const showDetail=useSelector((state)=>state.user.oneShow)
+  console.log("show detail ",showDetail)
+  
   const [matrix, setMatrix] = useState(
     Array.from({ length: rows }, () => Array.from({ length: cols }, () => null))
   );
@@ -40,10 +45,12 @@ const SeatSelection = () => {
   };
 
   useEffect(() => {
+    dispatch(FetchOneShow({movie_id,screen_id,show_id}))
+
     setbooked(0);
     let seatsbooked = 0;
     let copy = [...matrix];
-    booking.map((getseat) =>
+    booking?.map((getseat) =>
       getseat.seats.map((seat) => {
         console.log("i am seats ", seat);
         copy[seat.row][seat.col] = 1;
@@ -52,6 +59,7 @@ const SeatSelection = () => {
     );
     setMatrix(copy);
     setbooked(seatsbooked);
+ 
     console.log(matrix);
   }, [booking,dispatch,navigate]);
 
@@ -104,6 +112,7 @@ const SeatSelection = () => {
               {rows * cols - booked}
             </span>
           </div>
+          
         </div>
       </div>
       <div
@@ -115,7 +124,7 @@ const SeatSelection = () => {
           flexWrap: "wrap",
         }}
       >
-        {seatArray.map((row, rowIndex) => (
+        {seatArray?.map((row, rowIndex) => (
           <div
             key={rowIndex}
             style={{
@@ -124,7 +133,7 @@ const SeatSelection = () => {
               marginBottom: "5px",
             }}
           >
-            {row.map((seat, colIndex) => {
+            {row?.map((seat, colIndex) => {
               return matrix[rowIndex][colIndex] == 1 ? (
                 <div
                   key={colIndex}
@@ -201,9 +210,9 @@ const SeatSelection = () => {
       </div>
       <center>
         <div id="bookingStatus" className="heads">
-          {selectedSeats.length > 0 && (
+          {selectedSeats?.length > 0 && (
             <p>
-              {selectedSeats.map((seat) => (
+              {selectedSeats?.map((seat) => (
                 <span key={`${seat.row}_${seat.col}`}>
                   {seatArray[seat.row][seat.col]}
                   {" , "}
@@ -215,7 +224,7 @@ const SeatSelection = () => {
         </div>
       </center>
       <center>
-        <div className="heads">Total Price = {selectedSeats.length * 100}</div>
+        <div className="heads">Total Price = {( (showDetail?.price)? showDetail.price*selectedSeats?.length:<>reloading</> )}</div>
         <button onClick={() =>{dispatch(BookMovie({ movie_id, screen_id, show_id }, selectedSeats));
       dispatch(FetchShowSeats({ movie_id, screen_id, show_id }))
      

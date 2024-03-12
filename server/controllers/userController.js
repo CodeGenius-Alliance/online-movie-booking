@@ -275,7 +275,7 @@ const cancelticket = async (req, res) => {
           { "screenElem.screen_id": screen_id },
           { "showElem._id": show_id },
         ],
-      },
+      }
     );
     let user = await userModel.findOneAndUpdate(
       { email: user_id },
@@ -284,7 +284,12 @@ const cancelticket = async (req, res) => {
       }
     );
 
-    res.json({ user: user, movie: movie });
+    let movieDetail=await user.findById(user_id)
+
+
+
+
+    res.json({ user: user, movie: movie ,bookedmovies:movieDetail.bookedmovie});
   } catch (error) {
     console.log(error);
     res.json({ messege: error });
@@ -306,6 +311,27 @@ const getBookedMovie = async (req, res) => {
     res.status(404).json({ bookedmovies: "server error" });
   }
 };
+const getShow=async (req, res) => {
+  const { movie_id, screen_id, show_id } = req.params;
+  console.log(req.params)
+  //console.log("here ", movie_id, " screen ", screen_id, " show ", show_id);
+  try {
+    const movie = await MovieModule.findOne({ _id: movie_id });
+    const screen = await movie.screen.find(
+      (screen) => screen.screen_id === screen_id
+    );
+    // console.log("screen ",screen)
+    if (!screen) {
+      res.status(404).json({ messege: "out of date" });
+    }
+    const show = screen.show.find((show) => show._id == show_id);
+    //console.log("show ",show)
+    res.status(200).json({ messege: "show ready", show: show });
+  } catch (error) {
+    console.log(error);
+    res.json({ error: error });
+  }
+};
 
 module.exports = {
   getOneMovie,
@@ -317,4 +343,5 @@ module.exports = {
   getAllMovies,
   getSeats,
   bookMovieDetail,
+  getShow
 };

@@ -26,6 +26,9 @@ export const FETCH_SEATS_FAILURE="FETCH_SEATS_FAILURE"
 export const DETAIL_MOVIE_SUCCESS="DETAIL_MOVIE_SUCCESS"
 export const DETAIL_MOVIE_FAILURE="DETAIL_MOVIE_FAILURE"
 
+export const FETCH_ONE_SHOW_SUCCESS="FETCH_ONE_SHOW_SUCCESS"
+export const FETCH_ONE_SHOW_FAILURE="FETCH_ONE_SHOW_FAILURE"
+
 export const Loginuser = (userdetail) => async (dispatch) => {
  
   //login code -- working checked creating cookies also
@@ -62,6 +65,15 @@ export const Registeruser = (userdetail) => async (dispatch) => {
   }
 };
 
+export const FetchOneShow=({movie_id,screen_id,show_id})=>async(dispatch)=>{
+  try {
+    const response=await axios.get(base_url+`/getshow/${movie_id}/${screen_id}/${show_id}`,{withCredentials:true})
+    //console.log("res",response.data.show.bookings)
+    dispatch({type:FETCH_ONE_SHOW_SUCCESS,payload:{"messege":"ok",show:response.data?.show}})
+  } catch (error) {
+    dispatch({type:FETCH_ONE_SHOW_FAILURE})
+  }
+}
 export const FetchShowSeats=({movie_id,screen_id,show_id})=>async(dispatch)=>{
   try {
     const response=await axios.get(base_url+`/getseats/${movie_id}/${screen_id}/${show_id}`,{withCredentials:true})
@@ -109,7 +121,7 @@ export const FetchBookMovie=()=>async(dispatch)=>{
 export const CancelMovieTickets=(detail)=>async(dispatch)=>{
     try {
         const response= await axios.post(base_url+'/cancelTickets',detail,{withCredentials:true})
-        dispatch({type:CANCEL_MOVIE_SUCCESS,payload:{messege:response.data.messege,bookedmovie:response.data.movie}})
+        dispatch({type:CANCEL_MOVIE_SUCCESS,payload:{messege:response.data.messege,bookedmovie:response.data.bookedmovies}})
     } catch (error) {
         dispatch({type:CANCEL_MOVIE_FAILURE,payload:{messege:error.response.data.messege}})
     }

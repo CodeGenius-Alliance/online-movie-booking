@@ -1,6 +1,6 @@
 
 import { useNavigate } from "react-router-dom"
-import { BOOK_MOVIE_FAILURE, BOOK_MOVIE_SUCCESS, CANCEL_MOVIE_FAILURE, CANCEL_MOVIE_SUCCESS, FETCH_BOOK_MOVIE_FAILURE, FETCH_BOOK_MOVIE_SUCCESS, FETCH_SEATS_FAILURE, FETCH_SEATS_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_SUCCESS, REGISTER_USER_FAILURE, REGISTER_USER_SUCCESS } from "../Action/UserAction"
+import { BOOK_MOVIE_FAILURE, BOOK_MOVIE_SUCCESS, CANCEL_MOVIE_FAILURE, CANCEL_MOVIE_SUCCESS, FETCH_BOOK_MOVIE_FAILURE, FETCH_BOOK_MOVIE_SUCCESS, FETCH_ONE_SHOW_FAILURE, FETCH_ONE_SHOW_SUCCESS, FETCH_SEATS_FAILURE, FETCH_SEATS_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_SUCCESS, REGISTER_USER_FAILURE, REGISTER_USER_SUCCESS } from "../Action/UserAction"
 
 export const initialvalue={
     user:JSON.parse(localStorage.getItem('user')) ||{} ,
@@ -8,6 +8,7 @@ export const initialvalue={
     movie:[],
     seats:{},
     booking:[],
+    oneShow:{},
     bookedmovies:[]
 }
 
@@ -42,7 +43,7 @@ export const UserReducer=(state=initialvalue,action)=>{
 
         case CANCEL_MOVIE_SUCCESS:
             alert("tickets cancel")
-            return {...state,movie:[...state.movie,action.payload?.movie]}
+            return {...state,movie:[...state.movie,action.payload?.movie],bookedmovies:action.payload.bookedmovie}
 
         case CANCEL_MOVIE_FAILURE:
             alert("error")
@@ -65,6 +66,14 @@ export const UserReducer=(state=initialvalue,action)=>{
             
         case FETCH_SEATS_FAILURE:
             return {...state}
+
+
+        case FETCH_ONE_SHOW_SUCCESS:
+            return {...state,oneShow:action.payload.show}
+
+        case FETCH_ONE_SHOW_FAILURE:
+            return state;
+
         default:
             return state;
     }

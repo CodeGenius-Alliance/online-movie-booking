@@ -3,14 +3,18 @@ const movieModel = require("../models/MovieModule");
 
 const addShows = asyncHandler(async (req, res) => {
   //fine
-  const { date, show_time, show_id, price, screen_id, movie_id } = req.body;
+  const { date,screen,  show_time, show_id, price, movie_id } = req.body;
 
+  const sc=screen.split(',')
+  const screen_id=sc[0];
+const screen_name=sc[1];
+//console.log(sc)
   try {
     let flag = 1;
     let info = await movieModel.findOne({ _id: movie_id });
     let atr = info.screen;
     atr.map((x) => {
-      if (x.screen_id === screen_id) {
+      if (x.screen_id == screen_id) {
         flag = 0;
       }
     });
@@ -18,29 +22,56 @@ const addShows = asyncHandler(async (req, res) => {
     if (flag) {
       let updatedMovie = await movieModel.updateOne(
         { _id: movie_id },
-        { $push: { screen: { screen_id } } }
+        { $push: { screen: { screen_id ,screen_name} } }
       );
+    }
+    
+    let my_movie= await movieModel.findOne({_id:movie_id})
+
+    let my_screen= my_movie.screen.find((screen)=>screen.screen_id == screen_id)
+    let showexist
+
+    const dateObject = new Date(date);
+    const timestampToSearch = dateObject.getDate();
+   //console.log(dateObject,"     heheh ")
+   
+   if(my_screen)
+        showexist= my_screen.show.find((show) => {
+          // Convert the show date to timestamp for comparison
+          const showTimestamp = new Date(show.date).getDate();
+          return showTimestamp === timestampToSearch;
+      });
+
+    // let screenexist=await movieModel.findOne( { _id: movie_id ,"screen.screen_id":screen_id})
+    // let showexist= screenexist.screen.find((show)=>((show.show_time == show_time ) && (show.date == date)))
+
+   // console.log("   show exist at that time ",showexist,"       ,      ",my_screen)
+    if(showexist)
+    {
+      return res.status(404).json({"message":"already have some show please choose another date or time"})
     }
 
     let chk = await movieModel.updateOne(
-      { _id: movie_id, "screen.screen_id": screen_id },
+      { _id: movie_id, "screen.screen_id": screen_id  },
       { $push: { "screen.$.show": { date, show_time, price } } }
     );
+
 
     if (!chk) {
       return res.status(404).json({ message: "Movie not found" });
     }
+    else
 
-    res.status(201).json({ message: "Show has been added" });
+    return res.status(201).json({ message: "Show has been added" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error" });
   }
 });
 
 const viewBookings = asyncHandler(async (req, res) => {
   //fine
-  const { movie_id, screen_id, show_id } = req.body;
+  const { movie_id,screen_id, show_id } = req.body;
   console.log(req.body)
   try {
     const movie = await movieModel.findOne({ _id: movie_id });

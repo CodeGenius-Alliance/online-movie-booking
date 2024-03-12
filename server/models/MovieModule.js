@@ -22,6 +22,7 @@ const movieSchema = new mongoose.Schema({
     {
       // row , col --> add
       screen_id: { type: String },
+      screen_name:{type:String},
       show: [
         {
           show_id: { type: String, sparse: true },
@@ -29,7 +30,6 @@ const movieSchema = new mongoose.Schema({
           show_time: { type: String },
           price: { type: String },
           bookings: [
-            
             {
               _id: mongoose.Schema.Types.ObjectId,
               user_id: { type: String },
