@@ -1,10 +1,12 @@
 import React from 'react'
-
+import './Loading.css'
 
 function Loading() {
   return (
    <>
-   <img className='myimage' src={'../networkerror.png'} alt="error" />
+   <div className='loader-box '>
+   <div class="loader"></div>
+   </div>
    </>
   )
 }

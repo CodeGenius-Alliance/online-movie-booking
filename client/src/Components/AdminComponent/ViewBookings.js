@@ -23,6 +23,7 @@ function ViewBookings() {
    
     const [movieDetail,setMovieDetail]=useState();
     const [booked, setbooked] = useState(0);
+    const [seatArray,setSeatsArray] = useState([]);
     const [matrix, setMatrix] = useState(
       Array.from({ length: rows }, () => Array.from({ length: cols }, () => null))
     );
@@ -62,21 +63,20 @@ function ViewBookings() {
       console.log(matrix);
     }, [booking,dispatch,navigate]);
   
+    useEffect(()=>{
+      setMatrix(Array.from({ length: rows }, () => Array.from({ length: cols }, () => null)))
+      const seatarr=[];
     
-    const seatArray = [];
-  
-  
-  
-  
-  
-    for (let j = 0; j < cols; j++) {
-      let temp = [];
-      for (let i = 0; i < rows; i++) {
-        let seatName = String.fromCharCode(65 + j) + (i + 1);
-        temp.push(seatName);
+      for (let j = 0; j < cols; j++) {
+        let temp = [];
+        for (let i = 0; i < rows; i++) {
+          let seatName = String.fromCharCode(65 + j) + (i + 1);
+          temp.push(seatName);
+        }
+        seatarr.push(temp);
       }
-      seatArray.push(temp);
-    }
+      setSeatsArray(seatarr)
+    },[navigate])
     if(!admin.email)
     {
       navigate('/login')
@@ -86,9 +86,9 @@ function ViewBookings() {
     return (
       <div>
         <center>
-          <h1>Seat Selection</h1>
+          <h1>BOOKED SEATS</h1>
         </center>
-        <hr />
+       
         <div className="heads">
           <div className="d-flex justify-content-between flex-wrap">
             <div>
@@ -219,8 +219,7 @@ function ViewBookings() {
           </div>
         </center>
         <br />
-        <hr />
-        <center><div><h1>USER LIST WHO BOOKED SEATS</h1></div></center>
+        
        
       </div>
     );

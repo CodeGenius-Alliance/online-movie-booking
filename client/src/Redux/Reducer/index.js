@@ -21,6 +21,6 @@ export const CommonReducer=(state=initialValue,action)=>
         case FECTH_ONE_MOVIE_FAILURE:
             return {...state,oneMovie:{}}
         default :
-            return state;
+            return {...state};
     }
 }

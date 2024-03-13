@@ -16,3 +16,23 @@ p {
   margin-top: 5px;
   margin-bottom: 5px;
 }
+.contain {
+  position: relative;
+}
+
+.centered {
+  position: absolute;
+  font-family: cursive;
+  font-weight: bolder;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 68px;
+}
+
+.image-no-booking{ 
+  width: 100%;
+  height: auto;
+  opacity: 0.4;
+  box-sizing: border-box;
+}

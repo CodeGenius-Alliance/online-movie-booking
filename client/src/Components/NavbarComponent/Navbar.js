@@ -28,6 +28,7 @@ function Navbar() {
             <p>ADMIN</p>
             <div>
               <button
+              className="nav-button"
                 onClick={(e) => {
                   dispatch(Logout());
                   logoutMe();
@@ -65,6 +66,7 @@ function Navbar() {
 
             <div>
               <button
+              className="nav-button"
                 onClick={(e) => {
                   logoutMe();
                   dispatch(Logout());
@@ -86,10 +88,10 @@ function Navbar() {
             <h2>TicketBlitz</h2>
           </Link>
           <div className="btn-grp">
-            <button className="login-btn" onClick={() => navigate("/login")}>
+            <button className="nav-button login-btn"  onClick={() => navigate("/login")}>
               <span>Login</span>
             </button>
-            <button className="login-btn" onClick={() => navigate("/register")}>
+            <button className="login-btn nav-button" onClick={() => navigate("/register")}>
               <span>Register</span>
             </button>
           </div>

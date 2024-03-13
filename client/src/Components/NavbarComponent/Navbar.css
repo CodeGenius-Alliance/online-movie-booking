@@ -7,11 +7,15 @@
   align-items: center;
   overflow-x: hidden;
   overflow-y: hidden;
-  margin-top: 5px;
+ 
   padding-left: 2%;
   padding-right: 2%;
-
+color: white !important;
   height: 55px;
+  position: sticky;
+  top: 0;
+  background-image: linear-gradient(to right, #10898d9d , #02474d);
+  z-index: 1;
 }
 .login-btn {
   text-decoration: none;
@@ -63,5 +67,20 @@
 
 .logo {
   text-decoration: none;
-  color: black;
+  color: white !important;
+  font-size: 18px;
+  letter-spacing: 5px;
+  text-indent: 20px;
+}
+.nav-button {
+  padding: 7px;
+  margin: 10px;
+  background-color: transparent;
+  color: white;
+ 
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  border: none;
+  font-size: 18px;
 }

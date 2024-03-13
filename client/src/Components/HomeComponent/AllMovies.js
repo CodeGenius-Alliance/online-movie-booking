@@ -24,7 +24,7 @@ function AllMovies() {
     <>
       <div>
         {" "}
-        <Toaster position="bottom-right" richColors />
+       
       </div>
       {admin && admin.email ? (
         <>

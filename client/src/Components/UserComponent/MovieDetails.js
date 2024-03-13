@@ -12,11 +12,14 @@ const MovieDetails = () => {
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const movie = useSelector((state) => state.common.oneMovie);
+  
 
   useEffect(() => {
     dispatch(FetchOneMovie(movie_id));
-    console.log(movie?.screen);
-  }, [dispatch]);
+   
+  }, [dispatch,useParams]);
+
+  
 
   //console.log("movie",movie)
 

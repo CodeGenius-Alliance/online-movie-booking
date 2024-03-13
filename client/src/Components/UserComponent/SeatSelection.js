@@ -8,6 +8,7 @@ import { FetchShow } from "../../Redux/Action/AdminAction";
 const SeatSelection = () => {
   const user = useSelector((state) => state.user.user);
   const booking = useSelector((state) => state.user.booking);
+
   const rows = 10;
   const cols = 10;
 
@@ -17,13 +18,15 @@ const SeatSelection = () => {
   const { movie_id, screen_id, show_id } = useParams();
   const [movieDetail,setMovieDetail]=useState();
   const [booked, setbooked] = useState(0);
+  const [seatArray,setSeatsArray] = useState([]);
   
   const showDetail=useSelector((state)=>state.user.oneShow)
-  console.log("show detail ",showDetail)
+
   
   const [matrix, setMatrix] = useState(
     Array.from({ length: rows }, () => Array.from({ length: cols }, () => null))
   );
+
   const navigate = useNavigate();
  
   const selectSeat = (row, col) => {
@@ -49,10 +52,11 @@ const SeatSelection = () => {
 
     setbooked(0);
     let seatsbooked = 0;
+   
     let copy = [...matrix];
     booking?.map((getseat) =>
-      getseat.seats.map((seat) => {
-        console.log("i am seats ", seat);
+      getseat?.seats.map((seat) => {
+       // console.log("i am seats ", seat);
         copy[seat.row][seat.col] = 1;
         seatsbooked += 1;
       })
@@ -60,24 +64,14 @@ const SeatSelection = () => {
     setMatrix(copy);
     setbooked(seatsbooked);
  
-    console.log(matrix);
+   // console.log("mat ",matrix);
   }, [booking,dispatch,navigate]);
 
   
-  const seatArray = [];
-
-
-
-  useEffect(() => {
-    dispatch(FetchShowSeats({ movie_id, screen_id, show_id }));
-
-    if (user && !user.email) {
-      return navigate("/login");
-    }
-  }, [user,dispatch, booked, movie_id, screen_id, show_id]);
-
-  
-
+ 
+useEffect(()=>{
+  setMatrix(Array.from({ length: rows }, () => Array.from({ length: cols }, () => null)))
+  const seatarr=[];
 
   for (let j = 0; j < cols; j++) {
     let temp = [];
@@ -85,8 +79,25 @@ const SeatSelection = () => {
       let seatName = String.fromCharCode(65 + j) + (i + 1);
       temp.push(seatName);
     }
-    seatArray.push(temp);
+    seatarr.push(temp);
   }
+  setSeatsArray(seatarr)
+},[navigate])
+
+
+  useEffect(() => {
+    dispatch(FetchShowSeats({ movie_id, screen_id, show_id }));
+
+    if (user && !user.email) {
+      return navigate("/login");
+
+    }
+  }, [user, dispatch, booked, movie_id, screen_id, show_id, navigate]);
+
+  
+
+ 
+//  console.log("here array is ",seatArray)
 
 
   return (

@@ -6,7 +6,7 @@ import {
   FetchBookMovie,
   FetchMovieDetail,
 } from "../../Redux/Action/UserAction";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 function BookedMovies() {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ function BookedMovies() {
   useEffect(() => {
     dispatch(FetchBookMovie());
     console.log(bookedmovies);
-  }, [ dispatch]);
+  }, [dispatch]);
 
   const dateConverter = (date) => {
     const originalDate = new Date(date);
@@ -27,15 +27,14 @@ function BookedMovies() {
 
   return (
     <div className="main">
-      <center>
-        <div>
-          <h1>BookedMovies</h1>
-        </div>
-      </center>
-
-      {bookedmovies ? (
-        bookedmovies.map((item, index) => (
+      {bookedmovies.length >= 1 ? (
+        bookedmovies?.map((item, index) => (
           <>
+            <center>
+              <div>
+                <h1>BookedMovies</h1>
+              </div>
+            </center>
             <div className="booked-movie-div">
               {/* <div>
                 <h1>{index + 1}</h1>
@@ -78,7 +77,20 @@ function BookedMovies() {
           </>
         ))
       ) : (
-        <>YOUR BOOKING</>
+        <>
+          <div className="contain">
+            <img
+            className="image-no-booking"
+              src="/no-booking.jpg"
+              alt="Cinque Terre"
+              width="1000"
+              height="300"
+            />
+            <div class="centered">NO BOOKING <br />
+            <center><Link to='/' style={{fontSize:'17px'}}>click here to book tickets</Link></center>
+            </div>
+          </div>
+        </>
       )}
     </div>
   );
