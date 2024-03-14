@@ -27,14 +27,16 @@ function BookedMovies() {
 
   return (
     <div className="main">
-      {bookedmovies.length >= 1 ? (
-        bookedmovies?.map((item, index) => (
-          <>
-            <center>
+      <center>
               <div>
                 <h1>BookedMovies</h1>
               </div>
             </center>
+      {bookedmovies.length >= 1 ? (
+        bookedmovies?.map((item, index) => (
+          
+          <>
+            
             <div className="booked-movie-div">
               {/* <div>
                 <h1>{index + 1}</h1>

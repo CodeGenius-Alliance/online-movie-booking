@@ -284,12 +284,12 @@ const cancelticket = async (req, res) => {
       }
     );
 
-    let movieDetail=await user.findById(user_id)
+    let movieDetail=await userModel.findOne({email:user_id})
 
 
 
 
-    res.json({ user: user, movie: movie ,bookedmovies:movieDetail.bookedmovie});
+    res.json({ user: user, bookedmovies:movieDetail.bookedmovie});
   } catch (error) {
     console.log(error);
     res.json({ messege: error });
