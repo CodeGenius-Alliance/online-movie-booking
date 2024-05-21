@@ -111,10 +111,10 @@ const getOneMovie = async (req, res) => {
     // console.log(req);
     const Movie = await MovieModule.findOne({ _id: movie_id });
     // console.log("Movie",Movie)
-    res.status(200).json({ movie: Movie, messege: "movie fetch successfully" });
+    res.status(200).json({ movie: Movie, message: "movie fetch successfully" });
   } catch (error) {
     console.log(error);
-    res.status(404).json({ messege: "server error occur" });
+    res.status(404).json({ message: "server error occur" });
   }
 };
 
@@ -129,11 +129,11 @@ const getSeats = async (req, res) => {
     );
     // console.log("screen ",screen)
     if (!screen) {
-      res.status(404).json({ messege: "out of date" });
+      res.status(404).json({ message: "out of date" });
     }
     const show = screen.show.find((show) => show._id == show_id);
     //console.log("show ",show)
-    res.status(200).json({ messege: "show ready", show: show });
+    res.status(200).json({ message: "show ready", show: show });
   } catch (error) {
     console.log(error);
     res.json({ error: error });
@@ -180,7 +180,7 @@ const bookMovie = async (req, res) => {
     );
     // console.log("screen ",screen)
     if (!screen) {
-      res.status(404).json({ messege: "out of date" });
+      res.status(404).json({ message: "out of date" });
     }
     const show = screen.show.find((show) => show._id == show_id);
 
@@ -239,7 +239,7 @@ const bookMovie = async (req, res) => {
     );
 
     res.status(200).json({
-      messege: "your movieticket has been booked",
+      message: "your movieticket has been booked",
       user: user,
       movie: movie,
     });
@@ -292,7 +292,7 @@ const cancelticket = async (req, res) => {
     res.json({ user: user, bookedmovies:movieDetail.bookedmovie});
   } catch (error) {
     console.log(error);
-    res.json({ messege: error });
+    res.json({ message: error });
   }
 };
 
@@ -322,11 +322,11 @@ const getShow=async (req, res) => {
     );
     // console.log("screen ",screen)
     if (!screen) {
-      res.status(404).json({ messege: "out of date" });
+      res.status(404).json({ message: "out of date" });
     }
     const show = screen.show.find((show) => show._id == show_id);
     //console.log("show ",show)
-    res.status(200).json({ messege: "show ready", show: show });
+    res.status(200).json({ message: "show ready", show: show });
   } catch (error) {
     console.log(error);
     res.json({ error: error });

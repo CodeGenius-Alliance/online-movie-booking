@@ -52,6 +52,37 @@
   transition: 200ms transform ease-in-out;
 }
 
+.deleted-movie{
+  position: relative;
+  border-radius: 8px;
+  width: 240px;
+  height: 450px;
+  transition: 200ms transform ease-in-out;
+  
+}
+
+
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+ opacity: 0.5;
+  z-index: 2;
+  color: aliceblue;
+  border-radius: 10px;
+  font-size: 24px !important;
+  padding: 1rem;
+  font-family: 'Times New Roman', Times, serif !important;
+  background-color: rgb(0, 0, 0);
+}
+.centered:hover{
+  opacity: 1;
+ 
+}
+
 .movie-admin:hover {
   transform: scale(1.05);
   overflow: hidden;

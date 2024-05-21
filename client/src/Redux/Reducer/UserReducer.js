@@ -23,14 +23,14 @@ export const UserReducer=(state=initialvalue,action)=>{
             return {...state,user:action.payload.user,session:true}
 
         case LOGIN_USER_FAILURE:
-            alert(action.payload.messege)
+            alert(action.payload.message)
             return state;
 
         case REGISTER_USER_SUCCESS:
             return state;
 
         case REGISTER_USER_FAILURE:
-            alert(action.payload.messege)
+            alert(action.payload.message)
             return state;
 
         case BOOK_MOVIE_SUCCESS:
@@ -54,7 +54,7 @@ export const UserReducer=(state=initialvalue,action)=>{
             return {...state,bookedmovies:action.payload?.bookedmovies}
 
         case FETCH_BOOK_MOVIE_FAILURE:
-            alert(action.payload.messege)
+            alert(action.payload.message)
             return state
 
         case LOGOUT_SUCCESS:

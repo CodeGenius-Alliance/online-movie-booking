@@ -15,8 +15,11 @@
   display: flex;
   justify-content: flex-end;
 }
+
 button .link {
   text-decoration: none;
+  overflow-x: hidden;
+ 
 }
 .main {
   padding-left: 2% !important;

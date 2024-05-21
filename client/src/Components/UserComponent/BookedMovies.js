@@ -32,7 +32,7 @@ function BookedMovies() {
                 <h1>BookedMovies</h1>
               </div>
             </center>
-      {bookedmovies.length >= 1 ? (
+      {bookedmovies?.length >= 1 ? (
         bookedmovies?.map((item, index) => (
           
           <>

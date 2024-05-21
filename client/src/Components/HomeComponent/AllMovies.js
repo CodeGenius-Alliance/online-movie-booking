@@ -5,6 +5,7 @@ import "./AllMovies.css";
 import "./Home.css";
 import { Link } from "react-router-dom";
 import { Toaster, toast } from "sonner";
+import { DeleteMovie } from "../../Redux/Action/AdminAction";
 
 function AllMovies() {
   const user = useSelector((state) => state.user.user);
@@ -20,36 +21,62 @@ function AllMovies() {
     });
   }, []);
 
+  const DeleteMovieHandler=(movie_id)=>{
+    const c=window.confirm("DO YOU REALY WANT TO DELETE MOVIE?")
+    console.log(c)
+    if(c)
+      dispatch(DeleteMovie(movie_id))
+  }
+
   return (
     <>
-      <div>
-        {" "}
-       
-      </div>
+      <div> </div>
       {admin && admin.email ? (
         <>
           <div className="movies-container">
             <div className="movie-selection">
-              {movies?.map((movie) => (
-                <div className="movie-admin" key={movie._id}>
-                  <img
-                    className="movie-poster"
-                    src={movie["posterUrl"]}
-                    alt={movie.title}
-                  />
-                  <div className="movie-title">{movie.title}</div>
+              {movies?.map((movie) => {
+                return movie.screen.length === 0 ? (
+                  <div className=" deleted-movie" key={movie._id}>
+                    <img
+                      className="movie-poster"
+                      src={movie["posterUrl"]}
+                      alt={movie.title}
+                    />
+                    <div className="movie-title">{movie.title}</div>
 
-                  <div className="add_show_btn">
-                    <Link className="link" to={`/admin/addshow/${movie._id}`}>
-                      <span className="movie-title">Add Show</span>
-                    </Link>
+                    <div className="add_show_btn ">
+                      <button class="centered" onClick={()=>DeleteMovieHandler(movie._id)}>Delete</button>
+                      <Link className="link" to={`/admin/addshow/${movie._id}`}>
+                        <span className="movie-title">Add Show</span>
+                      </Link>
 
-                    <Link className="link" to={`/admin/${movie._id}`}>
-                      <span className="movie-title">View Show</span>
-                    </Link>
+                      <Link className="link" to={`/admin/${movie._id}`}>
+                        <span className="movie-title">View Show</span>
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ) : (
+                  <div className="movie-admin" key={movie._id}>
+                    <img
+                      className="movie-poster"
+                      src={movie["posterUrl"]}
+                      alt={movie.title}
+                    />
+                    <div className="movie-title">{movie.title}</div>
+
+                    <div className="add_show_btn">
+                      <Link className="link" to={`/admin/addshow/${movie._id}`}>
+                        <span className="movie-title">Add Show</span>
+                      </Link>
+
+                      <Link className="link" to={`/admin/${movie._id}`}>
+                        <span className="movie-title">View Show</span>
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </>

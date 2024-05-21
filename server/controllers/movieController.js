@@ -70,5 +70,14 @@ const getMovieById = async(req,res,next)=>{
     return res.status(200).json({movie})
 }
 
+const deleteMovie= async(req,res,next)=>{
+ const {movie_id}=req.body;
+  try{
+      movie = await MovieModule.findOneAndDelete({"_id":movie_id})
+      res.status(200).json({"message":"movie has been deleted"})
+  }catch(err){
+      return console.log(err)
+  }
 
-module.exports = {addMovie , getAllMovies , getMovieById};
+}
+module.exports = {addMovie , getAllMovies , getMovieById,deleteMovie};

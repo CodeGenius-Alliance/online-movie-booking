@@ -36,10 +36,10 @@ export const Loginuser = (userdetail) => async (dispatch) => {
     
     const response= await axios.post(base_url+'/login',userdetail,{withCredentials:true})
     //console.log(response.data)
-    dispatch({type:LOGIN_USER_SUCCESS,payload:{user:response.data?.user,messege:response.data?.messege}}) 
+    dispatch({type:LOGIN_USER_SUCCESS,payload:{user:response.data?.user,message:response.data?.message}}) 
   } catch (error) {
     // console.log(error)
-    dispatch({type:LOGIN_USER_FAILURE,payload:{messege:error.response.data.messege}}) 
+    dispatch({type:LOGIN_USER_FAILURE,payload:{message:error.response.data.message}}) 
   }
 };
 
@@ -59,9 +59,9 @@ export const Registeruser = (userdetail) => async (dispatch) => {
 
   try {
     const response= await axios.post(base_url+'/signup',userdetail)
-    dispatch({type:REGISTER_USER_SUCCESS,payload:{user:response.data.user,messege:response.data.messege}}) 
+    dispatch({type:REGISTER_USER_SUCCESS,payload:{user:response.data.user,message:response.data.message}}) 
   } catch (error) {
-    dispatch({type:REGISTER_USER_FAILURE,payload:{messege:error.response.data.messege}}) 
+    dispatch({type:REGISTER_USER_FAILURE,payload:{message:error.response.data.message}}) 
   }
 };
 
@@ -69,7 +69,7 @@ export const FetchOneShow=({movie_id,screen_id,show_id})=>async(dispatch)=>{
   try {
     const response=await axios.get(base_url+`/getshow/${movie_id}/${screen_id}/${show_id}`,{withCredentials:true})
     //console.log("res",response.data.show.bookings)
-    dispatch({type:FETCH_ONE_SHOW_SUCCESS,payload:{"messege":"ok",show:response.data?.show}})
+    dispatch({type:FETCH_ONE_SHOW_SUCCESS,payload:{"message":"ok",show:response.data?.show}})
   } catch (error) {
     dispatch({type:FETCH_ONE_SHOW_FAILURE})
   }
@@ -78,7 +78,7 @@ export const FetchShowSeats=({movie_id,screen_id,show_id})=>async(dispatch)=>{
   try {
     const response=await axios.get(base_url+`/getseats/${movie_id}/${screen_id}/${show_id}`,{withCredentials:true})
     //console.log("res",response.data.show.bookings)
-    dispatch({type:FETCH_SEATS_SUCCESS,payload:{"messege":"ok",booking:response.data?.show?.bookings}})
+    dispatch({type:FETCH_SEATS_SUCCESS,payload:{"message":"ok",booking:response.data?.show?.bookings}})
   } catch (error) {
     dispatch({type:FETCH_SEATS_FAILURE})
   }
@@ -89,10 +89,10 @@ export const FetchMovieDetail=({movie_id,screen_id,show_id})=>async(dispatch)=>{
   try {
       const response= await axios.get(base_url+'/bookMovieDetail',{movie_id,screen_id,show_id},{withCredentials:true})
      console.log(response)
-      dispatch({type:DETAIL_MOVIE_SUCCESS,payload:{messege:response.data.messege}})
+      dispatch({type:DETAIL_MOVIE_SUCCESS,payload:{message:response.data.message}})
   } catch (error) {
     console.log(error)
-      dispatch({type:DETAIL_MOVIE_FAILURE,payload:{messege:error.response.data.messege}})
+      dispatch({type:DETAIL_MOVIE_FAILURE,payload:{message:error.response.data.message}})
   }
 }
 export const BookMovie=({movie_id,screen_id,show_id,movie_name,show_date,screen_name},seatsBooked)=>async(dispatch)=>{
@@ -100,30 +100,30 @@ export const BookMovie=({movie_id,screen_id,show_id,movie_name,show_date,screen_
     try {
         const response= await axios.post(base_url+'/bookMovie',{seats:seatsBooked,movie_id,screen_id,show_id,movie_name,show_date,screen_name},{withCredentials:true})
        
-        dispatch({type:BOOK_MOVIE_SUCCESS,payload:{messege:response.data.messege}})
+        dispatch({type:BOOK_MOVIE_SUCCESS,payload:{message:response.data.message}})
     } catch (error) {
       console.log(error)
-        dispatch({type:BOOK_MOVIE_FAILURE,payload:{messege:error.response.data.messege}})
+        dispatch({type:BOOK_MOVIE_FAILURE,payload:{message:error.response.data.message}})
     }
 }
 
 export const FetchBookMovie=()=>async(dispatch)=>{
     try {
-        const response=await (await axios.get(base_url+'/getBookedMovie',{withCredentials:true}))
+        const response=(await axios.get(base_url+'/getBookedMovie',{withCredentials:true}))
        console.log("hi ",response.data.bookedmovies)
-        dispatch({type:FETCH_BOOK_MOVIE_SUCCESS,payload:{messege:response.data.messege,bookedmovies:response.data.bookedmovies}})
+        dispatch({type:FETCH_BOOK_MOVIE_SUCCESS,payload:{message:response.data.message,bookedmovies:response.data.bookedmovies}})
     } catch (error) {
       console.log(error)
-        dispatch({type:FETCH_BOOK_MOVIE_FAILURE,payload:{messege:error.response.data.messege}})
+        dispatch({type:FETCH_BOOK_MOVIE_FAILURE,payload:{message:error.response.data.message}})
     }
 }
 
 export const CancelMovieTickets=(detail)=>async(dispatch)=>{
     try {
         const response= await axios.post(base_url+'/cancelTickets',detail,{withCredentials:true})
-        dispatch({type:CANCEL_MOVIE_SUCCESS,payload:{messege:response.data.messege,bookedmovie:response.data.bookedmovies}})
+        dispatch({type:CANCEL_MOVIE_SUCCESS,payload:{message:response.data.message,bookedmovie:response.data.bookedmovies}})
     } catch (error) {
-        dispatch({type:CANCEL_MOVIE_FAILURE,payload:{messege:error.response.data.messege}})
+        dispatch({type:CANCEL_MOVIE_FAILURE,payload:{message:error.response.data.message}})
     }
 }
 

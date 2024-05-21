@@ -28,12 +28,13 @@ function Showslider() {
     autoplay: true,
     autoplaySpeed: 3000,
     pauseOnHover: true,
+    // rtl: true  right to left
   };
   return (
     <Slider {...settings}>
       {carouselShows.map((it) => (
         <div className="banner-div">
-          <img className="banner-image" src={it.img} />
+          <img className="banner-image" src={it.img} alt="" />
         </div>
       ))}
     </Slider>

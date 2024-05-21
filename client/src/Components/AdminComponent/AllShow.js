@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FetchOneMovie } from "../../Redux/Action";
+import { DeleteShow } from "../../Redux/Action/AdminAction";
 
 function AllShow() {
   const movie_id = useParams().movie_id;
@@ -10,6 +11,8 @@ function AllShow() {
   const navigate = useNavigate();
   const movie = useSelector((state) => state.common.oneMovie);
 
+  const [activeShows,setActiveShows]=useState(0)
+
   useEffect(() => {
     dispatch(FetchOneMovie(movie_id));
   }, [dispatch]);
@@ -17,6 +20,13 @@ function AllShow() {
   if (!admin.email) {
     navigate("/login");
   }
+
+  let now = new Date();
+
+  const convertToDate = (dateString) => {
+    return new Date(dateString);
+  };
+
   const dateConverter = (date) => {
     const originalDate = new Date(date);
     const options = { day: "numeric", month: "short" };
@@ -24,8 +34,10 @@ function AllShow() {
     return formattedDate;
   };
 
+ 
   return (
     <>
+
       <div className="movies-details-container">
         <div className="movies-details-left">
           <img
@@ -56,26 +68,74 @@ function AllShow() {
                   <span className="h3">Screen ID:</span> {screen?.screen_id}
                 </p>
                 <div className="show-container">
-                  {screen?.show?.map((show) => (
-                    <div key={show?.show_id} className="show">
-                      <div className="div1">
-                        <span>{dateConverter(show?.date)}</span>
-                        <span>{show["show_time"]}</span>
+                  {screen?.show?.map((show) => {
+                    const showdate = convertToDate(show?.date);
+                    if (show?.deleted === true) {
+                      return <>
+                      
+                      </>;
+                    }
+                    return (
+                      
+                      <div key={show?._id}>
+                        {showdate.getTime() < now.getTime() ? (
+                          <div className="show">
+                            <div className="div1">
+                              <span>{dateConverter(show?.date)}</span>
+                              <span>{show?.show_time}</span>
+                            </div>
+                            <p>
+                              <span>Price - Rs {show?.price}</span>
+                            </p>
+                            <button
+                            className="btn-full"
+                              onClick={() =>
+                                dispatch(
+                                  DeleteShow({
+                                    movie_id: movie_id,
+                                    show_id: show._id,
+                                    screen_id: screen.screen_id,
+                                  })
+                                )
+                              }
+                            >
+                              Delete Show
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="show">
+                            <div className="div1">
+                              <span>{dateConverter(show?.date)}</span>
+                              <span>{show?.show_time}</span>
+                            </div>
+                            <p>
+                              <span>Price - Rs {show?.price}</span>
+                            </p>
+                            <button
+                            className="btn-full"
+                              onClick={() =>
+                                navigate(
+                                  `/admin/${movie_id}/${screen.screen_id}/${show._id}`
+                                )
+                              }
+                            >
+                              Booked Seats
+                            </button>
+                            <button
+                            className="btn-full"
+                              onClick={() =>
+                                navigate(
+                                  `/admin/editshow/${movie_id}/${screen.screen_id}/${show._id}`
+                                )
+                              }
+                            >
+                              Edit Show Price
+                            </button>
+                          </div>
+                        )}
                       </div>
-                      <p>
-                        <span>Price - Rs {show?.price}</span>
-                      </p>
-                      <button
-                        onClick={() =>
-                          navigate(
-                            `/admin/${movie_id}/${screen.screen_id}/${show._id}`
-                          )
-                        }
-                      >
-                        View Booked Movies
-                      </button>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             ))}

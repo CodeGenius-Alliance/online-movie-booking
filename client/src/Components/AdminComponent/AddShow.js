@@ -62,7 +62,7 @@ function AddShow(props) {
              </>)}
              </select></div>
              <div className='d-flex flex-wrap justify-content-between'><label htmlFor="Price">Price: </label><input type="Number" placeholder='Price' onChange={(e)=>{setShow({...show,price:e.target.value})}}/></div>
-             <div><button onClick={(e)=>AddShowFunction(e)}>ADD SHOW</button></div>
+             <div><button className="btn-full" onClick={(e)=>AddShowFunction(e)}>ADD SHOW</button></div>
           </form>
       </div>
       </>

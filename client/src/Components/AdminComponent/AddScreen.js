@@ -25,7 +25,7 @@ function AddScreen() {
                <div className='d-flex flex-wrap justify-content-between'><label htmlFor="title">Screen Name: </label><input type="text" placeholder='Screen Name' onChange={(e)=>{setScreen({...screen,screen_name:e.target.value})}} /></div>     
                <div className='d-flex flex-wrap justify-content-between'><label htmlFor="movie detail">Rows: </label><input type="Number" placeholder='Number of Rows' onChange={(e)=>{setScreen({...screen,no_of_rows:e.target.value})}}/></div>     
                <div className='d-flex flex-wrap justify-content-between'><label htmlFor="movie detail">Columns: </label><input type="Number" placeholder='Number of  Columns' onChange={(e)=>{setScreen({...screen,no_of_columns:e.target.value})}}/></div>     
-               <div><button onClick={(e)=>AddScreenFunction(e)}>ADD SCREEN</button></div>
+               <div><button className="btn-full" onClick={(e)=>AddScreenFunction(e)}>ADD SCREEN</button></div>
             </form>
         </div>
         </>

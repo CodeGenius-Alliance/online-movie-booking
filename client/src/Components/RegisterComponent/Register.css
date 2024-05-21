@@ -37,11 +37,22 @@ input {
 }
 
 button {
-  padding: 7px;
-  margin: 10px;
-  background-color: #344955;
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #3fc4bd;
   color: white;
-  font-size: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  border: none;
+  font-size: 16px;
+}
+.btn-full {
+  margin-top: 1rem;
+  padding: 0.65rem;
+  background-color: #3fc4bd;
+  color: white;
+  width: 100%;
   border-radius: 10px;
   cursor: pointer;
   text-align: center;

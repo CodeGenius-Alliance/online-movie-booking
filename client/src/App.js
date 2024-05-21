@@ -16,12 +16,12 @@ import MovieDetails from "./Components/UserComponent/MovieDetails";
 import SeatSelection from "./Components/UserComponent/SeatSelection";
 import AddScreen from "./Components/AdminComponent/AddScreen";
 
-import Showslider from "./Components/HomeComponent/Showslider";
 import Footer from "./Components/HomeComponent/Footer";
 
-import ViewAllShows from "./Components/AdminComponent/ViewAllShows";
 import BookedMovies from "./Components/UserComponent/BookedMovies";
 import AllShow from "./Components/AdminComponent/AllShow";
+import { Hello } from "./Components/AdminComponent/Hello";
+import EditShow from "./Components/AdminComponent/EditShow";
 
 function App() {
   return (
@@ -45,7 +45,13 @@ function App() {
                 path=":movie_id/:screen_id/:show_id"
                 element={<ViewBookings />}
               ></Route>
+              <Route path="editshow/:movie_id/:screen_id/:show_id" element={<EditShow/>} ></Route>
+              {/* <Route
+                path="editshow/:movie_id/:screen_id/:show_id"
+                element={<EditShow />}
+              ></Route> */}
             </Route>
+
             <Route path="/user">
               <Route path=":movie_id" element={<MovieDetails />}></Route>
               <Route

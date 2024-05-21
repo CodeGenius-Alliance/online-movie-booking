@@ -1,76 +1,108 @@
 import React from "react";
-import { useState } from "react";
 import "./Register.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Registeruser } from "../../Redux/Action/UserAction";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
-//done
+const DisplayingErrorMessagesSchema = Yup.object().shape({
+  name: Yup.string().required("Name is required."),
+  password: Yup.string()
+    .required("Password is required.")
+    .min(6, "Password is too short - should be 6 chars minimum."),
+  email: Yup.string().email("Invalid email").required("Email is required."),
+});
+
 const Register = () => {
   const initialValue = { name: "", email: "", password: "" };
-  const [formValues, setFormValue] = useState(initialValue);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleClick = (e) => {
-    const { name, value } = e.target;
-    setFormValue({ ...formValues, [name]: value });
+
+  const SubmitRegister = async (values) => {
+    try {
+      await dispatch(Registeruser(values));
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
-    <>
-      <form>
-        <div className="container">
-          <h1 className="heading">Registration Form</h1>
+    <div className="container">
+      <h1 className="heading">Registration Form</h1>
 
-          <input
-            type="text"
-            placeholder="Enter your name"
-            name="name"
-            value={formValues.name}
-            onChange={handleClick}
-          ></input>
+      <Formik
+        initialValues={initialValue}
+        validationSchema={DisplayingErrorMessagesSchema}
+        onSubmit={(values, { setSubmitting }) => {
+          SubmitRegister(values);
+          setSubmitting(false);
+        }}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            <div className="box">
+              <Field
+                type="text"
+                placeholder="Enter your name"
+                name="name"
+                autoComplete="off"
+              />
+              <ErrorMessage
+                name="name"
+                component="div"
+                className="error"
+              />
+            </div>
+            <div className="box">
+              <Field
+                type="email"
+                placeholder="Enter your email"
+                name="email"
+                autoComplete="off"
+              />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="error"
+              />
+            </div>
+            <div className="box">
+              <Field
+                type="password"
+                placeholder="Enter your password"
+                name="password"
+                autoComplete="off"
+              />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="error"
+              />
+            </div>
+            <div>
+              <button className="btn-full" type="submit" disabled={isSubmitting}>
+                SUBMIT
+              </button>
+            </div>
+          </Form>
+        )}
+      </Formik>
 
-          <input
-            type="email"
-            placeholder="Enter your email"
-            name="email"
-            value={formValues.email}
-            onChange={handleClick}
-          ></input>
-
-          <input
-            type="password"
-            placeholder="Enter your password"
-            name="password"
-            value={formValues.password}
-            onChange={handleClick}
-          ></input>
-
-          <br />
-          <button
-            className="button"
-            onClick={(e) => {
-              e.preventDefault();
-              dispatch(Registeruser(formValues));
-              navigate("/login");
-            }}
-          >
-            SUBMIT
-          </button>
-          <hr />
-          <div>
-            <Link to={"/admin"} className="login-links">
-              Admin Login?
-            </Link>
-          </div>
-          <div>
-            <Link to={"/login"} className="login-links">
-              Already have account?
-            </Link>
-          </div>
-        </div>
-      </form>
-    </>
+      <hr />
+      <div>
+        <Link to={"/admin"} className="login-links">
+          Admin Login?
+        </Link>
+      </div>
+      <div>
+        <Link to={"/login"} className="login-links">
+          Already have an account?
+        </Link>
+      </div>
+    </div>
   );
 };
 

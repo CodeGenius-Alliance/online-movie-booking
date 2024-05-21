@@ -17,7 +17,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-
+  deleted:{type:Boolean,default:false},
   screen: [
     {
       // row , col --> add
@@ -25,6 +25,7 @@ const movieSchema = new mongoose.Schema({
       screen_name:{type:String},
       show: [
         {
+          deleted:{type:Boolean,default:false},
           show_id: { type: String, sparse: true },
           date: { type: Date },
           show_time: { type: String },

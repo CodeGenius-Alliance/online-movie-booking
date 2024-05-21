@@ -1,6 +1,5 @@
 .movies-details-container {
   display: flex;
-
   justify-content: space-between;
   margin: 0%;
   padding: 30px;
@@ -24,7 +23,8 @@
 .movies-details-right {
   font-size: 14px;
   width: 55%;
-  color: black; /* Adjust text color to make it visible */
+  color: black;
+  /* Adjust text color to make it visible */
 }
 
 /* Styling for the screen container */
@@ -42,36 +42,47 @@
   transition: background-color 0.3s ease;
   background-color: rgb(231, 231, 231) !important;
   box-shadow: 2px 5px 5px lightblue !important;
-  color: black; /* Adjust text color to make it visible */
+  color: rgb(0, 0, 0);
+  /* Adjust text color to make it visible */
 }
 
 /* Styling for the show container */
 .show-container {
   display: flex;
-  flex-direction: row; /* Change to row to make shows appear beside screens */
-  justify-content: flex-start; /* Adjust as needed */
-  align-items: center; /* Align items vertically */
+  flex-direction: row;
+  /* Change to row to make shows appear beside screens */
+  justify-content: flex-start;
+  /* Adjust as needed */
+  align-items: center;
+  /* Align items vertically */
+  padding: 1rem;
+  ;
 }
 
 /* Styling for individual shows */
 .show {
-  margin-right: 15px; /* Add margin to separate shows */
-  border: 2px solid #060505;
+  padding: 1rem;
+  margin-right: 15px;
+  /* Add margin to separate shows */
+  border: 2px solid #bababa;
   padding: 6px;
   font-size: medium;
   border-radius: 6px;
   transition: background-color 0.3s ease;
-  color: black; /* Adjust text color to make it visible */
+  color: black;
+  /* Adjust text color to make it visible */
   width: 150px;
 }
 
 /* Hover effect for shows */
 .show:hover {
-  background-color: rgb(196, 195, 195);
+  background-color: rgb(200, 200, 200);
 }
+
 .movies-details {
   color: black;
 }
+
 .title {
   font-weight: bold;
 }
@@ -99,3 +110,13 @@
   display: flex;
   justify-content: space-between;
 }
+
+@media  (max-width:800px) {
+
+    .movies-details-container {
+      display: block;
+    }
+    .movies-details-right{
+      width: 100%;
+    }
+  }
